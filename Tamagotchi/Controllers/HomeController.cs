@@ -6,6 +6,6 @@ namespace Tamagotchis.Controllers
   public class HomeController : Controller
   {
     [Route("/")]
-    public string Example() { return "Hello Enemy!"; }
+    public ActionResult Index() { return View(); }
   }
 }

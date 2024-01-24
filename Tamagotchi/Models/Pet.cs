@@ -85,6 +85,7 @@ namespace Tamagotchis.Models
         Fullness = 100;
       }
     }
+
     public void Sleep()
     {
       Energy += 10;
@@ -93,6 +94,7 @@ namespace Tamagotchis.Models
         Energy = 100;
       }
     }
+    
     public void Play()
     {
       Attention += 10;
