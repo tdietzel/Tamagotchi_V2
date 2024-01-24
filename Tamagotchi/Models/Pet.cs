@@ -12,12 +12,14 @@ namespace Tamagotchis.Models
       Name = "Jim default";
       Hunger = 100;
       Fatigue = 100;
+      Happiness = 100;
     }
     public Pet(string name)
     {
       Name = name;
       Hunger = 100;
       Fatigue = 100;
+      Happiness = 100;
     }
   }
 }

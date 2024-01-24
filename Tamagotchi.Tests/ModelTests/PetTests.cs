@@ -45,11 +45,11 @@ namespace Tamagotchis.Tests
       Assert.AreEqual(newPet.Fatigue, 100);
     }
     [TestMethod]
-    public void GetFatigueOfPet_ReturnFatigueOfPet_Int()
+    public void GetHappinessOfPet_ReturnHappinessOfPet_Int()
     {
       Pet newPet = new Pet();
-      newPet.Fatigue = 100;
-      Assert.AreEqual(newPet.Fatigue, 100);
+      newPet.Happiness = 100;
+      Assert.AreEqual(newPet.Happiness, 100);
     }
   }
 }
