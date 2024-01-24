@@ -16,8 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <!-- Change example name to fit project -->
-    <ProjectReference Include="..\ProjectName\ProjectName.csproj" />
+    <ProjectReference Include="..\Tamagotchi\Tamagotchi.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,10 +1,10 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ExampleName.Models;
+using Tamagotchis.Models;
 
-namespace ProjectName.Tests
+namespace Tamagotchis.Tests
 {
   [TestClass]
-  public class ClassNameTests
+  public class PetTests
   {
     [TestMethod]
     public void NameOfMethodWeAreTesting_DescriptionOfBehavior_ExpectedReturnValue()

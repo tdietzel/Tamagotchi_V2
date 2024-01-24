@@ -1,5 +1,5 @@
-# *CSHARP Template README*
-#### By Trent Dietzel
+# *Tamagotchi*
+#### By Trent Dietzel & Christopher Quattrocchi & Jonathan Song
 
 ## Table of Contents
 - [About](#about)

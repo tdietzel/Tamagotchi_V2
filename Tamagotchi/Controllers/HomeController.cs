@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
-using ExampleName.Models;
+using Tamagotchis.Models;
 
-namespace ExampleName.Controllers
+namespace Tamagotchis.Controllers
 {
-  public class ExampleNameController : Controller
+  public class HomeController : Controller
   {
     [Route("/")]
     public string Example() { return "Hello Friend!"; }
