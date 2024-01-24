@@ -12,7 +12,6 @@ namespace Tamagotchis.Tests
       Pet newPet = new Pet();
       Assert.AreEqual(typeof(Pet), newPet.GetType());
     }
-
     [TestMethod]
     public void GetNameOfPet_ReturnsNameOfPet_String()
     {
@@ -21,7 +20,6 @@ namespace Tamagotchis.Tests
       string result = newPet.Name;
       Assert.AreEqual(name,result);
     }
-
     [TestMethod]
     public void SetNameOfPet_SetsNameOfPet_String()
     {
@@ -31,11 +29,11 @@ namespace Tamagotchis.Tests
       Assert.AreEqual(name,result);
     }
     [TestMethod]
-    public void GetHungerOfPet_ReturnHungerOfPet_Int()
+    public void GetFullnessOfPet_ReturnFullnessOfPet_Int()
     {
       Pet newPet = new Pet();
-      newPet.Hunger = 100;
-      Assert.AreEqual(newPet.Hunger, 100);
+      newPet.Fullness = 100;
+      Assert.AreEqual(newPet.Fullness, 100);
     }
     [TestMethod]
     public void GetFatigueOfPet_ReturnFatigueOfPet_Int()
@@ -50,6 +48,16 @@ namespace Tamagotchis.Tests
       Pet newPet = new Pet();
       newPet.Happiness = 100;
       Assert.AreEqual(newPet.Happiness, 100);
+    }
+    [TestMethod]
+    public void FeedPet_IncreaseFullness_Int()
+    {
+      Pet newPet = new Pet();
+      int normalFood = 10;
+      newPet.Fullness = 80;
+      newPet.Feed(normalFood);
+      int result = newPet.Fullness;
+      Assert.AreEqual(result, 90);
     }
   }
 }
