@@ -1,5 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Tamagotchis.Models;
+using System.Threading;
 
 namespace Tamagotchis.Tests
 {
@@ -76,6 +77,14 @@ namespace Tamagotchis.Tests
       newPet.Play();
       int result = newPet.Attention;
       Assert.AreEqual(result, 90);
+    }
+    [TestMethod]
+    public void CheckTimer_CheckIfTimerDecreasesAttributes_Int()
+    {
+      Pet newPet = new Pet();
+      Thread.Sleep(13000);
+      int result = newPet.Energy;
+      Assert.AreEqual(98, result);
     }
   }
 }

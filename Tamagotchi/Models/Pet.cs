@@ -1,3 +1,6 @@
+using System;
+using System.Timers;
+
 namespace Tamagotchis.Models
 {
   public class Pet
@@ -6,6 +9,8 @@ namespace Tamagotchis.Models
     public int Fullness { get; set; }
     public int Energy { get; set; }
     public int Attention { get; set; }
+    
+    private Timer timer;
 
     public Pet()
     {
@@ -13,6 +18,11 @@ namespace Tamagotchis.Models
       Fullness = 100;
       Energy = 100;
       Attention = 100;
+
+      timer = new Timer();
+      timer.Interval = 10000;
+      timer.Elapsed += TimerElapsed;
+      timer.Start();
     }
     public Pet(string name)
     {
@@ -20,6 +30,49 @@ namespace Tamagotchis.Models
       Fullness = 100;
       Energy = 100;
       Attention = 100;
+
+      timer = new Timer();
+      timer.Interval = 10000;
+      timer.Elapsed += TimerElapsed;
+      timer.Start();
+    }
+
+    private void TimerElapsed(object sender, ElapsedEventArgs e)
+    {
+      DecreaseAttributes();
+    }
+
+    private void DecreaseAttributes()
+    {
+      Energy -= 2;
+      Fullness -= 2;
+      Attention -= 2;
+
+      if (Energy < 0)
+      {
+        Energy = 0;
+      }
+      if (Fullness < 0)
+      {
+        Fullness = 0;
+      }
+      if (Attention < 0)
+      {
+        Attention = 0;
+      }
+      
+      CheckIfDead();
+    }
+
+    private void CheckIfDead()
+    {
+      if (Energy == 0 || Fullness == 0 || Attention == 0)
+      {
+        Energy = 0;
+        Fullness = 0;
+        Attention = 0;
+        timer.Stop();
+      }
     }
 
     public void Feed(int food)
@@ -41,10 +94,14 @@ namespace Tamagotchis.Models
     public void Play()
     {
       Attention += 10;
+      Fullness -= 2;
+      Energy -= 2;
       if (Attention >= 100)
       {
         Attention = 100;
       }
+
+      CheckIfDead();
     }
   }
 }
