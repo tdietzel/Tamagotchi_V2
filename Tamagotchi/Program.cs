@@ -23,6 +23,11 @@ namespace Tamagotchis
         pattern: "{controller=Home}/{action=Index}/{id?}"
       );
 
+      // app.UseEndpoints(endpoints => 
+      // {
+      //   endpoints.MapHub<PetHub>("/petHub");
+      // });
+
       app.Run();
     }
   }

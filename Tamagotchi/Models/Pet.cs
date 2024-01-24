@@ -1,5 +1,6 @@
 using System;
 using System.Timers;
+using System.Collections.Generic;
 
 namespace Tamagotchis.Models
 {
@@ -10,9 +11,21 @@ namespace Tamagotchis.Models
     public int Energy { get; set; }
     public int Attention { get; set; }
     public bool Alive { get; set; } = true;
+    public int Id { get; }
     
     private Timer timer;
 
+    private static List<Pet> _instances = new List<Pet> { };
+
+    public static List<Pet> GetAll()
+    {
+      return _instances;
+    }
+
+    public static void ClearAll()
+    {
+      _instances.Clear();
+    }
     public Pet()
     {
       Name = "Jim default";
@@ -24,6 +37,9 @@ namespace Tamagotchis.Models
       timer.Interval = 10000;
       timer.Elapsed += TimerElapsed;
       timer.Start();
+      
+      _instances.Add(this);
+      Id = _instances.Count;
     }
     public Pet(string name)
     {
@@ -36,6 +52,9 @@ namespace Tamagotchis.Models
       timer.Interval = 10000;
       timer.Elapsed += TimerElapsed;
       timer.Start();
+
+      _instances.Add(this);
+      Id = _instances.Count;
     }
 
     private void TimerElapsed(object sender, ElapsedEventArgs e)
@@ -61,9 +80,17 @@ namespace Tamagotchis.Models
       {
         Attention = 0;
       }
+
+      // var hubContext = 'adfasfdfsa';
+      // await hubContext.Clients.All.SendAsync("ReceivePetStatus", GetPetStatus())
       
       CheckIfDead();
     }
+
+    // private string GetPetStatus()
+    // {
+    //   return $"Energy: {Energy}, Fullness: {Fullness}, Attention: {Attention}";
+    // }
 
     private void CheckIfDead()
     {
@@ -106,6 +133,11 @@ namespace Tamagotchis.Models
       }
 
       CheckIfDead();
+    }
+
+    public static Pet Find(int searchId)
+    {
+      return _instances[searchId - 1];
     }
   }
 }
