@@ -2,6 +2,7 @@ using System;
 using System.Timers;
 using System.Collections.Generic;
 using System.Windows;
+using System.Linq;
 
 namespace Tamagotchis.Models
 {
@@ -26,6 +27,15 @@ namespace Tamagotchis.Models
     public static void ClearAll()
     {
       _instances.Clear();
+    }
+
+    public static void Delete(int petId)
+    {
+      var petToDelete = _instances.FirstOrDefault(p => p.Id == petId);
+      if (petToDelete != null)
+      {
+        _instances.Remove(petToDelete);
+      }
     }
     public Pet()
     {
@@ -82,16 +92,8 @@ namespace Tamagotchis.Models
         Attention = 0;
       }
 
-      // var hubContext = 'adfasfdfsa';
-      // await hubContext.Clients.All.SendAsync("ReceivePetStatus", GetPetStatus())
-      
       CheckIfDead();
     }
-
-    // private string GetPetStatus()
-    // {
-    //   return $"Energy: {Energy}, Fullness: {Fullness}, Attention: {Attention}";
-    // }
 
     private void CheckIfDead()
     {

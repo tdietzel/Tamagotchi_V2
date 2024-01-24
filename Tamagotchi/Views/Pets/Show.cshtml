@@ -11,6 +11,8 @@
 
 <body>
 
+  @model Tamagotchis.Models.Pet
+
   <h1>Name: @Model.Name</h1>
   <ul>
     <li>Fullness: @Model.Fullness</li>
@@ -45,6 +47,13 @@
 
   <a href="/">Go back to make another pet!</a>
   <a href="/pets">Return to pet playground</a>
+
+  <script>
+    setTimeout(function() {
+      window.location.reload();
+    }, 10000);
+  </script>
+
 </body>
 
 </html>

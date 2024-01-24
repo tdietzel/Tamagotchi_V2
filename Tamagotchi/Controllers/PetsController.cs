@@ -50,6 +50,9 @@ namespace Tamagotchis.Controllers
             TempData["LowEnergyAlert"] = "Your pet is too tired to play!";
             break;
           }
+          case "delete":
+          Pet.Delete(petId);
+          return RedirectToAction("Index");
         }
       }
       return RedirectToAction("Show", new { id = petId });
