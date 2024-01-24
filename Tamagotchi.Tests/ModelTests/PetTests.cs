@@ -22,5 +22,13 @@ namespace Tamagotchis.Tests
       Assert.AreEqual(name,result);
     }
 
+    [TestMethod]
+    public void SetNameOfPet_SetsNameOfPet_String()
+    {
+      string name = "bob";
+      Pet newPet = new Pet(name);
+      string result = newPet.Name;
+      Assert.AreEqual(name,result);
+    }
   }
 }
