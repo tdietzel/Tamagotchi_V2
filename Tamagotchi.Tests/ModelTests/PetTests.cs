@@ -36,18 +36,18 @@ namespace Tamagotchis.Tests
       Assert.AreEqual(newPet.Fullness, 100);
     }
     [TestMethod]
-    public void GetFatigueOfPet_ReturnFatigueOfPet_Int()
+    public void GetEnergyOfPet_ReturnEnergyOfPet_Int()
     {
       Pet newPet = new Pet();
-      newPet.Fatigue = 100;
-      Assert.AreEqual(newPet.Fatigue, 100);
+      newPet.Energy = 100;
+      Assert.AreEqual(newPet.Energy, 100);
     }
     [TestMethod]
-    public void GetHappinessOfPet_ReturnHappinessOfPet_Int()
+    public void GetAttentionOfPet_ReturnAttentionOfPet_Int()
     {
       Pet newPet = new Pet();
-      newPet.Happiness = 100;
-      Assert.AreEqual(newPet.Happiness, 100);
+      newPet.Attention = 100;
+      Assert.AreEqual(newPet.Attention, 100);
     }
     [TestMethod]
     public void FeedPet_IncreaseFullness_Int()
@@ -57,6 +57,24 @@ namespace Tamagotchis.Tests
       newPet.Fullness = 80;
       newPet.Feed(normalFood);
       int result = newPet.Fullness;
+      Assert.AreEqual(result, 90);
+    }
+    [TestMethod]
+    public void RestPet_IncreaseFullness_Int()
+    {
+      Pet newPet = new Pet();
+      newPet.Energy = 80;
+      newPet.Sleep();
+      int result = newPet.Energy;
+      Assert.AreEqual(result, 90);
+    }
+    [TestMethod]
+    public void PlayPet_IncreaseAttention_Int()
+    {
+      Pet newPet = new Pet();
+      newPet.Attention = 80;
+      newPet.Play();
+      int result = newPet.Attention;
       Assert.AreEqual(result, 90);
     }
   }
