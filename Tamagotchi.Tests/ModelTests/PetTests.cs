@@ -86,5 +86,14 @@ namespace Tamagotchis.Tests
       int result = newPet.Energy;
       Assert.AreEqual(98, result);
     }
+
+    public void CheckIfDead_ReturnsDeadPet_Bool()
+    {
+      Pet newPet = new Pet();
+      newPet.Fullness = 2;
+      Thread.Sleep(13000);
+      bool result = newPet.Alive;
+      Assert.AreEqual(false, result);
+    }
   }
 }

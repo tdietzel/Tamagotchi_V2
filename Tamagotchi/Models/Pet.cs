@@ -9,6 +9,7 @@ namespace Tamagotchis.Models
     public int Fullness { get; set; }
     public int Energy { get; set; }
     public int Attention { get; set; }
+    public bool Alive { get; set; } = true;
     
     private Timer timer;
 
@@ -72,6 +73,7 @@ namespace Tamagotchis.Models
         Fullness = 0;
         Attention = 0;
         timer.Stop();
+        Alive = false;
       }
     }
 
