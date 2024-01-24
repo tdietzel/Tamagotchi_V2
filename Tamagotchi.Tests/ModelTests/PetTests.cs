@@ -7,9 +7,10 @@ namespace Tamagotchis.Tests
   public class PetTests
   {
     [TestMethod]
-    public void NameOfMethodWeAreTesting_DescriptionOfBehavior_ExpectedReturnValue()
+    public void CheckConstructor_CheckIfConstructorCreatesInstance_Bool()
     {
-      // Tests will go here
+      Pet newPet = new Pet();
+      Assert.AreEqual(typeof(Pet), newPet.GetType());
     }
   }
 }
