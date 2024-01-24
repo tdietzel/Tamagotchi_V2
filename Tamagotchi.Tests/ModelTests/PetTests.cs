@@ -9,8 +9,18 @@ namespace Tamagotchis.Tests
     [TestMethod]
     public void CheckConstructor_CheckIfConstructorCreatesInstance_Bool()
     {
-      Pet newPet = new Pet();
+      Pet newPet = new Pet("bob");
       Assert.AreEqual(typeof(Pet), newPet.GetType());
     }
+
+    [TestMethod]
+    public void GetNameOfPet_ReturnsNameOfPet_String()
+    {
+      string name = "bob";
+      Pet newPet = new Pet(name);
+      string result = newPet.Name;
+      Assert.AreEqual(name,result);
+    }
+
   }
 }
