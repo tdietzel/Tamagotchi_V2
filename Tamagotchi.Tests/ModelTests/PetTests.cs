@@ -37,5 +37,19 @@ namespace Tamagotchis.Tests
       newPet.Hunger = 100;
       Assert.AreEqual(newPet.Hunger, 100);
     }
+    [TestMethod]
+    public void GetFatigueOfPet_ReturnFatigueOfPet_Int()
+    {
+      Pet newPet = new Pet();
+      newPet.Fatigue = 100;
+      Assert.AreEqual(newPet.Fatigue, 100);
+    }
+    [TestMethod]
+    public void GetFatigueOfPet_ReturnFatigueOfPet_Int()
+    {
+      Pet newPet = new Pet();
+      newPet.Fatigue = 100;
+      Assert.AreEqual(newPet.Fatigue, 100);
+    }
   }
 }
