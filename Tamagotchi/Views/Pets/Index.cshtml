@@ -13,6 +13,10 @@
   @if (Model.Count == 0)
   {
     <p>There are no pets to display. Please create a pet!</p>
+    <br>
+    <a href="/">Make a new pet!</a>
+
+
   }
   else
   {
@@ -34,11 +38,11 @@
         }
         else
         {
-          <h4>Your pet has died :(</h4>
+          <h4>@pet.Name has died :(</h4>
           <form action="/pets/action" method="post">
             <input type="hidden" name="petId" value="@pet.Id" />
             <input type="hidden" name="action" value="delete" />
-            <button type="submit">Bury your pet</button>
+            <button type="submit">Bury @pet.Name</button>
           </form>
         }
       </ul>

@@ -140,7 +140,14 @@ namespace Tamagotchis.Models
 
     public static Pet Find(int searchId)
     {
-      return _instances[searchId - 1];
+      if (searchId > 0 && searchId <= _instances.Count)
+      {
+        return _instances[searchId - 1];
+      }
+      else
+      {
+        return null;
+      }
     }
   }
 }
