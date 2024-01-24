@@ -1,6 +1,7 @@
 using System;
 using System.Timers;
 using System.Collections.Generic;
+using System.Windows;
 
 namespace Tamagotchis.Models
 {

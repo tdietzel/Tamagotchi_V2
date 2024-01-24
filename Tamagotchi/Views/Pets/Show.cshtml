@@ -18,12 +18,29 @@
     <li>Attention: @Model.Attention</li>
   </ul>
 
+  @if (TempData["LowEnergyAlert"] != null)
+  {
+    <script type="text/javascript">
+      alert('@TempData["LowEnergyAlert"]');
+    </script>
+  }
 
+  <form action="/pets/action" method="post">
+    <input type="hidden" name="petId" value="@Model.Id"/>
+    <input type="hidden" name="action" value="feed"/>
+    <button type="submit">Feed</button>
+  </form>
 
-  <form action="post">
-    <button type="submit" name="feed">Feed</button>
-    <button type="submit" name="sleep">Sleep</button>
-    <button type="submit" name="play">Play</button>
+  <form action="/pets/action" method="post">
+    <input type="hidden" name="petId" value="@Model.Id"/>
+    <input type="hidden" name="action" value="sleep"/>
+    <button type="submit">Sleep</button>
+  </form>
+
+  <form action="/pets/action" method="post">
+    <input type="hidden" name="petId" value="@Model.Id"/>
+    <input type="hidden" name="action" value="play"/>
+    <button type="submit">Play</button>
   </form>
 
   <a href="/">Go back to make another pet!</a>
