@@ -1,0 +1,18 @@
+.shop-layout {
+  display: flex;
+  flex-direction: column;
+}
+.food {
+  width: 20px;
+  height: 10px;
+  margin: 0px;
+  margin: 0;
+}
+form {
+  margin: 0;
+}
+.toy {
+  width: 20px;
+  height: 10px;
+  margin: 0;
+}
