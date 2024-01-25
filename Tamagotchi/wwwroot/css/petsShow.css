@@ -39,3 +39,40 @@
   margin-right: auto;
   margin-left: auto;
 }
+.inventory {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100vw;
+  align-items: center;
+  justify-content: center;
+}
+.inventory-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  border: 1px solid black;
+  font-weight: bold;
+  width: 10rem;
+  height: 5rem;
+  margin-right: 5px;
+  background-color: lightgrey;
+}
+.inventory-item p {
+  margin: 0px;
+}
+.fullness {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding-right: 5px;
+  color: green;
+}
+.excitement {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding-right: 5px;
+  color: yellow;
+}

@@ -98,10 +98,27 @@
         </div>
       }
     </div>
-    <form id="new-pet" action="/" method="get">
+    <form id="new-pet" action="/shop" method="get">
       <button type="submit">Head to the shop!</button>
     </form>
-    }
+    <h1>Inventory</h1>
+    <div class="inventory">
+      @foreach (var food in Pet._inventory)
+      {
+        <div class="inventory-item">
+          <p>@food.Name</p>
+          <p class="fullness">@food.Fullness hp</p>
+        </div>
+      }
+      @foreach (var toy in Pet._inventoryToy)
+      {
+        <div class="inventory-item">
+          <p>@toy.Name</p>
+          <p class="excitement">@toy.Excitement</p>
+        </div>
+      }
+    </div>
+  }
   <script>
     setTimeout(function () {
       window.location.reload();
