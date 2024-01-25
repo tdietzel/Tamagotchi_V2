@@ -19,7 +19,17 @@
       {
         <img src="~/img/sleep.png"/>
         <p>@Model.Name is sleeping... zZz</p>
-      } else
+      } else if (Model.IsPlaying == true)
+      {
+        <img src="~/img/playing.png"/>
+        <p>@Model.Name is playing!</p>
+      }
+      else if (Model.IsFeeding == true)
+      {
+        <img src="~/img/food.png"/>
+        <p>@Model.Name is eating...</p>
+      }
+      else
       {
         <img src="~/img/dog.png"/>
       }

@@ -18,14 +18,17 @@ namespace Tamagotchis.Models
     public int Id { get; }
     private static int nextId = 1;
 
-    private Timer timer;
+    private Timer incubationTimer;
     private Timer ageTimer;
+    private Timer timer;
     private Timer sleepTimer;
     private Timer playTimer;
-    public bool IsSleeping { get; set; } = false;
+    private Timer feedTimer;
 
-    private Timer incubationTimer;
+    public bool IsSleeping { get; set; } = false;
     public bool IsHatched { get; set; } = false;
+    public bool IsPlaying { get; set; } = false;
+    public bool IsFeeding { get; set; } = false;
 
     private static List<Pet> _instances = new List<Pet> { };
 
@@ -71,7 +74,7 @@ namespace Tamagotchis.Models
       incubationTimer.Start();
 
       ageTimer = new Timer();
-      ageTimer.Interval = 86400000; // 24 hours in milliseconds
+      ageTimer.Interval = 600000; // 86400000; // 24 hours in milliseconds
       ageTimer.Elapsed += AgeTimerElapsed;
       ageTimer.Start();
     }
@@ -121,6 +124,16 @@ namespace Tamagotchis.Models
       Energy = 100;
       ((Timer)sender).Stop();
     }
+    private void FeedTimerElapsed(object sender, ElapsedEventArgs e)
+    {
+      IsFeeding = false;
+      Fullness += 20;
+      if (Fullness > 100)
+      {
+        Fullness = 100;
+      }
+      ((Timer)sender).Stop();
+    }
 
     private void TimerElapsed(object sender, ElapsedEventArgs e)
     {
@@ -130,6 +143,7 @@ namespace Tamagotchis.Models
     private void PlayTimerElapsed(object sender, ElapsedEventArgs e)
     {
       CheckIfDead();
+      IsPlaying = false;
       if (Fullness < 5)
       {
         Fullness = 0;
@@ -191,12 +205,17 @@ namespace Tamagotchis.Models
 
     public void Feed(int food)
     {
+      IsFeeding = true;
+      feedTimer = new Timer();
+      feedTimer.Interval = 10000;
+      feedTimer.Elapsed += FeedTimerElapsed;
       Fullness += food;
       Weight += 1;
       if (Fullness >= 100)
       {
         Fullness = 100;
       }
+      feedTimer.Start();
     }
 
     public void Sleep()
@@ -210,10 +229,14 @@ namespace Tamagotchis.Models
 
     public void Play()
     {
-      playTimer = new Timer();
-      playTimer.Interval = 5000;
-      playTimer.Elapsed += PlayTimerElapsed;
-      playTimer.Start();
+      if (IsPlaying == false)
+      {
+        IsPlaying = true;
+        playTimer = new Timer();
+        playTimer.Interval = 10000;
+        playTimer.Elapsed += PlayTimerElapsed;
+        playTimer.Start();
+      }
     }
   }
 }

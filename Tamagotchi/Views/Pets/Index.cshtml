@@ -47,6 +47,30 @@
               <form action="pets/@pet.Id" method="get">
                 <button type="submit">View Pet Details</button>
               </form>
+            } else if (pet.IsPlaying == true)
+            {
+              <img src="~/img/playing.png"/>
+              <p>playing!</p>
+              <p>Fullness: @pet.Fullness</p>
+              <p>Energy: @pet.Energy</p>
+              <p>Attention: @pet.Attention</p>
+              <p>Age: @pet.Age yrs</p>
+              <p>Weight: @pet.Weight lbs</p>
+              <form action="pets/@pet.Id" method="get">
+                <button type="submit">View Pet Details</button>
+              </form>
+            } else if (pet.IsFeeding == true)
+            {
+              <img src="~/img/food.png"/>
+              <p>@pet.Name is eating...</p>
+              <p>Fullness: @pet.Fullness</p>
+              <p>Energy: @pet.Energy</p>
+              <p>Attention: @pet.Attention</p>
+              <p>Age: @pet.Age yrs</p>
+              <p>Weight: @pet.Weight lbs</p>
+              <form action="pets/@pet.Id" method="get">
+                <button type="submit">View Pet Details</button>
+              </form>
             } else
             {
               <img src="~/img/dog.png"/>
