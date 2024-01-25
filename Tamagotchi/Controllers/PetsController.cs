@@ -23,7 +23,11 @@ namespace Tamagotchis.Controllers
     public ActionResult Show(int id)
     {
       Pet foundPet = Pet.Find(id);
-      return View(foundPet);
+      if (foundPet != null)
+      {
+        return View(foundPet);
+      }
+      return RedirectToAction("Index");
     }
     [HttpPost("/pets/action")]
     public ActionResult Perform(int petId, string action)
@@ -34,7 +38,7 @@ namespace Tamagotchis.Controllers
         switch (action)
         {
           case "feed":
-            foundPet.Feed(10);
+            foundPet.Feed(20);
             break;
           case "sleep":
             foundPet.Sleep();
