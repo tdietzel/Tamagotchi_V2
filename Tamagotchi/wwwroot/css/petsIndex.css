@@ -1,0 +1,28 @@
+.pet {
+  text-align: center;
+  width: 20rem;
+  height: 20rem;
+  display: flex;
+  flex-direction: column;
+  margin-left: auto;
+  margin-right: auto;
+}
+.container {
+  width: 40rem;
+  height: 20rem;
+  display: flex;
+  flex-direction: row;
+}
+a {
+  display: block;
+  margin: 0;
+  text-align: center;
+}
+#abandon {
+  background-color: red;
+  color: white;
+  font-weight: bold;
+}
+#no-pets {
+  text-align: center;
+}

@@ -1,0 +1,15 @@
+.pet {
+  text-align: center;
+  width: 20rem;
+  height: 20rem;
+  display: flex;
+  flex-direction: column;
+  margin-left: auto;
+  margin-right: auto;
+}
+.action-buttons {
+  display: flex;
+  flex-direction: row;
+  margin-left: auto;
+  margin-right: auto;
+}
