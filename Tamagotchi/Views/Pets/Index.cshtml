@@ -22,21 +22,48 @@
       @foreach (Pet pet in Model)
       {
         <div class="pet">
-          <h1>@pet.Name</h1>
           @if (pet.Alive == true)
           {
-            <p>Fullness: @pet.Fullness</p>
-            <p>Energy: @pet.Energy</p>
-            <p>Attention: @pet.Attention</p>
-            <a href="pets/@pet.Id">View Pet Details</a>
             <form action="/pets/action" method="post">
               <input type="hidden" name="petId" value="@pet.Id" />
               <input type="hidden" name="action" value="delete" />
               <button id="abandon" type="submit">Abandon Pet</button>
             </form>
+            <h1>@pet.Name</h1>
+
+            @if (pet.IsHatched == false)
+            {
+              <img src="~/img/egg.png" />
+              <h3>Hatching...</h3>
+            } else if (pet.IsSleeping == true)
+            {
+              <img src="~/img/sleep.png"/>
+              <p>sleeping... zZz</p>
+              <p>Fullness: @pet.Fullness</p>
+              <p>Energy: @pet.Energy</p>
+              <p>Attention: @pet.Attention</p>
+              <p>Age: @pet.Age yrs</p>
+              <p>Weight: @pet.Weight lbs</p>
+              <form action="pets/@pet.Id" method="get">
+                <button type="submit">View Pet Details</button>
+              </form>
+            } else
+            {
+              <img src="~/img/dog.png"/>
+              <p>Fullness: @pet.Fullness</p>
+              <p>Energy: @pet.Energy</p>
+              <p>Attention: @pet.Attention</p>
+              <p>Age: @pet.Age yrs</p>
+              <p>Weight: @pet.Weight lbs</p>
+              <form action="pets/@pet.Id" method="get">
+                <button type="submit">View Pet Details</button>
+              </form>
+            }
           }
           else
           {
+            <h1>@pet.Name</h1>
+            <img src="~/img/deadDog.png"/>
             <h4>@pet.Name has died :(</h4>
             <form action="/pets/action" method="post">
               <input type="hidden" name="petId" value="@pet.Id" />
@@ -47,7 +74,9 @@
         </div>
       }
     </div>
-    <a href="/">Make a new pet!</a>
+    <form id="new-pet" action="/" method="get">
+      <button type="submit">Head to the shop!</button>
+    </form>
     }
   <script>
     setTimeout(function () {

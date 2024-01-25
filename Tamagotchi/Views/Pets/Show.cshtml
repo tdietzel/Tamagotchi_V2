@@ -13,10 +13,173 @@
 
     @model Tamagotchis.Models.Pet
     <div class="pet">
-      <h1>Name: @Model.Name</h1>
-      <p>Fullness: @Model.Fullness</p>
-      <p>Energy: @Model.Energy</p>
-      <p>Attention: @Model.Attention</p>
+      <h1>@Model.Name</h1>
+
+      @if (Model.IsSleeping == true)
+      {
+        <img src="~/img/sleep.png"/>
+        <p>@Model.Name is sleeping... zZz</p>
+      } else
+      {
+        <img src="~/img/dog.png"/>
+      }
+@* HEALTH OR FOOD LEVEL *@
+
+      @if (Model.Fullness > 80)
+      {
+        <div class="health-hearts">
+          <img id="heart" src="~/img/hearts.png" />
+          <img id="heart" src="~/img/hearts.png" />
+          <img id="heart" src="~/img/hearts.png" />
+          <img id="heart" src="~/img/hearts.png" />
+          <img id="heart" src="~/img/hearts.png" />
+        </div>
+      } else if(Model.Fullness > 60)
+      {
+        <div class="health-hearts">
+          <img id="heart" src="~/img/hearts.png" />
+          <img id="heart" src="~/img/hearts.png" />
+          <img id="heart" src="~/img/hearts.png" />
+          <img id="heart" src="~/img/hearts.png" />
+          <img id="heart" src="~/img/heart.png" />
+        </div>
+      } else if (Model.Fullness > 40)
+      {
+        <div class="health-hearts">
+          <img id="heart" src="~/img/hearts.png" />
+          <img id="heart" src="~/img/hearts.png" />
+          <img id="heart" src="~/img/hearts.png" />
+          <img id="heart" src="~/img/heart.png" />
+          <img id="heart" src="~/img/heart.png" />
+        </div>
+      } else if (Model.Fullness > 20)
+      {
+        <div class="health-hearts">
+          <img id="heart" src="~/img/hearts.png" />
+          <img id="heart" src="~/img/hearts.png" />
+          <img id="heart" src="~/img/heart.png" />
+          <img id="heart" src="~/img/heart.png" />
+          <img id="heart" src="~/img/heart.png" />
+        </div>
+      } else if (Model.Fullness > 1)
+      {
+        <div class="health-hearts">
+          <img id="heart" src="~/img/hearts.png" />
+          <img id="heart" src="~/img/heart.png" />
+          <img id="heart" src="~/img/heart.png" />
+          <img id="heart" src="~/img/heart.png" />
+          <img id="heart" src="~/img/heart.png" />
+        </div>
+      } else
+      {
+        <div class="health-hearts">
+          <img id="heart" src="~/img/heart.png" />
+          <img id="heart" src="~/img/heart.png" />
+          <img id="heart" src="~/img/heart.png" />
+          <img id="heart" src="~/img/heart.png" />
+          <img id="heart" src="~/img/heart.png" />
+        </div>
+      }
+
+@* ENERGY LEVEL *@
+
+      @if (Model.Energy > 80)
+      {
+        <div class="health-hearts">
+          <img id="heart" src="~/img/lightning-bolt.png" />
+          <img id="heart" src="~/img/lightning-bolt.png" />
+          <img id="heart" src="~/img/lightning-bolt.png" />
+          <img id="heart" src="~/img/lightning-bolt.png" />
+          <img id="heart" src="~/img/lightning-bolt.png" />
+        </div>
+      } else if (Model.Energy > 60)
+      {
+        <div class="health-hearts">
+          <img id="heart" src="~/img/lightning-bolt.png" />
+          <img id="heart" src="~/img/lightning-bolt.png" />
+          <img id="heart" src="~/img/lightning-bolt.png" />
+          <img id="heart" src="~/img/lightning-bolt.png" />
+          <img id="heart" src="~/img/lightning-bolt-black.png" />
+        </div>
+      } else if (Model.Energy > 40)
+      {
+        <div class="health-hearts">
+          <img id="heart" src="~/img/lightning-bolt.png" />
+          <img id="heart" src="~/img/lightning-bolt.png" />
+          <img id="heart" src="~/img/lightning-bolt.png" />
+          <img id="heart" src="~/img/lightning-bolt-black.png" />
+          <img id="heart" src="~/img/lightning-bolt-black.png" />
+        </div>
+      } else if (Model.Energy > 20)
+      {
+        <div class="health-hearts">
+          <img id="heart" src="~/img/lightning-bolt.png" />
+          <img id="heart" src="~/img/lightning-bolt.png" />
+          <img id="heart" src="~/img/lightning-bolt-black.png" />
+          <img id="heart" src="~/img/lightning-bolt-black.png" />
+          <img id="heart" src="~/img/lightning-bolt-black.png" />
+        </div>
+      } else if (Model.Energy > 1)
+      {
+        <div class="health-hearts">
+          <img id="heart" src="~/img/lightning-bolt.png" />
+          <img id="heart" src="~/img/lightning-bolt-black.png" />
+          <img id="heart" src="~/img/lightning-bolt-black.png" />
+          <img id="heart" src="~/img/lightning-bolt-black.png" />
+          <img id="heart" src="~/img/lightning-bolt-black.png" />
+        </div>
+      } else
+      {
+        <div class="health-hearts" id="drained-energy">
+          <img id="heart" src="~/img/lightning-bolt-black.png" />
+          <img id="heart" src="~/img/lightning-bolt-black.png" />
+          <img id="heart" src="~/img/lightning-bolt-black.png" />
+          <img id="heart" src="~/img/lightning-bolt-black.png" />
+          <img id="heart" src="~/img/lightning-bolt-black.png" />
+        </div>
+      }
+
+@* HAPPINESS OR ATTENTION *@
+      @if (Model.Attention > 70)
+      {
+        <div class="health-hearts">
+          <img id="happiness" src="~/img/happy-face.png" />
+        </div>
+      } else if (Model.Attention > 40)
+      {
+        <div class="health-hearts">
+          <img id="happiness" src="~/img/neutral-face.png" />
+        </div>
+      } else
+      {
+        <div class="health-hearts">
+          <img id="happiness" src="~/img/sad-face.png" />
+        </div>
+      }
+      <p>Age: @Model.Age yrs</p>
+      <p>Weight: @Model.Weight lbs</p>
+      @if (Model.IsSleeping == false)
+      {
+        <div class="action-buttons">
+          <form action="/pets/action" method="post">
+            <input type="hidden" name="petId" value="@Model.Id"/>
+            <input type="hidden" name="action" value="feed"/>
+            <button type="submit">Feed</button>
+          </form>
+
+          <form action="/pets/action" method="post">
+            <input type="hidden" name="petId" value="@Model.Id"/>
+            <input type="hidden" name="action" value="sleep"/>
+            <button type="submit">Sleep</button>
+          </form>
+
+          <form action="/pets/action" method="post">
+            <input type="hidden" name="petId" value="@Model.Id"/>
+            <input type="hidden" name="action" value="play"/>
+            <button type="submit">Play</button>
+          </form>
+        </div>
+      }
 
       @if (TempData["LowEnergyAlert"] != null)
       {
@@ -24,34 +187,14 @@
           alert('@TempData["LowEnergyAlert"]');
         </script>
       }
-      <div class="action-buttons">
-        <form action="/pets/action" method="post">
-          <input type="hidden" name="petId" value="@Model.Id"/>
-          <input type="hidden" name="action" value="feed"/>
-          <button type="submit">Feed</button>
-        </form>
-
-        <form action="/pets/action" method="post">
-          <input type="hidden" name="petId" value="@Model.Id"/>
-          <input type="hidden" name="action" value="sleep"/>
-          <button type="submit">Sleep</button>
-        </form>
-
-        <form action="/pets/action" method="post">
-          <input type="hidden" name="petId" value="@Model.Id"/>
-          <input type="hidden" name="action" value="play"/>
-          <button type="submit">Play</button>
-        </form>
-      </div>
-
-      @* <a href="/">Go back to make another pet!</a> *@
-      <a href="/pets">Return to pet playground</a>
+      <form class="playground-form" action="/pets" method="get">
+        <button type="submit">Return to pet playground
+      </form>
     </div>
     <script>
       setTimeout(function() {
         window.location.reload();
       }, 10000);
     </script>
-
   </body>
 </html>
