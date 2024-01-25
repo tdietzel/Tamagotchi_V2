@@ -6,16 +6,24 @@
   flex-direction: column;
   margin-left: auto;
   margin-right: auto;
+  align-items: center;
+  justify-content: center;
+}
+.pet img {
+  height: 10rem;
+  width: 10rem;
 }
 .container {
   width: 40rem;
   height: 20rem;
   display: flex;
   flex-direction: row;
+  margin-top: 10rem;
+  align-items: center;
+  justify-content: center;
 }
 a {
   display: block;
-  margin: 0;
   text-align: center;
 }
 #abandon {
@@ -25,4 +33,16 @@ a {
 }
 #no-pets {
   text-align: center;
+}
+#new-pet {
+  text-align: center;
+  margin-top: 10rem;
+}
+.health-hearts {
+  display: flex;
+  flex-direction: row;
+}
+#heart {
+  width: 2rem;
+  height: 2rem;
 }
