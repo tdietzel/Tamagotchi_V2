@@ -74,11 +74,153 @@
             } else
             {
               <img src="~/img/dog.png"/>
-              <p>Fullness: @pet.Fullness</p>
-              <p>Energy: @pet.Energy</p>
-              <p>Attention: @pet.Attention</p>
-              <p>Age: @pet.Age yrs</p>
-              <p>Weight: @pet.Weight lbs</p>
+
+              @* HEALTH OR FOOD LEVEL *@
+
+              @if (pet.Fullness > 80)
+              {
+                <div class="health-hearts">
+                  <img id="heart" src="~/img/hearts.png" />
+                  <img id="heart" src="~/img/hearts.png" />
+                  <img id="heart" src="~/img/hearts.png" />
+                  <img id="heart" src="~/img/hearts.png" />
+                  <img id="heart" src="~/img/hearts.png" />
+                </div>
+              }
+              else if (pet.Fullness > 60)
+              {
+                <div class="health-hearts">
+                  <img id="heart" src="~/img/hearts.png" />
+                  <img id="heart" src="~/img/hearts.png" />
+                  <img id="heart" src="~/img/hearts.png" />
+                  <img id="heart" src="~/img/hearts.png" />
+                  <img id="heart" src="~/img/heart.png" />
+                </div>
+              }
+              else if (pet.Fullness > 40)
+              {
+                <div class="health-hearts">
+                  <img id="heart" src="~/img/hearts.png" />
+                  <img id="heart" src="~/img/hearts.png" />
+                  <img id="heart" src="~/img/hearts.png" />
+                  <img id="heart" src="~/img/heart.png" />
+                  <img id="heart" src="~/img/heart.png" />
+                </div>
+              }
+              else if (pet.Fullness > 20)
+              {
+                <div class="health-hearts">
+                  <img id="heart" src="~/img/hearts.png" />
+                  <img id="heart" src="~/img/hearts.png" />
+                  <img id="heart" src="~/img/heart.png" />
+                  <img id="heart" src="~/img/heart.png" />
+                  <img id="heart" src="~/img/heart.png" />
+                </div>
+              }
+              else if (pet.Fullness > 1)
+              {
+                <div class="health-hearts">
+                  <img id="heart" src="~/img/hearts.png" />
+                  <img id="heart" src="~/img/heart.png" />
+                  <img id="heart" src="~/img/heart.png" />
+                  <img id="heart" src="~/img/heart.png" />
+                  <img id="heart" src="~/img/heart.png" />
+                </div>
+              }
+              else
+              {
+                <div class="health-hearts">
+                  <img id="heart" src="~/img/heart.png" />
+                  <img id="heart" src="~/img/heart.png" />
+                  <img id="heart" src="~/img/heart.png" />
+                  <img id="heart" src="~/img/heart.png" />
+                  <img id="heart" src="~/img/heart.png" />
+                </div>
+              }
+
+              @* ENERGY LEVEL *@
+
+              @if (pet.Energy > 80)
+              {
+                <div class="health-hearts">
+                  <img id="heart" src="~/img/lightning-bolt.png" />
+                  <img id="heart" src="~/img/lightning-bolt.png" />
+                  <img id="heart" src="~/img/lightning-bolt.png" />
+                  <img id="heart" src="~/img/lightning-bolt.png" />
+                  <img id="heart" src="~/img/lightning-bolt.png" />
+                </div>
+              }
+              else if (pet.Energy > 60)
+              {
+                <div class="health-hearts">
+                  <img id="heart" src="~/img/lightning-bolt.png" />
+                  <img id="heart" src="~/img/lightning-bolt.png" />
+                  <img id="heart" src="~/img/lightning-bolt.png" />
+                  <img id="heart" src="~/img/lightning-bolt.png" />
+                  <img id="heart" src="~/img/lightning-bolt-black.png" />
+                </div>
+              }
+              else if (pet.Energy > 40)
+              {
+                <div class="health-hearts">
+                  <img id="heart" src="~/img/lightning-bolt.png" />
+                  <img id="heart" src="~/img/lightning-bolt.png" />
+                  <img id="heart" src="~/img/lightning-bolt.png" />
+                  <img id="heart" src="~/img/lightning-bolt-black.png" />
+                  <img id="heart" src="~/img/lightning-bolt-black.png" />
+                </div>
+              }
+              else if (pet.Energy > 20)
+              {
+                <div class="health-hearts">
+                  <img id="heart" src="~/img/lightning-bolt.png" />
+                  <img id="heart" src="~/img/lightning-bolt.png" />
+                  <img id="heart" src="~/img/lightning-bolt-black.png" />
+                  <img id="heart" src="~/img/lightning-bolt-black.png" />
+                  <img id="heart" src="~/img/lightning-bolt-black.png" />
+                </div>
+              }
+              else if (pet.Energy > 1)
+              {
+                <div class="health-hearts">
+                  <img id="heart" src="~/img/lightning-bolt.png" />
+                  <img id="heart" src="~/img/lightning-bolt-black.png" />
+                  <img id="heart" src="~/img/lightning-bolt-black.png" />
+                  <img id="heart" src="~/img/lightning-bolt-black.png" />
+                  <img id="heart" src="~/img/lightning-bolt-black.png" />
+                </div>
+              }
+              else
+              {
+                <div class="health-hearts" id="drained-energy">
+                  <img id="heart" src="~/img/lightning-bolt-black.png" />
+                  <img id="heart" src="~/img/lightning-bolt-black.png" />
+                  <img id="heart" src="~/img/lightning-bolt-black.png" />
+                  <img id="heart" src="~/img/lightning-bolt-black.png" />
+                  <img id="heart" src="~/img/lightning-bolt-black.png" />
+                </div>
+              }
+              
+              @* HAPPINESS OR ATTENTION *@
+              @if (pet.Attention > 70)
+              {
+                <div class="health-hearts">
+                  <img id="happiness" src="~/img/happy-face.png" />
+                </div>
+              }
+              else if (pet.Attention > 40)
+              {
+                <div class="health-hearts">
+                  <img id="happiness" src="~/img/neutral-face.png" />
+                </div>
+              }
+              else
+              {
+                <div class="health-hearts">
+                  <img id="happiness" src="~/img/sad-face.png" />
+                </div>
+              }
+
               <form action="pets/@pet.Id" method="get">
                 <button type="submit">View Pet Details</button>
               </form>
@@ -99,24 +241,26 @@
       }
     </div>
     <form id="new-pet" action="/shop" method="get">
-      <button type="submit">Head to the shop!</button>
+      <button id="shop-button" type="submit">Head to the shop!</button>
     </form>
-    <h1>Inventory</h1>
-    <div class="inventory">
-      @foreach (var food in Pet._inventory)
-      {
-        <div class="inventory-item">
-          <p>@food.Name</p>
-          <p class="fullness">@food.Fullness hp</p>
-        </div>
-      }
-      @foreach (var toy in Pet._inventoryToy)
-      {
-        <div class="inventory-item">
-          <p>@toy.Name</p>
-          <p class="excitement">@toy.Excitement</p>
-        </div>
-      }
+    <div class="inventory-style">
+      <h1 class="inventory-title">Inventory</h1>
+      <div class="inventory">
+        @foreach (var food in Pet._inventory)
+        {
+          <div class="inventory-item">
+            <p>@food.Name</p>
+            <p class="fullness">@food.Fullness hp</p>
+          </div>
+        }
+        @foreach (var toy in Pet._inventoryToy)
+        {
+          <div class="inventory-item">
+            <p>@toy.Name</p>
+            <p class="excitement">@toy.Excitement</p>
+          </div>
+        }
+      </div>
     </div>
   }
   <script>

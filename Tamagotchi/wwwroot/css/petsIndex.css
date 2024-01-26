@@ -37,18 +37,39 @@ a {
 #new-pet {
   text-align: center;
   margin-top: 10rem;
+  padding: 1rem;
+  background-color: black;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 50px;
+}
+#shop-button {
+  padding: 1rem;
+  background-color: brown;
+  border: 2px dashed red;
+  color: white;
+  font-weight: bold;
 }
 .health-hearts {
   display: flex;
   flex-direction: row;
 }
 #heart {
-  width: 2rem;
-  height: 2rem;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+.inventory-title {
+  text-align: center;
+  margin-top: 1rem;
+  font-family: Oswald;
+  text-shadow: 0 0 5px rgb(255, 255, 255);
 }
 .inventory {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
 }
 .inventory-item {
   display: flex;
@@ -57,14 +78,22 @@ a {
   justify-content: center;
   position: relative;
   border: 1px solid black;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   font-weight: bold;
   width: 10rem;
   height: 5rem;
   margin-right: 5px;
   background-color: lightgrey;
+  cursor: pointer;
 }
 .inventory-item p {
   margin: 0px;
+}
+.inventory-style {
+  background-color: grey;
+  padding-bottom: 8rem;
+  border: 6px solid black;
+  border-radius: 30px;
 }
 .fullness {
   position: absolute;
@@ -79,4 +108,8 @@ a {
   right: 0;
   padding-right: 5px;
   color: yellow;
+}
+#happiness {
+  width: 3rem;
+  height: 3rem;
 }
