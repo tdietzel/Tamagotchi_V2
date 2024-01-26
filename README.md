@@ -11,17 +11,18 @@
 - [License](#license)
 - [Contact](#contact)
 
-## About
-*ABOUT SECTION*
+# About
 
-The primary functionality of the application is *FILL IN*...:
-- 
--
--
+The primary functionality of the application is to take care of virtual pets, known as Tamagotchis. Users can create, feed, play with, and take care of their Tamagotchis.
 
 ## Features
-- **FEATURE**: 
-- **FEATURE**: 
+
+- **Creation:** Users can create new Tamagotchis by providing a name.
+- **Feeding:** Users can feed their Tamagotchis to maintain their fullness level.
+- **Playing:** Users can play with their Tamagotchis to keep them entertained and happy.
+- **Sleeping:** Tamagotchis need sleep to replenish their energy levels.
+- **Inventory:** Users can manage their inventory of food and toys to interact with their Tamagotchis.
+- **Life Cycle:** Tamagotchis age over time and require care to stay alive and healthy.
 
 ## Technologies Used
 - **Language**: C#
@@ -38,11 +39,11 @@ Follow these steps to set up the project locally:
 1. Open Git BASH [Download Link](https://gitforwindows.org/)
 2. Clone the repository to your local machine:
    ```bash
-   git clone https://github.com/tdietzel/*PROJECT NAME*
+   git clone https://github.com/tdietzel/Tamagotchi
    ```
 3. Open the project directory:
    ```bash
-   cd *PROJECT NAME*
+   cd Tamagotchi
    ```
 4. Open in a code editor like __Visual Studio Code__.
 5. In the command line, run the command ``` dotnet run ``` to compile and execute the console application. Since this is a console application, you'll interact with it through text commands in your terminal.
@@ -60,7 +61,7 @@ I welcome contributions to improve the project. If you'd like to contribute, ple
 
 ## Known Bugs
 
-* _N/A_
+* _Still a WIP_
 
 ## License
 This project is licensed under the MIT License. See the LICENSE file for details.
