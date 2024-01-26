@@ -34,6 +34,22 @@ namespace Tamagotchis.Models
       return _instances;
     }
 
+    public static Toy Find(int searchId)
+    {
+      return _instances.FirstOrDefault(Toy => Toy.Id == searchId);
+    }
+
+    public static void Buy(int toyId)
+    {
+      
+      // var toyToBuy = _instances.FirstOrDefault(t => t.Id == toyId);
+      int toyCost = (int)Math.Floor((double)toyToBuy.Excitement / 2);
+      if (Shop.Money >= toyCost) {
+        Shop.Money -= toyCost
+      }
+    
+    }
+
     public static Dictionary<string,int> GetToys()
     {
       return ExcitementDictionary;

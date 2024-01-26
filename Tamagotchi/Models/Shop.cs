@@ -9,7 +9,7 @@ namespace Tamagotchis.Models
 {
   public class Shop
   {
-    public int Money {get;set;}
+    public int Money {get;set;} = 200;
     public Dictionary<string, int> typesOfFood = Food.GetFood();
     public Dictionary<string, int> typesOfToy = Toy.GetToys();
   }
