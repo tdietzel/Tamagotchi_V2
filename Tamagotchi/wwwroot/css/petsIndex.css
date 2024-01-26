@@ -83,7 +83,8 @@ a {
   width: 10rem;
   height: 5rem;
   margin-right: 5px;
-  background-color: lightgrey;
+  background-color: black;
+  color: white;
   cursor: pointer;
 }
 .inventory-item p {
@@ -100,16 +101,47 @@ a {
   top: 0;
   right: 0;
   padding-right: 5px;
-  color: green;
+  padding-top: 5px;
+  width: 2rem;
+  height: 2rem;
+}
+.hp {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding-right: 2rem;
+  color: rgb(3, 239, 3);
+}
+.energy {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding-right: 2rem;
+  color: yellow;
 }
 .excitement {
   position: absolute;
   top: 0;
   right: 0;
   padding-right: 5px;
-  color: yellow;
+  width: 2rem;
+  height: 2rem;
 }
 #happiness {
   width: 3rem;
   height: 3rem;
+}
+#pet-details-button {
+  padding: 0.5rem 1rem;
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 0.5rem;
+  transition: background-color 0.3s;
+}
+
+#pet-details-button:hover {
+  background-color: #45a049; /* Darker green on hover */
 }

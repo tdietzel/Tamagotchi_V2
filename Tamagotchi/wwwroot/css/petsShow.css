@@ -73,7 +73,8 @@
   width: 10rem;
   height: 5rem;
   margin-right: 5px;
-  background-color: lightgrey;
+  background-color: black;
+  color: white;
   cursor: pointer;
 }
 .inventory-item p {
@@ -90,7 +91,16 @@
   top: 0;
   right: 0;
   padding-right: 5px;
-  color: green;
+  padding-top: 5px;
+  width: 2rem;
+  height: 2rem;
+}
+.hp {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding-right: 2rem;
+  color: yellow;
 }
 .excitement {
   position: absolute;

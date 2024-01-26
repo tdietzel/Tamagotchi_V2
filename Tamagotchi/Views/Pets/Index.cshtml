@@ -13,8 +13,8 @@
 
     @if (Model.Count == 0)
     {
-      <p id="no-pets">There are no pets to display. Please create a pet!</p>
-      <a href="/">Make a new pet!</a>
+      <b><p id="no-pets">There are no pets to display. Please create a pet!</p>
+      <a href="/">Make a new pet!</a></b>
     }
     else
     {
@@ -34,40 +34,88 @@
             @if (pet.IsHatched == false)
             {
               <img src="~/img/egg.png" />
-              <h3>Hatching...</h3>
+              <b><h3>Hatching...</h3></b>
             } else if (pet.IsSleeping == true)
             {
               <img src="~/img/sleep.png"/>
-              <p>sleeping... zZz</p>
-              <p>Fullness: @pet.Fullness</p>
-              <p>Energy: @pet.Energy</p>
-              <p>Attention: @pet.Attention</p>
-              <p>Age: @pet.Age yrs</p>
-              <p>Weight: @pet.Weight lbs</p>
+              <b><p>sleeping... zZz</p></b>
+              @* HEALTH OR FOOD LEVEL *@
+
+              @if (pet.Fullness > 80)
+              {
+                <div class="health-hearts">
+                  <img id="heart" src="~/img/hearts.png" />
+                  <img id="heart" src="~/img/hearts.png" />
+                  <img id="heart" src="~/img/hearts.png" />
+                  <img id="heart" src="~/img/hearts.png" />
+                  <img id="heart" src="~/img/hearts.png" />
+                </div>
+              }
+              else if (pet.Fullness > 60)
+              {
+                <div class="health-hearts">
+                  <img id="heart" src="~/img/hearts.png" />
+                  <img id="heart" src="~/img/hearts.png" />
+                  <img id="heart" src="~/img/hearts.png" />
+                  <img id="heart" src="~/img/hearts.png" />
+                  <img id="heart" src="~/img/heart.png" />
+                </div>
+              }
+              else if (pet.Fullness > 40)
+              {
+                <div class="health-hearts">
+                  <img id="heart" src="~/img/hearts.png" />
+                  <img id="heart" src="~/img/hearts.png" />
+                  <img id="heart" src="~/img/hearts.png" />
+                  <img id="heart" src="~/img/heart.png" />
+                  <img id="heart" src="~/img/heart.png" />
+                </div>
+              }
+              else if (pet.Fullness > 20)
+              {
+                <div class="health-hearts">
+                  <img id="heart" src="~/img/hearts.png" />
+                  <img id="heart" src="~/img/hearts.png" />
+                  <img id="heart" src="~/img/heart.png" />
+                  <img id="heart" src="~/img/heart.png" />
+                  <img id="heart" src="~/img/heart.png" />
+                </div>
+              }
+              else if (pet.Fullness > 1)
+              {
+                <div class="health-hearts">
+                  <img id="heart" src="~/img/hearts.png" />
+                  <img id="heart" src="~/img/heart.png" />
+                  <img id="heart" src="~/img/heart.png" />
+                  <img id="heart" src="~/img/heart.png" />
+                  <img id="heart" src="~/img/heart.png" />
+                </div>
+              }
+              else
+              {
+                <div class="health-hearts">
+                  <img id="heart" src="~/img/heart.png" />
+                  <img id="heart" src="~/img/heart.png" />
+                  <img id="heart" src="~/img/heart.png" />
+                  <img id="heart" src="~/img/heart.png" />
+                  <img id="heart" src="~/img/heart.png" />
+                </div>
+              }
+
               <form action="pets/@pet.Id" method="get">
                 <button type="submit">View Pet Details</button>
               </form>
             } else if (pet.IsPlaying == true)
             {
               <img src="~/img/playing.png"/>
-              <p>playing!</p>
-              <p>Fullness: @pet.Fullness</p>
-              <p>Energy: @pet.Energy</p>
-              <p>Attention: @pet.Attention</p>
-              <p>Age: @pet.Age yrs</p>
-              <p>Weight: @pet.Weight lbs</p>
+              <b><p>playing!</p></b>
               <form action="pets/@pet.Id" method="get">
                 <button type="submit">View Pet Details</button>
               </form>
             } else if (pet.IsFeeding == true)
             {
               <img src="~/img/food.png"/>
-              <p>@pet.Name is eating...</p>
-              <p>Fullness: @pet.Fullness</p>
-              <p>Energy: @pet.Energy</p>
-              <p>Attention: @pet.Attention</p>
-              <p>Age: @pet.Age yrs</p>
-              <p>Weight: @pet.Weight lbs</p>
+              <b><p>@pet.Name is eating...</p></b>
               <form action="pets/@pet.Id" method="get">
                 <button type="submit">View Pet Details</button>
               </form>
@@ -222,7 +270,7 @@
               }
 
               <form action="pets/@pet.Id" method="get">
-                <button type="submit">View Pet Details</button>
+                <button id="pet-details-button" type="submit">View Pet Details</button>
               </form>
             }
           }
@@ -250,14 +298,16 @@
         {
           <div class="inventory-item">
             <p>@food.Name</p>
-            <p class="fullness">@food.Fullness hp</p>
+            <p class="hp">@food.Fullness</p>
+            <img class="excitement" src="~/img/hearts.png" />
           </div>
         }
         @foreach (var toy in Pet._inventoryToy)
         {
           <div class="inventory-item">
             <p>@toy.Name</p>
-            <p class="excitement">@toy.Excitement</p>
+            <p class="energy">@toy.Excitement</p>
+            <img class="fullness" src="~/img/lightning-bolt.png" />
           </div>
         }
       </div>

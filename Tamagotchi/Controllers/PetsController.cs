@@ -46,7 +46,7 @@ namespace Tamagotchis.Controllers
           case "play":
           if (foundPet.Energy > 2)
           {
-            foundPet.Play();
+            foundPet.Play(10);
             break;
           }
           else

@@ -19,17 +19,17 @@
       @if (Model.IsSleeping == true)
       {
         <img src="~/img/sleep.png" />
-        <p>@Model.Name is sleeping... zZz</p>
+        <b><p>@Model.Name is sleeping... zZz</p></b>
       }
       else if (Model.IsPlaying == true)
       {
         <img src="~/img/playing.png" />
-        <p>@Model.Name is playing!</p>
+        <b><p>@Model.Name is playing!</p></b>
       }
       else if (Model.IsFeeding == true)
       {
         <img src="~/img/food.png" />
-        <p>@Model.Name is eating...</p>
+        <b><p>@Model.Name is eating...</p></b>
       }
       else
       {
@@ -180,8 +180,8 @@
           <img id="happiness" src="~/img/sad-face.png" />
         </div>
       }
-      <p>Age: @Model.Age yrs</p>
-      <p>Weight: @Model.Weight lbs</p>
+      <b><p>Age: @Model.Age yrs</p>
+      <p>Weight: @Model.Weight lbs</p></b>
       @if (Model.IsSleeping == false && Model.IsPlaying == false && Model.IsFeeding == false)
       {
         <div class="action-buttons">
@@ -215,8 +215,7 @@
     else
     {
       <img src="~/img/deadDog.png" />
-
-      <p>Lived to be: @Model.Age yrs old</p>
+      <b><p>Lived to be: @Model.Age yrs old</p></b>
     }
   </div>
   <form class="playground-form" action="/pets" method="get">
@@ -229,7 +228,8 @@
       {
         <div class="inventory-item">
           <p>@food.Name</p>
-          <p class="fullness">@food.Fullness hp</p>
+          <p class="hp">@food.Fullness hp</p>
+          <img class="fullness" src="~/img/lightning-bolt.png" />
         </div>
       }
       @foreach (var toy in Tamagotchis.Models.Pet._inventoryToy)
