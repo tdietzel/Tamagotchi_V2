@@ -204,24 +204,6 @@
           </form>
         </div>
       }//turn these to buttons or attach some kind of onclick handler. These need to do several things: connect to the methods in toy and food to use item, connect to methods to feed and play in pet, and the buttons/whatevers need to be deleted using the delete methods in toy and food. also, the visual representation of the item on the page needs to disappear. To re-render the page, reroute to this same page with specific id
-      <h1>Inventory</h1>
-      <div class="inventory">
-        @foreach (var food in Tamagotchis.Models.Pet._inventory)
-        {
-          <div class="inventory-item">
-            <p>@food.Name</p>
-            <p class="fullness">@food.Fullness hp</p>
-          </div>
-        }
-        @foreach (var toy in Tamagotchis.Models.Pet._inventoryToy)
-        {
-          <div class="inventory-item">
-            <p>@toy.Name</p>
-            <p class="excitement">@toy.Excitement</p>
-          </div>
-        }
-      </div>
-      //end new
 
       @if (TempData["LowEnergyAlert"] != null)
       {
@@ -236,9 +218,28 @@
 
       <p>Lived to be: @Model.Age yrs old</p>
     }
-    <form class="playground-form" action="/pets" method="get">
-      <button type="submit">Return to pet playground</button>
-    </form>
+  </div>
+  <form class="playground-form" action="/pets" method="get">
+    <button type="submit">Return to pet playground</button>
+  </form>
+  <div class="inventory-style">
+    <h1 class="inventory-title">Inventory</h1>
+    <div class="inventory">
+      @foreach (var food in Tamagotchis.Models.Pet._inventory)
+      {
+        <div class="inventory-item">
+          <p>@food.Name</p>
+          <p class="fullness">@food.Fullness hp</p>
+        </div>
+      }
+      @foreach (var toy in Tamagotchis.Models.Pet._inventoryToy)
+      {
+        <div class="inventory-item">
+          <p>@toy.Name</p>
+          <p class="excitement">@toy.Excitement</p>
+        </div>
+      }
+    </div>
   </div>
   <script>
     setTimeout(function () {
