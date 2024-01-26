@@ -34,6 +34,20 @@ namespace Tamagotchis.Models
       return _instances;
     }
 
+    public static Food Find(int searchId)
+    {
+      return _instances.FirstOrDefault(Food => Food.Id == searchId);
+    }
+
+    public static void Delete(int foodId)
+    {
+      var foodToDelete = _instances.FirstOrDefault(f => f.Id == foodId);
+      if (foodToDelete != null)
+      {
+        _instances.Remove(foodToDelete);
+      }
+    }
+
     public static Dictionary<string,int> GetFood()
     {
       return FullnessDictionary;
