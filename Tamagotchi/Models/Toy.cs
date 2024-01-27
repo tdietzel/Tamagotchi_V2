@@ -7,37 +7,52 @@ using System.Linq;
 namespace Tamagotchis.Models
 {
   public class Toy {
-
     public string Name { get; set; }
-    public int Excitement {get;set;}
-    public int Id {get;}
+    public int Excitement { get; set; }
+
+    public int Id { get; set; }
     private static int nextId = 1;
-
-    public Toy(string name) {
-      Name = name;
-      SetExcitementBasedOnName();
-      _instances.Add(this);
-      Id = nextId;
-      nextId++;
-    }
-
     private static List<Toy> _instances = new List<Toy>();
+
     private static Dictionary<string, int> ExcitementDictionary = new Dictionary<string, int>
     {
       {"Ball", 20},
       {"Bone", 30},
       {"frisbee", 50}
     };
+
+    // Constructor
+    public Toy(string name) {
+      Name = name;
+      SetExcitementBasedOnName();
+      AddToInstances();
+    }
+    private void SetExcitementBasedOnName()
+    {
+      Excitement = ExcitementDictionary.ContainsKey(Name) ? ExcitementDictionary[Name] : 0;
+    }
+    private void AddToInstances()
+    {
+      Id = nextId;
+      nextId++;
+      _instances.Add(this);
+    }
     
+    // Toy Management
+    public static Toy Find(int searchId)
+    {
+      return _instances.FirstOrDefault(Toy => Toy.Id == searchId);
+    }
+    public static Dictionary<string,int> GetToys()
+    {
+      return ExcitementDictionary;
+    }
     public static List<Toy> GetAll()
     {
       return _instances;
     }
 
-    public static Toy Find(int searchId)
-    {
-      return _instances.FirstOrDefault(Toy => Toy.Id == searchId);
-    }
+    //                 WIP BELOW                                //
 
     // public static bool Buy(string toyId)
     // {
@@ -53,21 +68,5 @@ namespace Tamagotchis.Models
     //   }
     
     // }
-
-    public static Dictionary<string,int> GetToys()
-    {
-      return ExcitementDictionary;
-    }
-    private void SetExcitementBasedOnName()
-    {
-      if (ExcitementDictionary.ContainsKey(Name))
-      {
-        Excitement = ExcitementDictionary[Name];
-      }
-      else
-      {
-        Excitement = 0;
-      }
-    }
   }
 }
