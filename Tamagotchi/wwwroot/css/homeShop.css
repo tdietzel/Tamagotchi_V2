@@ -11,20 +11,50 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  text-align: center;
+}
+.shop-section {
+  background-color: lightgrey;
+  border: 2px dashed yellow;
+  border-radius: 20px;
+  padding: 1rem;
+  margin-top: 1rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.9);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 .shop-layout button {
   margin-left: 1rem;
   font-weight: bold;
-
   background-color: rgb(0, 255, 68);
 }
+.shop-section h1 {
+  font-family: Oswald;
+}
 .food {
+  display: flex;
+  flex-direction: row;
+}
+.food p {
+  font-weight: bold;
+  color: green;
+}
+.item-section {
   display: flex;
   flex-direction: row;
 }
 .toy {
   display: flex;
   flex-direction: row;
+}
+.toy p {
+  display: flex;
+  flex-direction: column;
+  font-size: large;
+  font-weight: bold;
+  color: yellow;
 }
 #heart {
   width: 1rem;
@@ -44,4 +74,7 @@
 #coin {
   height: 1rem;
   width: 1rem;
+}
+#head-back {
+  color: white;
 }

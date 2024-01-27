@@ -103,21 +103,21 @@
               }
 
               <form action="pets/@pet.Id" method="get">
-                <button type="submit">View Pet Details</button>
+                <button id="pet-details-button" type="submit">View Pet Details</button>
               </form>
             } else if (pet.IsPlaying == true)
             {
               <img src="~/img/playing.png"/>
               <b><p>playing!</p></b>
               <form action="pets/@pet.Id" method="get">
-                <button type="submit">View Pet Details</button>
+                <button id="pet-details-button" type="submit">View Pet Details</button>
               </form>
             } else if (pet.IsFeeding == true)
             {
               <img src="~/img/food.png"/>
               <b><p>@pet.Name is eating...</p></b>
               <form action="pets/@pet.Id" method="get">
-                <button type="submit">View Pet Details</button>
+                <button id="pet-details-button" type="submit">View Pet Details</button>
               </form>
             } else
             {

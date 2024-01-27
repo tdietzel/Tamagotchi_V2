@@ -142,7 +142,6 @@ a {
   border-radius: 0.5rem;
   transition: background-color 0.3s;
 }
-
 #pet-details-button:hover {
-  background-color: #45a049; /* Darker green on hover */
+  background-color: #45a049;
 }
