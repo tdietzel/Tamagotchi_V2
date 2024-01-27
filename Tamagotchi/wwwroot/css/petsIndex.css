@@ -86,6 +86,7 @@ a {
   background-color: black;
   color: white;
   cursor: pointer;
+  margin-bottom: 5px;
 }
 .inventory-item p {
   margin: 0px;

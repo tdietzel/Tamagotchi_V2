@@ -76,6 +76,7 @@
   background-color: black;
   color: white;
   cursor: pointer;
+  margin-bottom: 5px;
 }
 .inventory-item p {
   margin: 0px;
@@ -100,12 +101,12 @@
   top: 0;
   right: 0;
   padding-right: 2rem;
-  color: yellow;
+  color: rgb(0, 255, 0);
 }
 .excitement {
   position: absolute;
   top: 0;
-  right: 0;
+  right: 2rem;
   padding-right: 5px;
   color: yellow;
 }
