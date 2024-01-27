@@ -53,33 +53,7 @@ namespace Tamagotchis.Models
     // Pet Constructors
     private static List<Pet> _instances = new List<Pet> { };
 
-    public Pet()
-    {
-      Name = "Jim default";
-      Type = Type;
-      Fullness = 100;
-      Energy = 0;
-      Attention = 100;
-
-      _instances.Add(this);
-      Id = nextId;
-      nextId++;
-
-      ageTimer = new Timer();
-      ageTimer.Interval = 600000; // 86400000; // 24 hours in milliseconds
-      ageTimer.Elapsed += AgeTimerElapsed;
-      ageTimer.Start();
-
-      incubationTimer = new Timer();
-      incubationTimer.Interval = 10000;
-      incubationTimer.Elapsed += HatchTimerElapsed;
-      incubationTimer.Start();
-
-      statTicker = new Timer();
-      statTicker.Interval = 10000;
-      statTicker.Elapsed += StatTickerElapsed;
-      statTicker.Start();
-    }
+    public Pet() : this("Jimmy Default") {}
     public Pet(string name)
     {
       Name = name;
@@ -92,6 +66,12 @@ namespace Tamagotchis.Models
       Id = nextId;
       nextId++;
 
+      InitializeTimers();
+    }
+
+    // Timers
+    private void InitializeTimers()
+    {
       ageTimer = new Timer();
       ageTimer.Interval = 600000; // 86400000; // 24 hours in milliseconds
       ageTimer.Elapsed += AgeTimerElapsed;
@@ -108,8 +88,6 @@ namespace Tamagotchis.Models
       statTicker.Start();
     }
 
-
-    // Timers Elapsed
     private void AgeTimerElapsed(object sender, ElapsedEventArgs e)
     {
       Age += 1;
@@ -122,7 +100,7 @@ namespace Tamagotchis.Models
 
       Random randomEgg = new Random();
       int randomResult = randomEgg.Next(1, 3);
-      randomResult == 1 ? Type = "Dog" : Type = "Cat";
+      Type = randomResult == 1 ? "Dog" : "Cat";
 
       ((Timer)sender).Stop();
     }
@@ -130,6 +108,7 @@ namespace Tamagotchis.Models
     {
       DecreaseAttributes();
     }
+
     private void FeedTimerElapsed(object sender, ElapsedEventArgs e)
     {
       IsFeeding = false;
