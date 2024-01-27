@@ -44,8 +44,23 @@
             </div>
           }
         </div>
+        <div class="shop-section">
+          <h1>Eggs</h1>
+          <p>Coming soon</p>
+          @* @foreach (var toy in Model.TypesOfToy)
+          {
+            double cost = Math.Round(toy.Value / 2.0);
+            <div class="toy">
+              <h5>@toy.Key</h5> <p>@toy.Value</p>
+              <img id="lightning-bolt" src="~/img/lightning-bolt.png" />
+              <form action="/shop/buytoy" method="post">
+                <input type="hidden" name="toyId" value="@toy.Key" />
+                <button type="submit">@cost <img id="coin" src="~/img/coin.png" /> </button>
+              </form>
+            </div>
+          } *@
+        </div>
         <br />
-        <h4><a id="head-back" href="/pets">Head to your pets</a></h4>
 
         @* Update to display actual currency amount *@
         <div class="coins">
@@ -53,6 +68,7 @@
           <img id="coin" src="~/img/coin.png" />
         </div>
       </div>
+      <h4><a id="head-back" href="/pets">Head to your pets</a></h4>
     </div>
   </body>
 </html>
