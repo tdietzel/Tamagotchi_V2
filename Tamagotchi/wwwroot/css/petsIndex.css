@@ -129,10 +129,9 @@ a {
 .excitement {
   position: absolute;
   top: 0;
-  right: 0;
-  padding-right: 5px;
-  width: 2rem;
-  height: 2rem;
+  right: 2rem;
+  padding-right: 10px;
+  color: yellow;
 }
 #happiness {
   width: 3rem;
