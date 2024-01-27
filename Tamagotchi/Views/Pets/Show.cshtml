@@ -13,22 +13,43 @@
 
   @model Tamagotchis.Models.Pet
   <div class="pet">
+
+    @{
+      string eat;
+      string sleep;
+      string play;
+
+      if(Model.Type == "Cat")
+      {
+        eat = "/img/kitten-food.png";
+        sleep = "/img/kitten-sleeping.png";
+        play = "/img/kitten-playing.png";
+      }
+      else
+      {
+        eat = "/img/food.png";
+        sleep = "/img/sleep.png";
+        play="/img/playing.png";
+      }
+
+    }
+    
     <h1>@Model.Name</h1>
     @if (Model.Alive == true)
     {
       @if (Model.IsSleeping == true)
       {
-        <img src="~/img/sleep.png" />
+        <img src="@sleep" />
         <b><p>@Model.Name is sleeping... zZz</p></b>
       }
       else if (Model.IsPlaying == true)
       {
-        <img src="~/img/playing.png" />
+        <img src="@play" />
         <b><p>@Model.Name is playing!</p></b>
       }
       else if (Model.IsFeeding == true)
       {
-        <img src="~/img/food.png" />
+        <img src="@eat" />
         <b><p>@Model.Name is eating...</p></b>
       }
       else

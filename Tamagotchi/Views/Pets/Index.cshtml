@@ -11,6 +11,13 @@
 <body>
   @using Tamagotchis.Models
 
+    @{
+      string eat;
+      string sleep;
+      string play;
+      string petImg;
+    }
+
     @if (Model.Count == 0)
     {
       <b><p id="no-pets">There are no pets to display. Please create a pet!</p>
@@ -21,6 +28,21 @@
     <div class="container">
       @foreach (Pet pet in Model)
       {
+        if(pet.Type == "Cat")
+        {
+          eat = "/img/kitten-food.png";
+          sleep = "/img/kitten-sleeping.png";
+          play = "/img/kitten-playing.png";
+          petImg = "/img/kitten.png";
+        }
+        else
+        {
+          eat = "/img/food.png";
+          sleep = "/img/sleep.png";
+          play= "/img/playing.png";
+          petImg = "/img/dog.png";
+        }
+
         <div class="pet">
           @if (pet.Alive == true)
           {
@@ -37,7 +59,7 @@
               <b><h3>Hatching...</h3></b>
             } else if (pet.IsSleeping == true)
             {
-              <img src="~/img/sleep.png"/>
+              <img src="@sleep"/>
               <b><p>sleeping... zZz</p></b>
               @* HEALTH OR FOOD LEVEL *@
 
@@ -107,21 +129,21 @@
               </form>
             } else if (pet.IsPlaying == true)
             {
-              <img src="~/img/playing.png"/>
+              <img src="@play"/>
               <b><p>playing!</p></b>
               <form action="pets/@pet.Id" method="get">
                 <button id="pet-details-button" type="submit">View Pet Details</button>
               </form>
             } else if (pet.IsFeeding == true)
             {
-              <img src="~/img/food.png"/>
+              <img src="@eat"/>
               <b><p>@pet.Name is eating...</p></b>
               <form action="pets/@pet.Id" method="get">
                 <button id="pet-details-button" type="submit">View Pet Details</button>
               </form>
             } else
             {
-              <img src="~/img/dog.png"/>
+              <img src="@petImg"/>
 
               @* HEALTH OR FOOD LEVEL *@
 
@@ -282,7 +304,7 @@
             <form action="/pets/action" method="post">
               <input type="hidden" name="petId" value="@pet.Id" />
               <input type="hidden" name="action" value="delete" />
-              <button type="submit">Bury @pet.Name</button>
+              <button id="abandon" type="submit">Bury @pet.Name</button>
             </form>
           }
         </div>

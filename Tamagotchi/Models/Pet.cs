@@ -17,6 +17,7 @@ namespace Tamagotchis.Models
     public List<Toy> ToyList {get; set;}
   }
     public string Name { get; private set; }
+    public string Type { get; set; }
     public int Fullness { get; set; }
     public int Energy { get; set; }
     public int Attention { get; set; }
@@ -64,6 +65,7 @@ namespace Tamagotchis.Models
     public Pet()
     {
       Name = "Jim default";
+      Type = "";
       Fullness = 100;
       Energy = 0;
       Attention = 100;
@@ -109,7 +111,7 @@ namespace Tamagotchis.Models
       incubationTimer.Start();
 
       ageTimer = new Timer();
-      ageTimer.Interval = 600000; // 86400000; // 24 hours in milliseconds
+      ageTimer.Interval = 600000;//10mins | 86400000; 24 hours in milliseconds
       ageTimer.Elapsed += AgeTimerElapsed;
       ageTimer.Start();
     }
@@ -118,6 +120,16 @@ namespace Tamagotchis.Models
     {
       IsHatched = true;
       Energy = 100;
+      Random randomEgg = new Random();
+      int randomResult = randomEgg.Next(1, 3);
+      if (randomResult == 1)
+      {
+        Type = "Dog";
+      }
+      else
+      {
+        Type = "Cat";
+      }
       ((Timer)sender).Stop();
     }
 
