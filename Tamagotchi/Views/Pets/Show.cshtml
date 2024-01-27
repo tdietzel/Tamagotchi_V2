@@ -18,18 +18,21 @@
       string eat;
       string sleep;
       string play;
+      string petImg;
 
       if(Model.Type == "Cat")
       {
         eat = "/img/kitten-food.png";
         sleep = "/img/kitten-sleeping.png";
         play = "/img/kitten-playing.png";
+        petImg = "/img/kitten.png";
       }
       else
       {
         eat = "/img/food.png";
         sleep = "/img/sleep.png";
         play="/img/playing.png";
+        petImg = "/img/dog.png";
       }
 
     }
@@ -54,7 +57,7 @@
       }
       else
       {
-        <img src="~/img/dog.png" />
+        <img src="@petImg" />
       }
       @* HEALTH OR FOOD LEVEL *@
 
