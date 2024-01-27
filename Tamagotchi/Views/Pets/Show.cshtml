@@ -242,28 +242,29 @@
       <b><p>Lived to be: @Model.Age yrs old</p></b>
     }
   </div>
-  <form class="playground-form" action="/pets" method="get">
-    <button type="submit">Return to pet playground</button>
-  </form>
-  <div class="inventory-style">
-    <h1 class="inventory-title">Inventory</h1>
-    <div class="inventory">
-      @foreach (var food in Tamagotchis.Models.Pet._inventory)
-      {
-        <div class="inventory-item">
-          <p>@food.Name</p>
-          <p class="hp">@food.Fullness hp</p>
-          <img class="fullness" src="~/img/hearts.png" />
-        </div>
-      }
-      @foreach (var toy in Tamagotchis.Models.Pet._inventoryToy)
-      {
-        <div class="inventory-item">
-          <p>@toy.Name</p>
-          <p class="excitement">@toy.Excitement</p>
-          <img class="fullness" src="~/img/lightning-bolt.png" />
-        </div>
-      }
+    <form class="playground-form" action="/pets" method="get">
+      <button type="submit">Return to pet playground</button>
+    </form>
+    <div class="inventory-style">
+      <h1 class="inventory-title">Inventory</h1>
+      <div class="inventory">
+        @foreach (var food in Tamagotchis.Models.Pet._inventory)
+        {
+          <div class="inventory-item">
+            <p>@food.Name</p>
+            <p class="hp">@food.Fullness</p>
+            <img class="fullness" src="~/img/hearts.png" />
+          </div>
+        }
+        @foreach (var toy in Tamagotchis.Models.Pet._inventoryToy)
+        {
+          <div class="inventory-item">
+            <p>@toy.Name</p>
+            <p class="excitement">@toy.Excitement</p>
+            <img class="fullness" src="~/img/lightning-bolt.png" />
+          </div>
+        }
+      </div>
     </div>
   </div>
   <script>
