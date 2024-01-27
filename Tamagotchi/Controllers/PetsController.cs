@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using Tamagotchis.Models;
 
-
 namespace Tamagotchis.Controllers
 {
   public class PetsController : Controller
@@ -13,12 +12,14 @@ namespace Tamagotchis.Controllers
       Pet newPet = new Pet(petName);
       return RedirectToAction("Index");
     }
+
     [HttpGet("/pets")]
     public ActionResult Index()
     {
       List<Pet> allPets = Pet.GetAll();
       return View(allPets);
     }
+
     [HttpGet("/pets/{id}")]
     public ActionResult Show(int id)
     {
@@ -29,6 +30,7 @@ namespace Tamagotchis.Controllers
       }
       return RedirectToAction("Index");
     }
+
     [HttpPost("/pets/action")]
     public ActionResult Perform(int petId, string action)
     {
@@ -44,19 +46,19 @@ namespace Tamagotchis.Controllers
             foundPet.Sleep();
             break;
           case "play":
-          if (foundPet.Energy > 2)
-          {
-            foundPet.Play(10);
-            break;
-          }
-          else
-          {
-            TempData["LowEnergyAlert"] = "Your pet is too tired to play!";
-            break;
-          }
+            if (foundPet.Energy > 2)
+            {
+              foundPet.Play(10);
+              break;
+            }
+            else
+            {
+              TempData["LowEnergyAlert"] = "Your pet is too tired to play!";
+              break;
+            }
           case "delete":
-          Pet.Delete(petId);
-          return RedirectToAction("Index");
+            Pet.Delete(petId);
+            return RedirectToAction("Index");
         }
       }
       return RedirectToAction("Show", new { id = petId });
