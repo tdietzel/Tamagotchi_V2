@@ -1,18 +1,24 @@
+using System.ComponentModel;
 using Microsoft.AspNetCore.Mvc;
 using Tamagotchis.Models;
 
 namespace Tamagotchis.Controllers
 {
   public class ShopController : Controller
+  
   {
     [HttpGet("/shop")]
-    public ActionResult Shop() 
+    public ActionResult Show() 
     {
+       
+    
       Shop shop = new Shop();
+      
       ShopViewModel viewModel = new ShopViewModel
       {
         TypesOfFood = shop.typesOfFood,
-        TypesOfToy = shop.typesOfToy
+        TypesOfToy = shop.typesOfToy,
+        money = Shop.Money,
       };
       return View(viewModel);
     }
@@ -23,15 +29,24 @@ namespace Tamagotchis.Controllers
       Food newPurchase = new Food(foodId);
       // Shop shop = new Shop();
 
-      return RedirectToAction("Shop");
+      return RedirectToAction("Show");
     }
 
     [HttpPost("/shop/buyToy")]
     public ActionResult PurchaseToy(string toyId)
     {
-      Toy newPurchase = new Toy(toyId);
-      // Shop shop = new Shop();
-      return RedirectToAction("Shop");
+
+      
+        Toy newPurchase = new Toy(toyId);
+
+        
+        if (newPurchase.Buy(toyId))
+        {
+            
+            newPurchase.AddToInstances();
+        }
+      
+      return RedirectToAction("Show");
     }
   }
 }

@@ -10,6 +10,8 @@ namespace Tamagotchis.Models
     public string Name { get; set; }
     public int Excitement { get; set; }
 
+    private bool purchasedSuccessfully = false;
+
     public int Id { get; set; }
     private static int nextId = 1;
     private static List<Toy> _instances = new List<Toy>();
@@ -25,19 +27,21 @@ namespace Tamagotchis.Models
     public Toy(string name) {
       Name = name;
       SetExcitementBasedOnName();
-      AddToInstances();
+      
     }
     private void SetExcitementBasedOnName()
     {
       Excitement = ExcitementDictionary.ContainsKey(Name) ? ExcitementDictionary[Name] : 0;
     }
-    private void AddToInstances()
+    public void AddToInstances()
     {
-      Id = nextId;
-      nextId++;
-      _instances.Add(this);
+        if (purchasedSuccessfully)
+        {
+            Id = nextId;
+            nextId++;
+            _instances.Add(this);
+        }
     }
-    
     // Toy Management
     public static Toy Find(int searchId)
     {
@@ -52,21 +56,24 @@ namespace Tamagotchis.Models
       return _instances;
     }
 
-    //                 WIP BELOW                                //
+                
 
-    // public static bool Buy(string toyId)
-    // {
-      
-    //   var toyValue = ExcitementDictionary[toyId];
-    //   int toyCost = (int)Math.Floor((double)toyValue / 2);
-    //   if (Shop.Money >= toyCost) {
-    //     Shop.Money -= toyCost;
-    //     return true;
-    //   } else 
-    //   {
-    //     return false;
-    //   }
-    
-    // }
+    public bool Buy(string toyId)
+    {
+        var toyValue = ExcitementDictionary[toyId];
+        int toyCost = (int)Math.Floor((double)toyValue / 2);
+
+        if (Shop.Money >= toyCost)
+        {
+            Shop.Money -= toyCost;
+            purchasedSuccessfully = true;
+            return true;
+        }
+        else
+        {
+            purchasedSuccessfully = false;
+            return false;
+        }
+    }
   }
 }
