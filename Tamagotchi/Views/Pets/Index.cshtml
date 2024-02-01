@@ -9,7 +9,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
-  integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 
   <link rel="stylesheet" href="~/css/petsIndex.css">
 </head>
@@ -26,19 +26,19 @@
 
   @if (Model.Count == 0)
   {
-  <div class="container">
+    <div class="container">
       <div id="no-pets">
         <h1>There are no pets to display. Please create a pet!</h1>
         <a href="/" class="btn btn-primary">Make a new pet!</a>
       </div>
-  </div>
+    </div>
   }
   else
   {
-  <div class="container">
+    <div class="container">
       @foreach (Pet pet in Model)
       {
-        if(pet.Type == "Cat")
+        if (pet.Type == "Cat")
         {
           eat = "/img/kitten-food.png";
           sleep = "/img/kitten-sleeping.png";
@@ -54,7 +54,7 @@
           petImg = "/img/dog.png";
           dead = "/img/deadDog.png";
         }
-      <div class="pet">
+        <div class="pet">
           @if (pet.Alive)
           {
             <form action="/pets/abandon" method="post">
@@ -63,38 +63,80 @@
               <button type="submit" id="abandon">Abandon Pet</button>
             </form>
             <h1>@pet.Name</h1>
-            
+
             @if (!pet.IsHatched)
             {
-            <img src="~/img/egg.png" alt="Egg" />
-            <h3>Hatching...</h3>
-            <form action="/pets/hatch" method="post" id='@($"hatchForm-{pet.PetId}")'>
-              <input type="hidden" name="petId" value="@pet.PetId"/>
-              <button type="submit" style="display: none;">Hatch</button>
-            </form>
-            <script type="text/javascript"> 
-              console.log("Does this script even run?");
-              setTimeout(() => {
-                console.log("I am inside the timeout function");
-                document.getElementById('hatchForm-@pet.PetId').submit();
-              }, 10000);
-            </script>
+              <img src="~/img/egg.png" alt="Egg" />
+              <h3>Hatching...</h3>
+              <form action="/pets/hatch" method="post" id='@($"hatchForm-{pet.PetId}")'>
+                <input type="hidden" name="petId" value="@pet.PetId" />
+                <button type="submit" style="display: none;">Hatch</button>
+              </form>
+              <script type="text/javascript">
+                setTimeout(() => {
+                  document.getElementById('hatchForm-@pet.PetId').submit();
+                }, 10000);
+              </script>
+              // call action function, set updated model to a form, and send to the controller to update the database
             }
             else if (pet.IsSleeping)
             {
               <img src="@sleep" alt="Sleeping" />
               <h3>sleeping... zZz</h3>
+
+              <form action="/pets/action/sleeping" method="post" id='@($"sleeping-{pet.PetId}")'>
+                <input type="hidden" name="petId" value="@pet.PetId" />
+                <input type="hidden" name="action" value="sleep" />
+                <button type="submit" style="display: none">Sleep</button>
+              </form>
+
+              <script>
+                setTimeout(function () {
+                  var sleepForm = document.getElementById('sleeping-' + @pet.PetId);
+                  console.log(sleepForm);
+                  document.getElementById('sleeping-' + @pet.PetId).submit();
+                }, 5000);
+              </script>
+
               RenderHearts(pet.Fullness);
             }
             else if (pet.IsPlaying)
             {
               <img src="@play" alt="Playing" />
-              <h3>playing!</h3>
+              <h3>@pet.Name is playing!</h3>
+
+              <form action="/pets/action/playing" method="post" id='@($"playing-{pet.PetId}")'>
+                <input type="hidden" name='petId' value="@pet.PetId" />
+                <input type="hidden" name="action" value="play" />
+                <button type="submit" style="display: none">Play</button>
+              </form>
+
+              <script>
+                setTimeout(function () {
+                  var playForm = document.getElementById('playing-' + @pet.PetId);
+                  console.log(playForm);
+                  document.getElementById('playing-' + @pet.PetId).submit();
+                }, 5000);
+              </script>
             }
             else if (pet.IsFeeding)
             {
               <img src="@eat" alt="Eating" />
               <h3>@pet.Name is eating...</h3>
+
+              <form action="/pets/action/eating" method="post" id='@($"eating-{pet.PetId}")'>
+                <input type="hidden" name="petId" value="@pet.PetId" />
+                <input type="hidden" name="action" value="feed" />
+                <button type="submit" style="display: none">Feed</button>
+              </form>
+
+              <script>
+                setTimeout(function () {
+                  var eatForm = document.getElementById('eating-'+ @pet.PetId);
+                  console.log(eatForm);
+                  document.getElementById("eating-" + @pet.PetId).submit();
+                }, 5000);
+              </script>
             }
             else
             {
@@ -104,7 +146,7 @@
               RenderHappiness(pet.Attention);
               @using (Html.BeginForm("show", "pets", new { id = pet.PetId }, FormMethod.Get))
               {
-                <input id="pet-details-btn" type="submit" value="View Pet Details"/>
+                <input id="pet-details-btn" type="submit" value="View Pet Details" />
               }
             }
           }
@@ -119,62 +161,64 @@
               <button id="abandon" type="submit">Bury @pet.Name</button>
             </form>
           }
-      </div>
+        </div>
       }
-  </div>
-  <form id="new-pet" action="/shop" method="get">
-    <button type="submit" id=shop-btn>Head to the shop!</button>
-  </form>
-  <div class="inventory-style">
+    </div>
+    <form id="new-pet" action="/shop" method="get">
+      <button type="submit" id="shop-btn">Head to the shop!</button>
+    </form>
+    <div class="inventory-style">
       <h1 class="inventory-title">Inventory</h1>
       <div class="inventory">
-          @foreach (var food in Pet._inventory)
-          {
-            <div class="inventory-item">
-                <p>@food.Name</p>
-                <p class="hp">@food.Fullness</p>
-                <img class="fullness" src="~/img/hearts.png" />
-            </div>
-          }
-          @foreach (var toy in Pet._inventoryToy)
-          {
-            <div class="inventory-item">
-                <p>@toy.Name</p>
-                <p class="excitement">@toy.Excitement</p>
-                <img class="fullness" src="~/img/lightning-bolt.png" />
-            </div>
-          }
+        @foreach (var food in Pet._inventory)
+        {
+          <div class="inventory-item">
+            <p>@food.Name</p>
+            <p class="hp">@food.Fullness</p>
+            <img class="fullness" src="~/img/hearts.png" />
+          </div>
+        }
+        @foreach (var toy in Pet._inventoryToy)
+        {
+          <div class="inventory-item">
+            <p>@toy.Name</p>
+            <p class="excitement">@toy.Excitement</p>
+            <img class="fullness" src="~/img/lightning-bolt.png" />
+          </div>
+        }
       </div>
-  </div>
-  }
-  
-@functions
-{
-  void RenderHearts(int value)
-  {
-    <div class="health-hearts">
-      @for (var i = 0; i < 5; i++)
-      {
-        <img id="heart" src="/img/@(i * 20 < value ? "hearts.png" : "heart.png")" alt="Heart" />
-      }
     </div>
   }
-  void RenderEnergy(int value)
+
+  @functions
   {
-    <div class="health-hearts">
-      @for (var i = 0; i < 5; i++)
-      {
-        <img id="heart" src="/img/@(i * 20 < value ? "lightning-bolt.png" : "lightning-bolt-black.png")" alt="Lightning Bolt" />
-      }
-    </div>
+    void RenderHearts(int value)
+    {
+      <div class="health-hearts">
+        @for (var i = 0; i < 5; i++)
+        {
+          <img id="heart" src="/img/@(i * 20 < value ? "hearts.png" : "heart.png")" alt="Heart" />
+        }
+      </div>
+    }
+    void RenderEnergy(int value)
+    {
+      <div class="health-hearts">
+        @for (var i = 0; i < 5; i++)
+        {
+          <img id="heart" src="/img/@(i * 20 < value ? "lightning-bolt.png" : "lightning-bolt-black.png")"
+            alt="Lightning Bolt" />
+        }
+      </div>
+    }
+    void RenderHappiness(int value)
+    {
+      <div class="health-hearts">
+        <img id="happiness" src="/img/@(value > 70 ? "happy-face.png" : value > 40 ? "neutral-face.png" : "sad-face.png")"
+          alt="Happiness" />
+      </div>
+    }
   }
-  void RenderHappiness(int value)
-  {
-    <div class="health-hearts">
-      <img id="happiness" src="/img/@(value > 70 ? "happy-face.png" : value > 40 ? "neutral-face.png" : "sad-face.png")" alt="Happiness" />
-    </div>
-  }
-}
 
 </body>
 

@@ -11,6 +11,7 @@ namespace Tamagotchis.Controllers
   public class PetsController : Controller
   {
     private readonly TamagotchiContext _db;
+    
     public PetsController(TamagotchiContext db)
     {
       _db = db;
@@ -47,42 +48,61 @@ namespace Tamagotchis.Controllers
       return RedirectToAction("Index");
     }
 
+
+    private ActionResult PerformAction(int petId, string action, string redirectToAction)
+    {
+        Pet foundPet = _db.Pets.FirstOrDefault(pet => pet.PetId == petId);
+
+        if (foundPet != null)
+        {
+            switch (action)
+            {
+              case "feed":
+                  foundPet.Feed(20);
+                  break;
+              case "sleep":
+                  foundPet.Sleep();
+                  break;
+              case "play":
+                  if (foundPet.Energy > 2)
+                  {
+                    foundPet.Play(10);
+                  }
+                  else
+                  {
+                    TempData["LowEnergyAlert"] = "Your pet is too tired to play!";
+                  }
+                  break;
+            }
+
+            _db.Pets.Update(foundPet);
+            _db.SaveChanges();
+        }
+
+        return RedirectToAction(redirectToAction);
+    }
+
     [HttpPost("/pets/action")]
     public ActionResult Perform(int petId, string action)
     {
-      Pet foundPet = _db.Pets
-        .FirstOrDefault(pet => pet.PetId == petId);
+      return PerformAction(petId, action, "Show");
+    }
 
-      if (foundPet != null)
-      {
-        switch (action)
-        {
-          case "feed":
-            foundPet.Feed(20);
-            _db.Pets.Update(foundPet);
-            _db.SaveChanges();
-            break;
-          case "sleep":
-            foundPet.Sleep();
-            _db.Pets.Update(foundPet);
-            _db.SaveChanges();
-            break;
-          case "play":
-            if (foundPet.Energy > 2)
-            {
-              foundPet.Play(10);
-              _db.Pets.Update(foundPet);
-              _db.SaveChanges();
-              break;
-            }
-            else
-            {
-              TempData["LowEnergyAlert"] = "Your pet is too tired to play!";
-              break;
-            }
-        }
-      }
-      return RedirectToAction("Show", new { id = petId });
+    [HttpPost("/pets/action/eating")]
+    public ActionResult EatingAction(int petId, string action)
+    {
+      return PerformAction(petId, action, "Index");
+    }
+
+    [HttpPost("/pets/action/sleeping")]
+    public ActionResult SleepingAction(int petId, string action)
+    {
+      return PerformAction(petId, action, "Index");
+    }
+    [HttpPost("/pets/action/playing")]
+    public ActionResult PlayingAction(int petId, string action)
+    {
+      return PerformAction(petId, action, "Index");
     }
 
     public ActionResult Abandon(int petId)

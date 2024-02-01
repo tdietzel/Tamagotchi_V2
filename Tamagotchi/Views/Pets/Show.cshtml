@@ -47,16 +47,31 @@
       {
         <img src="@sleep" />
         <b><p>@Model.Name is sleeping... zZz</p></b>
+          <script>
+              setTimeout(function() {
+                document.getElementById('sleeping-' + @Model.PetId).submit();
+              }, 10000);
+          </script>
       }
       else if (Model.IsPlaying == true)
       {
         <img src="@play" />
         <b><p>@Model.Name is playing!</p></b>
+          <script>
+              setTimeout(function() {
+                document.getElementById('playing-' + @Model.PetId).submit();
+              }, 10000);
+          </script>
       }
       else if (Model.IsFeeding == true)
       {
         <img src="@eat" />
         <b><p>@Model.Name is eating...</p></b>
+          <script>
+              setTimeout(function() {
+                document.getElementById('eating-' + @Model.PetId).submit();
+              }, 10000);
+          </script>
       }
       else
       {
@@ -68,31 +83,27 @@
       
       <b><p>Age: @Model.Age yrs</p>
       <p>Weight: @Model.Weight lbs</p></b>
-      @if (Model.IsSleeping == false && Model.IsPlaying == false && Model.IsFeeding == false)
-      {
-        <div class="action-buttons">
-            <form action="/pets/action" method="post">
-              <input type="hidden" name="petId" value="@Model.PetId" />
-              <input type="hidden" name="action" value="feed" />
-              <button type="submit">Feed</button>
-            </form>
 
-            <form action="/pets/action" method="post">
-              <input type="hidden" name="petId" value="@Model.PetId" />
-              <input type="hidden" name="action" value="sleep" />
-              <button type="submit">Sleep</button>
-            </form>
+      <div class="action-buttons">
+          <form action="/pets/action" method="post" id='@($"eating-{Model.PetId}")'>
+            <input type="hidden" name="petId" value="@Model.PetId" />
+            <input type="hidden" name="action" value="feed" />
+            <button type="submit">Feed</button>
+          </form>
 
-            <form action="/pets/action" method="post">
-              <input type="hidden" name="petId" value="@Model.PetId" />
-              <input type="hidden" name="action" value="play" />
-              <button type="submit">Play</button>
-            </form>
-        </div>
-      }
+          <form action="/pets/action" method="post" id='@($"sleeping-{Model.PetId}")'>
+            <input type="hidden" name="petId" value="@Model.PetId" />
+            <input type="hidden" name="action" value="sleep" />
+            <button type="submit">Sleep</button>
+          </form>
+
+          <form action="/pets/action" method="post" id='@($"playing-{Model.PetId}")'>
+            <input type="hidden" name="petId" value="@Model.PetId" />
+            <input type="hidden" name="action" value="play" />
+            <button type="submit">Play</button>
+          </form>
+      </div>
       
-      //turn these to buttons or attach some kind of onclick handler. These need to do several things: connect to the methods in toy and food to use item, connect to methods to feed and play in pet, and the buttons/whatevers need to be deleted using the delete methods in toy and food. also, the visual representation of the item on the page needs to disappear. To re-render the page, reroute to this same page with specific id
-
     @if (TempData["LowEnergyAlert"] != null)
     {
       <script type="text/javascript">
@@ -134,12 +145,6 @@
           </div>
       </div>
   </div>
-
-  <script>
-    setTimeout(function () {
-      window.location.reload();
-    }, 10000);
-  </script>
 
     @functions
   {

@@ -36,11 +36,7 @@ namespace Tamagotchis.Models
 
     // Timers
     private Timer ageTimer;
-    private Timer incubationTimer;
     private Timer statTicker;
-    private Timer feedTimer;
-    private Timer sleepTimer;
-    private Timer playTimer;
 
     // Pet Actions
     public bool NeedsUpdate { get; set; } = false;
@@ -60,8 +56,6 @@ namespace Tamagotchis.Models
       Attention = 100;
 
       _instances.Add(this);
-
-      //InitializeTimers();
     }
 
     // Timers
@@ -71,11 +65,6 @@ namespace Tamagotchis.Models
       ageTimer.Interval = 600000; // 86400000; // 24 hours in milliseconds
       ageTimer.Elapsed += AgeTimerElapsed;
       ageTimer.Start();
-
-      incubationTimer = new Timer();
-      incubationTimer.Interval = 10000;
-      incubationTimer.Elapsed += HatchTimerElapsed;
-      incubationTimer.Start();
 
       statTicker = new Timer();
       statTicker.Interval = 10000;
@@ -87,61 +76,10 @@ namespace Tamagotchis.Models
     {
       Age += 1;
     }
-    private void HatchTimerElapsed(object sender, ElapsedEventArgs e)
-    {
-      IsHatched = true;
-
-      Energy = 100;
-
-      Random randomEgg = new Random();
-      int randomResult = randomEgg.Next(1, 3);
-      Type = randomResult == 1 ? "Dog" : "Cat";
-
-      ((Timer)sender).Stop();
-    }
 
     private void StatTickerElapsed(object sender, ElapsedEventArgs e)
     {
       DecreaseAttributes();
-    }
-
-    private void FeedTimerElapsed(object sender, ElapsedEventArgs e)
-    {
-      IsFeeding = false;
-
-      Fullness += 20;
-      Fullness = Fullness > 100 ? Fullness = 100 : Fullness;
-
-      ((Timer)sender).Stop();
-    }
-    private void SleepTimerElapsed(object sender, ElapsedEventArgs e)
-    {
-      IsSleeping = false;
-
-      Energy = 100;
-
-      ((Timer)sender).Stop();
-    }
-
-    private void PlayTimerElapsed(object sender, ElapsedEventArgs e)
-    {
-      IsPlaying = false;
-
-      Fullness = Fullness < 5 ? Fullness = 0 : Fullness;
-
-      if (Energy < 5)
-      {
-        Energy = 0;
-      }
-      else
-      {
-        Fullness -= 5;
-        Energy -= 20;
-        Attention = Attention < 50 ? Attention += 50 : Attention = 100;
-      }
-
-      CheckIfDead();
-      ((Timer)sender).Stop();
     }
 
     // Vitals Control
@@ -180,14 +118,16 @@ namespace Tamagotchis.Models
       {
         IsFeeding = true;
 
-        feedTimer = new Timer();
-        feedTimer.Interval = 10000;
-        feedTimer.Elapsed += FeedTimerElapsed;
-        feedTimer.Start();
+        Fullness += 20;
+        Fullness = Fullness > 100 ? Fullness = 100 : Fullness;
 
         Weight += 1;
         Fullness += food; // WIP
         Fullness = Fullness > 100 ? Fullness = 100 : Fullness;
+      } 
+      else 
+      {
+        IsFeeding = false;
       }
     }
   
@@ -196,11 +136,11 @@ namespace Tamagotchis.Models
       if (IsSleeping == false)
       {
         IsSleeping = true;
-
-        sleepTimer = new Timer();
-        sleepTimer.Interval = 10000;
-        sleepTimer.Elapsed += SleepTimerElapsed;
-        sleepTimer.Start();
+        Energy = 100;
+      }
+      else
+      {
+        IsSleeping = false;
       }
     }
     public void Play(int toy) // WIP
@@ -209,13 +149,18 @@ namespace Tamagotchis.Models
       {
         IsPlaying = true;
 
-        playTimer = new Timer();
-        playTimer.Interval = 10000;
-        playTimer.Elapsed += PlayTimerElapsed;
-        playTimer.Start();
-
-        Attention += toy; // WIP
+        if (Energy < 5) {
+            Energy = 0;
+        } else {
+            Fullness -= 5;
+            Energy -= 20;
+        }
+        // Attention += toy; // WIP
         Attention = Attention > 100 ? Attention = 100 : Attention;
+      }
+      else
+      {
+        IsPlaying = false;
       }
     }
   }
