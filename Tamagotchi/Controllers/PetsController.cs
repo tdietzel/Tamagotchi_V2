@@ -1,32 +1,48 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+
 using System.Collections.Generic;
+using System.Linq;
+
 using Tamagotchis.Models;
 
 namespace Tamagotchis.Controllers
 {
   public class PetsController : Controller
   {
-    [HttpPost("/pets")]
-    public ActionResult Create(string petName)
+    private readonly TamagotchiContext _db;
+    public PetsController(TamagotchiContext db)
     {
-      Pet newPet = new Pet(petName);
+      _db = db;
+    }
+
+    public ActionResult Index()
+    {
+      List<Pet> model = _db.Pets.ToList();
+
+      return View(model);
+    }
+
+    public ActionResult Create()
+    {
+      return View();
+    }
+
+    [HttpPost]
+    public ActionResult Create(Pet pet)
+    {
+      _db.Pets.Add(pet);
+      _db.SaveChanges();
+
       return RedirectToAction("Index");
     }
 
-    [HttpGet("/pets")]
-    public ActionResult Index()
-    {
-      List<Pet> allPets = Pet.GetAll();
-      return View(allPets);
-    }
-
-    [HttpGet("/pets/{id}")]
     public ActionResult Show(int id)
     {
-      Pet foundPet = Pet.Find(id);
-      if (foundPet != null)
+      Pet thisPet = _db.Pets.FirstOrDefault(PetsController => PetsController.PetId == id);
+      if (thisPet != null)
       {
-        return View(foundPet);
+        return View(thisPet);
       }
       return RedirectToAction("Index");
     }
@@ -34,21 +50,29 @@ namespace Tamagotchis.Controllers
     [HttpPost("/pets/action")]
     public ActionResult Perform(int petId, string action)
     {
-      Pet foundPet = Pet.Find(petId);
+      Pet foundPet = _db.Pets
+        .FirstOrDefault(pet => pet.PetId == petId);
+
       if (foundPet != null)
       {
         switch (action)
         {
           case "feed":
             foundPet.Feed(20);
+            _db.Pets.Update(foundPet);
+            _db.SaveChanges();
             break;
           case "sleep":
             foundPet.Sleep();
+            _db.Pets.Update(foundPet);
+            _db.SaveChanges();
             break;
           case "play":
             if (foundPet.Energy > 2)
             {
               foundPet.Play(10);
+              _db.Pets.Update(foundPet);
+              _db.SaveChanges();
               break;
             }
             else
@@ -56,12 +80,32 @@ namespace Tamagotchis.Controllers
               TempData["LowEnergyAlert"] = "Your pet is too tired to play!";
               break;
             }
-          case "delete":
-            Pet.Delete(petId);
-            return RedirectToAction("Index");
         }
       }
       return RedirectToAction("Show", new { id = petId });
+    }
+
+    public ActionResult Abandon(int petId)
+    {
+      var petToAbandon = _db.Pets.Find(petId);
+      if (petToAbandon != null)
+      {
+        _db.Pets.Remove(petToAbandon);
+        _db.SaveChanges();
+      }
+      return RedirectToAction("Index");
+    }
+    [HttpPost]
+    public IActionResult Hatch(int petId)
+    {
+      var pet = _db.Pets.FirstOrDefault(p => p.PetId == petId);
+      if (pet != null && !pet.IsHatched)
+      {
+        pet.IsHatched = true;
+        _db.SaveChanges();
+      }
+
+      return RedirectToAction("Index");
     }
   }
 }

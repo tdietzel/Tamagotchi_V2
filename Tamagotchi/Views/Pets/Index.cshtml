@@ -54,21 +54,31 @@
           petImg = "/img/dog.png";
           dead = "/img/deadDog.png";
         }
-
       <div class="pet">
           @if (pet.Alive)
           {
-            <form action="/pets/action" method="post">
-              <input type="hidden" name="petId" value="@pet.Id" />
+            <form action="/pets/abandon" method="post">
+              <input type="hidden" name="petId" value="@pet.PetId" />
               <input type="hidden" name="action" value="delete" />
               <button type="submit" id="abandon">Abandon Pet</button>
             </form>
             <h1>@pet.Name</h1>
-
+            
             @if (!pet.IsHatched)
             {
-              <img src="~/img/egg.png" alt="Egg" />
-              <h3>Hatching...</h3>
+            <img src="~/img/egg.png" alt="Egg" />
+            <h3>Hatching...</h3>
+            <form action="/pets/hatch" method="post" id='@($"hatchForm-{pet.PetId}")'>
+              <input type="hidden" name="petId" value="@pet.PetId"/>
+              <button type="submit" style="display: none;">Hatch</button>
+            </form>
+            <script type="text/javascript"> 
+              console.log("Does this script even run?");
+              setTimeout(() => {
+                console.log("I am inside the timeout function");
+                document.getElementById('hatchForm-@pet.PetId').submit();
+              }, 10000);
+            </script>
             }
             else if (pet.IsSleeping)
             {
@@ -92,10 +102,11 @@
               RenderHearts(pet.Fullness);
               RenderEnergy(pet.Energy);
               RenderHappiness(pet.Attention);
+              @using (Html.BeginForm("show", "pets", new { id = pet.PetId }, FormMethod.Get))
+              {
+                <input id="pet-details-btn" type="submit" value="View Pet Details"/>
+              }
             }
-            <form action="pets/@pet.Id" method="get">
-              <button type="submit" id="pet-details-btn">View Pet Details</button>
-            </form>
           }
           else
           {
@@ -103,7 +114,7 @@
             <img src="@dead" alt="Dead Pet" />
             <h4>@pet.Name has died :(</h4>
             <form action="/pets/action" method="post">
-              <input type="hidden" name="petId" value="@pet.Id" />
+              <input type="hidden" name="petId" value="@pet.PetId" />
               <input type="hidden" name="action" value="delete" />
               <button id="abandon" type="submit">Bury @pet.Name</button>
             </form>
@@ -137,12 +148,6 @@
   </div>
   }
   
-  <script>
-    setTimeout(function () {
-      window.location.reload();
-    }, 10000);
-  </script>
-
 @functions
 {
   void RenderHearts(int value)

@@ -21,13 +21,12 @@ namespace Tamagotchis.Models
 
     // Pet Variables
 
-    public string Name { get; private set; }
+    public string Name { get; set; }
 
     public bool Alive { get; set; } = true;
     public int Age { get; set; }
     public string Type { get; set; }
-    public int Id { get; }
-    private static int nextId = 1;
+    public int PetId { get; set; }
 
     public int Fullness { get; set; }
     public int Energy { get; set; }
@@ -44,6 +43,7 @@ namespace Tamagotchis.Models
     private Timer playTimer;
 
     // Pet Actions
+    public bool NeedsUpdate { get; set; } = false;
     public bool IsHatched { get; set; } = false;
     public bool IsFeeding { get; set; } = false;
     public bool IsSleeping { get; set; } = false;
@@ -53,24 +53,19 @@ namespace Tamagotchis.Models
     // Pet Constructors
     private static List<Pet> _instances = new List<Pet> { };
 
-    public Pet() : this("Jimmy Default") {}
-    public Pet(string name)
+    public Pet()
     {
-      Name = name;
-      Type = Type;
       Fullness = 100;
       Energy = 0;
       Attention = 100;
 
       _instances.Add(this);
-      Id = nextId;
-      nextId++;
 
-      InitializeTimers();
+      //InitializeTimers();
     }
 
     // Timers
-    private void InitializeTimers()
+    public void InitializeTimers()
     {
       ageTimer = new Timer();
       ageTimer.Interval = 600000; // 86400000; // 24 hours in milliseconds
@@ -104,6 +99,7 @@ namespace Tamagotchis.Models
 
       ((Timer)sender).Stop();
     }
+
     private void StatTickerElapsed(object sender, ElapsedEventArgs e)
     {
       DecreaseAttributes();
@@ -221,28 +217,6 @@ namespace Tamagotchis.Models
         Attention += toy; // WIP
         Attention = Attention > 100 ? Attention = 100 : Attention;
       }
-    }
-
-    // Pet Management
-    public static List<Pet> GetAll()
-    {
-      return _instances;
-    }
-    public static void ClearAll()
-    {
-      _instances.Clear();
-    }
-    public static void Delete(int petId)
-    {
-      var petToDelete = _instances.FirstOrDefault(p => p.Id == petId);
-      if (petToDelete != null)
-      {
-        _instances.Remove(petToDelete);
-      }
-    }
-    public static Pet Find(int searchId)
-    {
-      return _instances.FirstOrDefault(Pet => Pet.Id == searchId);
     }
   }
 }

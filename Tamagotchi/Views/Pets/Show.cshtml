@@ -72,19 +72,19 @@
       {
         <div class="action-buttons">
             <form action="/pets/action" method="post">
-              <input type="hidden" name="petId" value="@Model.Id" />
+              <input type="hidden" name="petId" value="@Model.PetId" />
               <input type="hidden" name="action" value="feed" />
               <button type="submit">Feed</button>
             </form>
 
             <form action="/pets/action" method="post">
-              <input type="hidden" name="petId" value="@Model.Id" />
+              <input type="hidden" name="petId" value="@Model.PetId" />
               <input type="hidden" name="action" value="sleep" />
               <button type="submit">Sleep</button>
             </form>
 
             <form action="/pets/action" method="post">
-              <input type="hidden" name="petId" value="@Model.Id" />
+              <input type="hidden" name="petId" value="@Model.PetId" />
               <input type="hidden" name="action" value="play" />
               <button type="submit">Play</button>
             </form>
@@ -106,9 +106,12 @@
       <b><p>Lived to be: @Model.Age yrs old</p></b>
     }
   </div>
-      <form class="playground-form" action="/pets" method="get">
-        <button type="submit">Return to pet playground</button>
-      </form>
+      <div class="playground-form">
+          @using (Html.BeginForm("Index", "Pets", FormMethod.Get))
+          {
+            <input type="submit" value="Return to pet playground"/>
+          }
+      </div>
       <div class="inventory-style">
           <h1 class="inventory-title">Inventory</h1>
           <div class="inventory">
