@@ -18,29 +18,68 @@
   <div class="pet">
 
     @{
-      string eat;
+      @* string eat;
       string sleep;
-      string play;
+      string play; *@
       string petImg;
 
       if(Model.Type == "Cat")
       {
-        eat = "/img/kitten-food.png";
+        @* eat = "/img/kitten-food.png";
         sleep = "/img/kitten-sleeping.png";
-        play = "/img/kitten-playing.png";
+        play = "/img/kitten-playing.png"; *@
         petImg = "/img/kitten.png";
       }
       else
       {
-        eat = "/img/food.png";
+        @* eat = "/img/food.png";
         sleep = "/img/sleep.png";
-        play="/img/playing.png";
+        play="/img/playing.png"; *@
         petImg = "/img/dog.png";
       }
 
     }
+
+    @if (Model.Alive == true)
+    {
+      <h1>@Model.Name</h1>
+      <img src="@petImg" />
+
+      RenderHearts(Model.Fullness);
+      RenderEnergy(Model.Energy);
+      RenderHappiness(Model.Attention);
+
+      <b><p>Age: @Model.Age yrs</p>
+      <p>Weight: @Model.Weight lbs</p></b>
+
+      <div class="action-buttons">
+          @using (Html.BeginForm("EatingAction", "Pets", new { id = $"eating-{Model.PetId}" }, FormMethod.Post))
+          {
+            @Html.HiddenFor(model => model.PetId)
+            <input type="hidden" name="action" value="feed" />
+            <input type="submit" value="Feed" />
+          }
+          @using (Html.BeginForm("SleepingAction", "Pets", new { id = $"sleeping-{Model.PetId}" }, FormMethod.Post))
+          {
+            @Html.HiddenFor(model => model.PetId)
+            <input type="hidden" name="action" value="sleep" />
+            <input type="submit" value="Sleep" />
+          }
+          @using (Html.BeginForm("PlayingAction", "Pets", new { id = $"playing-{Model.PetId}" }, FormMethod.Post))
+          {
+            @Html.HiddenFor(model => model.PetId)
+            <input type="hidden" name="action" value="play" />
+            <input type="submit" value="Play" />
+          }
+      </div>
+    }
+    else
+    {
+      <img src="~/img/deadDog.png" />
+      <b><p>Lived to be: @Model.Age yrs old</p></b>
+    }
     
-    <h1>@Model.Name</h1>
+    @* <h1>@Model.Name</h1>
     @if (Model.Alive == true)
     {
       @if (Model.IsSleeping == true)
@@ -104,18 +143,20 @@
           </form>
       </div>
       
-    @if (TempData["LowEnergyAlert"] != null)
-    {
-      <script type="text/javascript">
-        alert('@TempData["LowEnergyAlert"]');
-      </script>
-    }
+      @if (TempData["LowEnergyAlert"] != null)
+      {
+        <script type="text/javascript">
+          alert('@TempData["LowEnergyAlert"]');
+        </script>
+      }
+
     }
     else
     {
       <img src="~/img/deadDog.png" />
       <b><p>Lived to be: @Model.Age yrs old</p></b>
-    }
+    } *@
+
   </div>
       <div class="playground-form">
           @using (Html.BeginForm("Index", "Pets", FormMethod.Get))
