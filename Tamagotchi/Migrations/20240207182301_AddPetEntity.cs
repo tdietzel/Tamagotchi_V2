@@ -65,7 +65,7 @@ namespace Tamagotchi.Migrations
                 name: "IX_Pets_UserId",
                 table: "Pets",
                 column: "UserId",
-                unique: true);
+                unique: false);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

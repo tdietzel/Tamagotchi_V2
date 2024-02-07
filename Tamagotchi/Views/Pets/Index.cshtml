@@ -29,7 +29,7 @@
     <div class="container">
         <div id="no-pets">
             <h1>There are no pets to display. Please create a pet!</h1>
-            <a href="/" class="btn btn-primary">Make a new pet!</a>
+            @Html.ActionLink("Make a new pet!", "Create", new { id = ViewBag.UserId })
         </div>
     </div>
   }
@@ -83,6 +83,7 @@
         {
           <form action="/pets/abandon" method="post">
             <input type="hidden" name="petId" value="@pet.PetId" />
+            <input type="hidden" name="userId" value="@pet.UserId"/>
             <input type="hidden" name="action" value="delete" />
             <button type="submit" id="abandon">Abandon Pet</button>
           </form>
@@ -98,6 +99,7 @@
 
             <form action="/pets/hatch" method="post" id='@($"hatchForm-{pet.PetId}")'>
               <input type="hidden" name="petId" value="@pet.PetId" />
+              <input type="hidden" name="userId" value="@pet.UserId"/>
               <button type="submit" style="display: none;">Hatch</button>
             </form>
 
@@ -127,6 +129,7 @@
             </div>
             <form action="/pets/action/sleeping" method="post" id='@($"sleeping-{pet.PetId}")'>
               <input type="hidden" name="petId" value="@pet.PetId" />
+              <input type="hidden" name="userId" value="@pet.UserId"/>
               <input type="hidden" name="action" value="sleep" />
               <button type="submit" style="display: none">Sleep</button>
             </form>
@@ -162,6 +165,7 @@
 
             <form action="/pets/action/playing" method="post" id='@($"playing-{pet.PetId}")'>
               <input type="hidden" name='petId' value="@pet.PetId" />
+              <input type="hidden" name="userId" value="@pet.UserId"/>
               <input type="hidden" name="action" value="play" />
               <button type="submit" style="display: none">Play</button>
             </form>
@@ -196,6 +200,7 @@
 
             <form action="/pets/action/eating" method="post" id='@($"eating-{pet.PetId}")'>
               <input type="hidden" name="petId" value="@pet.PetId" />
+              <input type="hidden" name="userId" value="@pet.UserId"/>
               <input type="hidden" name="action" value="feed" />
               <button type="submit" style="display: none">Feed</button>
             </form> 
@@ -228,10 +233,11 @@
             RenderEnergy(pet.Energy);
             RenderHappiness(pet.Attention);
 
-            @using (Html.BeginForm("show", "pets", new { id = pet.PetId }, FormMethod.Get))
+            @* @using (Html.BeginForm("show", "pets", new { id = pet.PetId }, FormMethod.Get))
             {
               <input id="pet-details-btn" type="submit" value="View Pet Details" />
-            }
+            } *@
+              @Html.ActionLink("View Pet Details", "Show", new { id = pet.PetId } )
 
           }
         }
@@ -243,6 +249,7 @@
 
           <form action="/pets/action/bury" method="post">
             <input type="hidden" name="petId" value="@pet.PetId" />
+            <input type="hidden" name="userId" value="@pet.UserId"/>
             <input type="hidden" name="action" value="delete" />
             <button id="abandon" type="submit">Bury @pet.Name</button>
           </form>

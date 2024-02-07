@@ -23,7 +23,7 @@
 <ul>
   @foreach (var user in Model) {
     <li>
-    @Html.ActionLink($"{user.UserName}", "Show", new {id = user.UserId})
+    @Html.ActionLink($"{user.UserName}", "Index", "Pets", new {id = user.UserId})
     </li>
   }
 </ul>

@@ -17,6 +17,7 @@
 <h1>@Model.UserName</h1>
 <ul>
   @foreach (var pet in Model.Pets) {
+    @* @Html.ActionLink(@pet.Name, "ShowPets", "Pets", { id = Model.UserId}) *@
     <li>@pet.Name</li>
     //ADD MORE STUFF LATER
   }

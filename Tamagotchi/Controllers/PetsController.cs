@@ -20,33 +20,34 @@ namespace Tamagotchis.Controllers
       _db = db;
     }
 
-    public ActionResult Index()
+    [HttpGet("/Pets/{id}")]
+    public ActionResult Index(int id)
     {
       List<Pet> model = _db.Pets
-      .Include(pet => pet.User) 
+        .Include(pet => pet.User)
+        .Where(pet => pet.UserId == id)
       .ToList();
 
+      ViewBag.UserId = id;
       return View(model);
     }
     [HttpGet("/Pets/Create/{id}")]
     public ActionResult Create(int id)
     {
-      Console.WriteLine("🤑🤑🤑🤑🤑🤑");
-      Console.WriteLine(id);
       ViewBag.UserId = id;
       return View();
     }
     [HttpPost("/Pets/Create/{id}")]
     public ActionResult Create(Pet pet)
     {
-      Console.WriteLine("👽👽👽👽👽👽");
-      Console.WriteLine(pet.UserId);
+      //validation here maybe??
       _db.Pets.Add(pet);
       _db.SaveChanges();
 
-      return RedirectToAction("Index");
+      return RedirectToAction("Index", new { id = pet.UserId}); //CHANGE
     }
 
+    [HttpGet("/Pets/Show/{id}")]
     public ActionResult Show(int id)
     {
       Pet thisPet = _db.Pets.FirstOrDefault(PetsController => PetsController.PetId == id);
@@ -54,64 +55,64 @@ namespace Tamagotchis.Controllers
       {
         return View(thisPet);
       }
-      return RedirectToAction("Index");
+      return RedirectToAction("Index", new { id = id });
     }
 
-    private ActionResult PerformAction(int petId, string action, string redirectToAction)
+    private ActionResult PerformAction(int petId, int userId, string action, string redirectToAction)
     {
       Pet foundPet = _db.Pets.FirstOrDefault(pet => pet.PetId == petId);
 
       if (foundPet != null)
       {
-        switch (action)
-        {
-          case "feed":
-              foundPet.Feed(20);
-              break;
-          case "sleep":
-              foundPet.Sleep();
-              break;
-          case "play":
-              if (foundPet.Energy > 2)
-              {
-                foundPet.Play(10);
-              }
-              else
-              {
-                TempData["LowEnergyAlert"] = "Your pet is too tired to play!";
-              }
-              break;
-        }
+          switch (action)
+          {
+            case "feed":
+                foundPet.Feed(20);
+                break;
+            case "sleep":
+                foundPet.Sleep();
+                break;
+            case "play":
+                if (foundPet.Energy > 2)
+                {
+                    foundPet.Play(10);
+                }
+                else
+                {
+                    TempData["LowEnergyAlert"] = "Your pet is too tired to play!";
+                }
+                break;
+          }
 
-        _db.Pets.Update(foundPet);
-        _db.SaveChanges();
+          _db.Pets.Update(foundPet);
+          _db.SaveChanges();
       }
 
-      return RedirectToAction(redirectToAction);
+      return RedirectToAction(redirectToAction, new { id = userId });
     }
 
     [HttpPost("/pets/action/bury")]
-    public ActionResult BuryAction(int petId, string action)
+    public ActionResult BuryAction(int petId, int userId, string action)
     {
-      return PerformAction(petId, action, "Show");
+      return PerformAction(petId, userId, action, "Show");
     }
 
     [HttpPost("/pets/action/eating")]
-    public ActionResult EatingAction(int petId, string action)
+    public ActionResult EatingAction(int petId, int userId, string action)
     {
-      return PerformAction(petId, action, "Index");
+      return PerformAction(petId, userId, action, "Index");
     }
 
     [HttpPost("/pets/action/sleeping")]
-    public ActionResult SleepingAction(int petId, string action)
+    public ActionResult SleepingAction(int petId, int userId, string action)
     {
-      return PerformAction(petId, action, "Index");
+      return PerformAction(petId, userId, action, "Index");
     }
 
     [HttpPost("/pets/action/playing")]
-    public ActionResult PlayingAction(int petId, string action)
+    public ActionResult PlayingAction(int petId, int userId, string action)
     {
-      return PerformAction(petId, action, "Index");
+      return PerformAction(petId, userId, action, "Index");
     }
 
     public ActionResult Abandon(int petId)
@@ -122,7 +123,7 @@ namespace Tamagotchis.Controllers
         _db.Pets.Remove(petToAbandon);
         _db.SaveChanges();
       }
-      return RedirectToAction("Index");
+      return RedirectToAction("Index", new { id = petId });
     }
     
     [HttpPost]
@@ -147,7 +148,7 @@ namespace Tamagotchis.Controllers
         _db.SaveChanges();
       }
 
-      return RedirectToAction("Index");
+      return RedirectToAction("Index", new { id = petId });
     }
 
     // [HttpGet("pets/show/{id}")]
