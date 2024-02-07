@@ -5,28 +5,35 @@ body {
   background-color: transparent;
 }
 .pet {
-  text-align: center;
-  width: 20rem;
-  height: 20rem;
-  display: flex;
+  /* attempt at bug fix pet moves up when doing something */
+  /* position: relative;
+  overflow: hidden; */
+  /* attempt at bug fix pet moves up when doing something */
+  display: inline-flex; 
   flex-direction: column;
-  margin-left: auto;
-  margin-right: auto;
   align-items: center;
   justify-content: center;
+  width: 20rem;
+  height: 25rem;
+  margin: 10px 10px; 
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  background-color: rgb(253, 211, 158);
+  text-align: center;
+  transition: transform 0.3 ease, box-shadow 0.3 ease;
+}
+.pet:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
 }
 .pet img {
   height: 10rem;
   width: 10rem;
 }
-.container {
-  width: 40rem;
-  height: 20rem;
-  display: flex;
-  flex-direction: row;
-  margin-top: 10rem;
-  align-items: center;
-  justify-content: center;
+.action {
+  margin: 3rem 0;
+}
+.action-sleep {
+  margin-top: 4.5rem;
 }
 a {
   display: block;
@@ -42,7 +49,7 @@ a {
 }
 #new-pet {
   text-align: center;
-  margin-top: 10rem;
+  margin-top: 2rem;
   padding: 1rem;
   background-color: black;
   width: 90%;
