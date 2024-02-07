@@ -5,7 +5,6 @@ namespace Tamagotchis.Models
   public class TamagotchiContext : DbContext
   {
     public DbSet<Pet> Pets { get; set; }
-
     public DbSet<User> Users { get; set; }
 
     public TamagotchiContext(DbContextOptions options) : base(options) { }

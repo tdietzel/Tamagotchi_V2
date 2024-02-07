@@ -1,3 +1,5 @@
+@using System.Collections.Generic
+
 <!DOCTYPE html>
 <html>
 
@@ -13,6 +15,7 @@
 </head>
 
 <body>
+@model List<Tamagotchis.Models.User>
 
 <h1>Users</h1>
 <!-- in Users/Index -->
@@ -20,7 +23,7 @@
 <ul>
   @foreach (var user in Model) {
     <li>
-      <a href="/pets/show/@user.UserId">@user.UserName</a>
+    @Html.ActionLink($"{user.UserName}", "Show", new {id = user.UserId})
     </li>
   }
 </ul>

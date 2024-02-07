@@ -18,13 +18,11 @@
       {
         @Html.LabelFor(model => model.Name)
         @Html.TextBoxFor(model => model.Name)
-        @Html.LabelFor(model => model.User)
-        @Html.DropDownList("UserId")
-
-        // When creating a pet we need to assign what owner its creating it for
+        <input type="hidden" id="UserId" name="UserId" value="@ViewBag.UserId" />
         <input type="submit" value="Add new pet" />
       }
       <h4>Already have a pet? @Html.ActionLink("Head to your pets", "Index")</h4>
+      <a href="/users/index">Create a new user</a>
     </div>
   </body>
 

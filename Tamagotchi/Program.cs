@@ -34,7 +34,7 @@ namespace Tamagotchis
 
       app.MapControllerRoute(
         name: "default",
-        pattern: "{controller=Pets}/{action=Create}/{id?}"
+        pattern: "{controller=Users}/{action=Index}"
       );
 
       app.Run();

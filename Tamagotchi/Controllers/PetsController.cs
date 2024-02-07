@@ -28,15 +28,19 @@ namespace Tamagotchis.Controllers
 
       return View(model);
     }
-
-    public ActionResult Create()
+    [HttpGet("/Pets/Create/{id}")]
+    public ActionResult Create(int id)
     {
-      ViewBag.UserId = new SelectList(_db.Users, "UserId", "Name");
+      Console.WriteLine("🤑🤑🤑🤑🤑🤑");
+      Console.WriteLine(id);
+      ViewBag.UserId = id;
       return View();
     }
-    [HttpPost]
+    [HttpPost("/Pets/Create/{id}")]
     public ActionResult Create(Pet pet)
     {
+      Console.WriteLine("👽👽👽👽👽👽");
+      Console.WriteLine(pet.UserId);
       _db.Pets.Add(pet);
       _db.SaveChanges();
 
