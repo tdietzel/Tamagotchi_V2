@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+
 using Tamagotchis.Models;
 
 namespace Tamagotchis
@@ -9,12 +10,10 @@ namespace Tamagotchis
   {
     static void Main(string[] args)
     {
-
       WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
       builder.Services.AddControllersWithViews();
       //builder.Services.AddHostedService<PetUpdateService>(); //ADDED THIS, it uses the PetUpdateService cs file under models
-
 
       builder.Services.AddDbContext<TamagotchiContext>(
         dbContextOptions => dbContextOptions

@@ -58,17 +58,18 @@
                 <button type="submit">@cost <img id="coin" src="~/img/coin.png" /> </button>
               </form>
             </div>
-          }
+          } *@
         </div>
         <br />
 
-        Update to display actual currency amount *@
+        @* Update to display actual currency amount *@
         <div class="coins">
           <h3>@Model.money</h3>
           <img id="coin" src="~/img/coin.png" />
         </div>
       </div>
       <h4><a id="head-back" href="/pets">Head to your pets</a></h4>
+      @* @Html.ActionLink("Head to your pets", "Index", "Pets", ) *@ @* Get id passed through *@
     </div>
   </body>
 </html>

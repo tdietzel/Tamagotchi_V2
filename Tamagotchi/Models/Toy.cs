@@ -27,7 +27,6 @@ namespace Tamagotchis.Models
     public Toy(string name) {
       Name = name;
       SetExcitementBasedOnName();
-      
     }
     private void SetExcitementBasedOnName()
     {
@@ -35,13 +34,14 @@ namespace Tamagotchis.Models
     }
     public void AddToInstances()
     {
-        if (purchasedSuccessfully)
-        {
-            Id = nextId;
-            nextId++;
-            _instances.Add(this);
-        }
+      if (purchasedSuccessfully)
+      {
+        Id = nextId;
+        nextId++;
+        _instances.Add(this);
+      }
     }
+
     // Toy Management
     public static Toy Find(int searchId)
     {
@@ -56,24 +56,22 @@ namespace Tamagotchis.Models
       return _instances;
     }
 
-                
-
     public bool Buy(string toyId)
     {
-        var toyValue = ExcitementDictionary[toyId];
-        int toyCost = (int)Math.Floor((double)toyValue / 2);
+      var toyValue = ExcitementDictionary[toyId];
+      int toyCost = (int)Math.Floor((double)toyValue / 2);
 
-        if (Shop.Money >= toyCost)
-        {
-            Shop.Money -= toyCost;
-            purchasedSuccessfully = true;
-            return true;
-        }
-        else
-        {
-            purchasedSuccessfully = false;
-            return false;
-        }
+      if (Shop.Money >= toyCost)
+      {
+        Shop.Money -= toyCost;
+        purchasedSuccessfully = true;
+        return true;
+      }
+      else
+      {
+        purchasedSuccessfully = false;
+        return false;
+      }
     }
   }
 }

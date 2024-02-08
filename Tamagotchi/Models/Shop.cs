@@ -16,6 +16,7 @@ namespace Tamagotchis.Models
       Money -= amount;
     }
   }
+  
   public class ShopViewModel
   {
     public Dictionary<string, int> TypesOfFood { get; set; }

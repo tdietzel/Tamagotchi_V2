@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using Microsoft.AspNetCore.Mvc;
+
 using Tamagotchis.Models;
 
 namespace Tamagotchis.Controllers
@@ -10,8 +11,6 @@ namespace Tamagotchis.Controllers
     [HttpGet("/shop")]
     public ActionResult Show() 
     {
-       
-    
       Shop shop = new Shop();
       
       ShopViewModel viewModel = new ShopViewModel
@@ -35,16 +34,12 @@ namespace Tamagotchis.Controllers
     [HttpPost("/shop/buyToy")]
     public ActionResult PurchaseToy(string toyId)
     {
+      Toy newPurchase = new Toy(toyId);
 
-      
-        Toy newPurchase = new Toy(toyId);
-
-        
-        if (newPurchase.Buy(toyId))
-        {
-            
-            newPurchase.AddToInstances();
-        }
+      if (newPurchase.Buy(toyId))
+      {
+        newPurchase.AddToInstances();
+      }
       
       return RedirectToAction("Show");
     }

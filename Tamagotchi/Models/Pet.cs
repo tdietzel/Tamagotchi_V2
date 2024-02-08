@@ -20,7 +20,6 @@ namespace Tamagotchis.Models
     }
 
     // Pet Variables
-
     public User User { get; set; }
     public int UserId { get; set; }
 
@@ -42,7 +41,6 @@ namespace Tamagotchis.Models
     private Timer statTicker;
 
     // Pet Actions
-    // public bool NeedsUpdate { get; set; } = false;
     public bool IsHatched { get; set; } = false;
     public bool IsFeeding { get; set; } = false;
     public bool IsSleeping { get; set; } = false;
@@ -174,6 +172,5 @@ namespace Tamagotchis.Models
         IsPlaying = false;
       }
     }
-
   }
 }

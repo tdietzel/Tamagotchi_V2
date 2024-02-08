@@ -22,7 +22,7 @@
         <input type="submit" value="Add new pet" />
       }
       <h4>Already have a pet? @Html.ActionLink("Head to your pets", "Index", new { id = ViewBag.UserId })</h4>
-      <a href="/users/index">Create a new user</a>
+      @Html.ActionLink("Create a new user", "Create", "Users")
     </div>
   </body>
 
