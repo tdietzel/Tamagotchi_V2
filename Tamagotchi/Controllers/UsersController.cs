@@ -38,20 +38,5 @@ namespace Tamagotchis.Controllers
 
       return RedirectToAction("Index");
     }
-
-    [HttpGet("/users/show/{id}")]
-    public ActionResult Show(int id)
-    {
-      User user = _db.Users
-        .Include(u => u.Pets)
-      .FirstOrDefault(u => u.UserId == id);
-
-      if (user == null)
-      {
-        return NotFound();
-      }
-
-      return View(user);
-    }
   }
 }
