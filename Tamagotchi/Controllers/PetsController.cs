@@ -1,11 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-
+using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Routing;
 using System;
 using System.Linq;
 using System.Collections.Generic;
-
 using Tamagotchis.Models;
 
 namespace Tamagotchis.Controllers
@@ -13,7 +13,6 @@ namespace Tamagotchis.Controllers
   public class PetsController : Controller
   {
     private readonly TamagotchiContext _db;
-    
     public PetsController(TamagotchiContext db)
     {
       _db = db;
@@ -44,18 +43,22 @@ namespace Tamagotchis.Controllers
       _db.Pets.Add(pet);
       _db.SaveChanges();
 
-      return RedirectToAction("Index", new { id = pet.UserId});
+      return RedirectToAction("Index", new { id = pet.UserId });
     }
 
-    [HttpGet("/Pets/Show/{id}")]
+    [HttpGet("/Pets/Show/{id}")]//trying to figure out how to debug this? I think this is where things might be going wrong with the missing first pet
     public ActionResult Show(int id)
     {
-      Pet thisPet = _db.Pets.FirstOrDefault(PetsController => PetsController.PetId == id);
+      Pet thisPet = _db.Pets.FirstOrDefault(pet => pet.PetId == id);//these were named wrong I think? used to be PetsController
       if (thisPet != null)
       {
         return View(thisPet);
       }
-      return RedirectToAction("Index", new { id = id });
+      else
+      {
+        return RedirectToAction("Index", new { userId = id });
+      }
+
     }
 
     private ActionResult PerformAction(int petId, int userId, string action, string redirectToAction)
@@ -67,21 +70,21 @@ namespace Tamagotchis.Controllers
         switch (action)
         {
           case "feed":
-              foundPet.Feed(20);
-              break;
+            foundPet.Feed(20);
+            break;
           case "sleep":
-              foundPet.Sleep();
-              break;
+            foundPet.Sleep();
+            break;
           case "play":
-              if (foundPet.Energy > 2)
-              {
-                foundPet.Play(10);
-              }
-              else
-              {
-                TempData["LowEnergyAlert"] = "Your pet is too tired to play!";
-              }
-              break;
+            if (foundPet.Energy > 2)
+            {
+              foundPet.Play(10);
+            }
+            else
+            {
+              TempData["LowEnergyAlert"] = "Your pet is too tired to play!";
+            }
+            break;
         }
 
         _db.Pets.Update(foundPet);
@@ -126,7 +129,7 @@ namespace Tamagotchis.Controllers
 
       return RedirectToAction("Index", new { id = petToAbandon.UserId });
     }
-    
+
     [HttpPost]
     public IActionResult Hatch(int petId)
     {
@@ -151,5 +154,60 @@ namespace Tamagotchis.Controllers
 
       return RedirectToAction("Index", new { id = pet.UserId });
     }
+
+
+    // //Hypothetical feed function to work with inventory stuff
+    // [HttpPost]
+    // public ActionResult FeedPet(int PetId, int inventoryItemId)
+    // {
+    //   var pet = _db.Pets.Find(petId);
+    //   var inventoryItem = _db.InventoryItems.Find(inventoryItemId);
+
+    //   if (pet != null && inventoryItem != null && inventoryItem.ItemType == "Food")
+    //   {
+    //     pet.Feed(inventoryItem.ItemId); //may need to adjust pet model
+    //     inventoryItem.Quantity -= 1;
+
+    //     if (inventoryItem.Quantity <= 0)
+    //     {
+    //       _db.InventoryItems.Remove(inventoryItem);
+    //     }
+    //     _db.SaveChanges();
+    //     //put a redirect here
+    //   }
+    //   else
+    //   {
+    //     //this pops up if errors happen
+    //   }
+
+    //   return RedirectToAction("Show", new { id=petId});
+
+    // }
+
+    // [HttpPost]
+    // public ActionResult PlayPet(int PetId, int inventoryItemId)
+    // {
+    //   var pet = _db.Pets.Find(petId);
+    //   var toyItem = _db.InventoryItems.Find(inventoryItemId);
+
+    //   if (pet != null && toyItem != null && toyItem.ItemType == "Toy")
+    //   {
+    //     pet.Play(toyItem.ItemId); //may need to adjust pet stuff
+    //     toyItem.Quantity -= 1;
+
+    //     if (toyItem.Quantity <= 0)
+    //     {
+    //       _db.InventoryItems.Remove(toyItem);
+    //     }
+    //     _db.SaveChanges();
+    //     //redirect for success
+    //   }
+    //   else 
+    //   {
+    //     //error!
+    //   }
+
+    //   return RedirectToAction("Show", new { id=petId });
+    // }
   }
 }

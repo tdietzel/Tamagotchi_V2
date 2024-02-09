@@ -1,4 +1,5 @@
-@model Tamagotchis.Models.ShopViewModel
+@model Tamagotchis.Models.Shop
+@using Tamagotchis.Models
 
 <!DOCTYPE html>
 <html>
@@ -16,14 +17,23 @@
       <div class="shop-style">
         <div class="shop-section">
           <h1>Food</h1>
-          @foreach (var food in Model.TypesOfFood)
+           @foreach (var food in Model.Foods)
           {
-            double cost = Math.Round(food.Value / 2.0);
+            double cost = Math.Round(food.Fullness / 2.0);
             <div class="food">
-              <h5>@food.Key</h5> <p>@food.Value</p>
+              <h5>@food.Name</h5> <p>@food.Fullness</p>
               <img id="heart" src="~/img/hearts.png" />
-              <form class="food-form" action="/shop/buyfood" method="post">
-              <input type="hidden" name="foodId" value="@food.Key" />
+
+              @* @using (Html.BeginForm("PurchaseFood", "Shop", FormMethod.Post))
+              {
+                <input type="hidden" name="foodId" value="@food.FoodId" />
+                <input type="hidden" id="userId" name="userId" value="@ViewBag.user.UserId" />
+                <button type="submit">@cost <img id="coin" src="~/img/coin.png" /> </button>
+              } *@
+
+              <form class="food-form" action="/Shop/PurchaseFood" method="post">
+              <input type="hidden" name="foodId" value="@food.FoodId" />
+              <input type="hidden" id="userId" name="userId" value="@ViewBag.user.UserId" />
               <button type="submit">@cost <img id="coin" src="~/img/coin.png" /> </button>
               </form>
             </div>
@@ -31,14 +41,14 @@
         </div>
         <div class="shop-section">
           <h1>Toys</h1>
-          @foreach (var toy in Model.TypesOfToy)
+          @foreach (var toy in Model.Toys)
           {
-            double cost = Math.Round(toy.Value / 2.0);
+            double cost = Math.Round(toy.Excitement / 2.0);
             <div class="toy">
-              <h5>@toy.Key</h5> <p>@toy.Value</p>
+              <h5>@toy.Name</h5> <p>@toy.Excitement</p>
               <img id="lightning-bolt" src="~/img/lightning-bolt.png" />
               <form action="/shop/buytoy" method="post">
-                <input type="hidden" name="toyId" value="@toy.Key" />
+                <input type="hidden" name="toyId" value="@toy.Name" />
                 <button type="submit">@cost <img id="coin" src="~/img/coin.png" /> </button>
               </form>
             </div>
@@ -64,12 +74,12 @@
 
         @* Update to display actual currency amount *@
         <div class="coins">
-          <h3>@Model.money</h3>
+          <h3>@ViewBag.user.Money</h3>
           <img id="coin" src="~/img/coin.png" />
         </div>
       </div>
       <h4><a id="head-back" href="/pets">Head to your pets</a></h4>
-      @* @Html.ActionLink("Head to your pets", "Index", "Pets", ) *@ @* Get id passed through *@
+      @Html.ActionLink("Head to your pets", "Index", "Pets", new { id = ViewBag.user.UserId }, null)
     </div>
   </body>
-</html>
+</html> 
