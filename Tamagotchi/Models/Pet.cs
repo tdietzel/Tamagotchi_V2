@@ -8,16 +8,6 @@ namespace Tamagotchis.Models
 {
   public class Pet
   {
-    // Inventory
-    public static List<Food> _inventory = Food.GetAll();
-    public static List<Toy> _inventoryToy = Toy.GetAll();
-
-    // Controller Model
-    public class FoodAndToyModel
-    {
-      public List<Food> FoodList { get; set; }
-      public List<Toy> ToyList { get; set; }
-    }
 
     // Pet Variables
     public User User { get; set; }
@@ -35,6 +25,15 @@ namespace Tamagotchis.Models
     public int Attention { get; set; }
     public int Weight { get; set; } = 1;
 
+    // Pet Constructor
+    public Pet()
+    {
+      Fullness = 100;
+      Energy = 0;
+      Attention = 100;
+
+      InitializeTimers();
+    }
 
     // Timers
     private Timer ageTimer;
@@ -45,25 +44,6 @@ namespace Tamagotchis.Models
     public bool IsFeeding { get; set; } = false;
     public bool IsSleeping { get; set; } = false;
     public bool IsPlaying { get; set; } = false;
-
-
-    // Pet Constructors
-    private static List<Pet> _instances = new List<Pet> { };
-
-    public Pet()
-    {
-      Fullness = 100;
-      Energy = 0;
-      Attention = 100;
-
-      InitializeTimers();
-      _instances.Add(this);
-    }
-
-    public static List<Pet> GetAll()
-    {
-      return _instances;
-    }
 
     // Timers
     public void InitializeTimers()
