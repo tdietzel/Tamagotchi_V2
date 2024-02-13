@@ -6,6 +6,7 @@
 - [Features](#features)
 - [Technologies Used](#technologies-used)
 - [Installation](#installation)
+- [Setting Up SQL](#setting-up-the-sql-database)
 - [Contributing](#contributing)
 - [Known Bugs](#known-bugs)
 - [License](#license)
@@ -48,6 +49,42 @@ Follow these steps to set up the project locally:
 4. Open in a code editor like __Visual Studio Code__.
 5. In the command line, run the command ``` dotnet run ``` to compile and execute the console application. Since this is a console application, you'll interact with it through text commands in your terminal.
 6. Optionally, you can run ``` dotnet build ``` to compile this console app without running it.
+
+## Setting up the SQL Database
+This project uses a SQL database to store and manage data. Follow the instructions below to set up the database environment:
+
+### Prerequisites
+- Install SQL Workbench if you haven't already. You can download it from the [official website](https://www.mysql.com/products/workbench/).
+
+### Steps to Set Up the Database
+1. **Connect to MySQL Server**
+   - Open SQL Workbench.
+   - Click on the "+" icon in the "MySQL Connections" tab to create a new connection.
+   - Enter the connection details such as hostname, port, username, and password to connect to your MySQL Server instance.
+
+2. **Create a New Database**
+   - Once connected, click on the "SQL Editor" tab.
+   - Execute the following SQL command to create a new database:
+     ```sql
+     CREATE DATABASE YourDatabaseName;
+     ```
+
+3. **Configure Connection String**
+   - In the root of the Factory directory, create the `appsettings.json` file.
+   - Update the connection string with the appropriate details and add it to that file:
+     ```json
+        {
+          "ConnectionStrings": {
+            "DefaultConnection": "Server=YourServerName;database=YourDatabaseName;uid=YourUsername;pwd=YourPassword;"
+          }
+        }
+     ```
+     Replace `YourServerName`, `YourDatabaseName`, `YourUsername`, and `YourPassword` with your actual MySQL Server instance details.
+
+4. **Testing Connection**
+   - Run the command ``` dotnet ef database update ``` to update your database with the current migrations.
+   - Build and run the project using ``` dotnet run ```.
+   - Ensure that your application can connect to the database without any errors.
 
 ## Contributing
 
