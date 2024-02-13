@@ -3,22 +3,34 @@ using System.Timers;
 using System.Collections.Generic;
 using System.Windows;
 using System.Linq;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 
 namespace Tamagotchis.Models
 {
   public class Pet
   {
+    // Database
+    private readonly TamagotchiContext _db;
+    public Pet(TamagotchiContext db)
+    {
+      _db = db;
+    }
+
+    [Key]
+    public int PetId { get; set; }
+
+    [ForeignKey("User")]
+    public string Id { get; set; }
+    public User User { get; set; }
 
     // Pet Variables
-    public User User { get; set; }
-    public int UserId { get; set; }
-
     public string Name { get; set; }
 
     public bool Alive { get; set; } = true;
     public int Age { get; set; }
     public string Type { get; set; }
-    public int PetId { get; set; }
 
     public int Fullness { get; set; }
     public int Energy { get; set; }
@@ -54,7 +66,7 @@ namespace Tamagotchis.Models
       ageTimer.Start();
 
       statTicker = new Timer();
-      statTicker.Interval = 10000;
+      statTicker.Interval = 1000;
       statTicker.Elapsed += StatTickerElapsed;
       statTicker.Start();
     }
@@ -67,6 +79,18 @@ namespace Tamagotchis.Models
     private void StatTickerElapsed(object sender, ElapsedEventArgs e)
     {
       DecreaseAttributes();
+      Pet petToUpdate = _db.Pets.Find(this.PetId);
+      if (petToUpdate != null)
+      {
+        petToUpdate.Fullness = this.Fullness;
+        petToUpdate.Energy = this.Energy;
+        petToUpdate.Attention = this.Attention;
+        _db.SaveChanges();
+      }
+      else
+      {
+        Console.WriteLine("Pet is NULL");
+      }
     }
 
     // Vitals Control

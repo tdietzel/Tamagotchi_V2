@@ -5,51 +5,64 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Routing;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Collections.Generic;
 using Tamagotchis.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace Tamagotchis.Controllers
 {
   public class PetsController : Controller
   {
     private readonly TamagotchiContext _db;
-    public PetsController(TamagotchiContext db)
+    private readonly UserManager<User> _userManager;
+    public PetsController(TamagotchiContext db, UserManager<User> userManager)
     {
       _db = db;
+      _userManager = userManager;
     }
 
     [HttpGet("/Pets/{id}")]
-    public ActionResult Index(int id)
+    public async Task<ActionResult> Index(string id)
     {
-      List<Pet> model = _db.Pets
-        .Include(pet => pet.User)
-        .Where(pet => pet.UserId == id)
-      .ToList();
+      string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+      User currentUser = await _userManager.FindByIdAsync(userId);
 
+      List<Pet> userPets = _db.Pets
+        .Where(pet => pet.Id == currentUser.Id)
+      .ToList();
+  
       ViewBag.UserId = id;
-      return View(model);
+      // Response.Headers.Add("Refresh", "11");
+
+      return View(userPets);
     }
 
     [HttpGet("/Pets/Create/{id}")]
-    public ActionResult Create(int id)
+    public ActionResult Create(string id)
     {
+
       ViewBag.UserId = id;
       return View();
     }
     [HttpPost("/Pets/Create/{id}")]
-    public ActionResult Create(Pet pet)
+    public async Task<ActionResult> Create(Pet pet)
     {
-      //validation here maybe??
+      string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+      User currentUser = await _userManager.FindByIdAsync(userId);
+      pet.User = currentUser;
       _db.Pets.Add(pet);
       _db.SaveChanges();
 
-      return RedirectToAction("Index", new { id = pet.UserId });
+      return RedirectToAction("Index", new { id = userId });
     }
 
-    [HttpGet("/Pets/Show/{id}")]//trying to figure out how to debug this? I think this is where things might be going wrong with the missing first pet
+    [HttpGet("/Pets/Show/{id}")]//I think this is where things might be going wrong with the missing first pet
     public ActionResult Show(int id)
     {
-      Pet thisPet = _db.Pets.FirstOrDefault(pet => pet.PetId == id);//these were named wrong I think? used to be PetsController
+      Pet thisPet = _db.Pets.FirstOrDefault(pet => pet.PetId == id);
       if (thisPet != null)
       {
         return View(thisPet);
@@ -127,7 +140,7 @@ namespace Tamagotchis.Controllers
         _db.SaveChanges();
       }
 
-      return RedirectToAction("Index", new { id = petToAbandon.UserId });
+      return RedirectToAction("Index", new { id = petToAbandon.Id });
     }
 
     [HttpPost]
@@ -152,62 +165,61 @@ namespace Tamagotchis.Controllers
         _db.SaveChanges();
       }
 
-      return RedirectToAction("Index", new { id = pet.UserId });
+      return RedirectToAction("Index", new { id = pet.Id });
     }
-
-
-    // //Hypothetical feed function to work with inventory stuff
-    // [HttpPost]
-    // public ActionResult FeedPet(int PetId, int inventoryItemId)
-    // {
-    //   var pet = _db.Pets.Find(petId);
-    //   var inventoryItem = _db.InventoryItems.Find(inventoryItemId);
-
-    //   if (pet != null && inventoryItem != null && inventoryItem.ItemType == "Food")
-    //   {
-    //     pet.Feed(inventoryItem.ItemId); //may need to adjust pet model
-    //     inventoryItem.Quantity -= 1;
-
-    //     if (inventoryItem.Quantity <= 0)
-    //     {
-    //       _db.InventoryItems.Remove(inventoryItem);
-    //     }
-    //     _db.SaveChanges();
-    //     //put a redirect here
-    //   }
-    //   else
-    //   {
-    //     //this pops up if errors happen
-    //   }
-
-    //   return RedirectToAction("Show", new { id=petId});
-
-    // }
-
-    // [HttpPost]
-    // public ActionResult PlayPet(int PetId, int inventoryItemId)
-    // {
-    //   var pet = _db.Pets.Find(petId);
-    //   var toyItem = _db.InventoryItems.Find(inventoryItemId);
-
-    //   if (pet != null && toyItem != null && toyItem.ItemType == "Toy")
-    //   {
-    //     pet.Play(toyItem.ItemId); //may need to adjust pet stuff
-    //     toyItem.Quantity -= 1;
-
-    //     if (toyItem.Quantity <= 0)
-    //     {
-    //       _db.InventoryItems.Remove(toyItem);
-    //     }
-    //     _db.SaveChanges();
-    //     //redirect for success
-    //   }
-    //   else 
-    //   {
-    //     //error!
-    //   }
-
-    //   return RedirectToAction("Show", new { id=petId });
-    // }
   }
 }
+
+//     // //Hypothetical feed function to work with inventory stuff
+//     // [HttpPost]
+//     // public ActionResult FeedPet(int PetId, int inventoryItemId)
+//     // {
+//     //   var pet = _db.Pets.Find(petId);
+//     //   var inventoryItem = _db.InventoryItems.Find(inventoryItemId);
+
+//     //   if (pet != null && inventoryItem != null && inventoryItem.ItemType == "Food")
+//     //   {
+//     //     pet.Feed(inventoryItem.ItemId); //may need to adjust pet model
+//     //     inventoryItem.Quantity -= 1;
+
+//     //     if (inventoryItem.Quantity <= 0)
+//     //     {
+//     //       _db.InventoryItems.Remove(inventoryItem);
+//     //     }
+//     //     _db.SaveChanges();
+//     //     //put a redirect here
+//     //   }
+//     //   else
+//     //   {
+//     //     //this pops up if errors happen
+//     //   }
+
+//     //   return RedirectToAction("Show", new { id=petId});
+
+//     // }
+
+//     // [HttpPost]
+//     // public ActionResult PlayPet(int PetId, int inventoryItemId)
+//     // {
+//     //   var pet = _db.Pets.Find(petId);
+//     //   var toyItem = _db.InventoryItems.Find(inventoryItemId);
+
+//     //   if (pet != null && toyItem != null && toyItem.ItemType == "Toy")
+//     //   {
+//     //     pet.Play(toyItem.ItemId); //may need to adjust pet stuff
+//     //     toyItem.Quantity -= 1;
+
+//     //     if (toyItem.Quantity <= 0)
+//     //     {
+//     //       _db.InventoryItems.Remove(toyItem);
+//     //     }
+//     //     _db.SaveChanges();
+//     //     //redirect for success
+//     //   }
+//     //   else 
+//     //   {
+//     //     //error!
+//     //   }
+
+//     //   return RedirectToAction("Show", new { id=petId });
+//     // }

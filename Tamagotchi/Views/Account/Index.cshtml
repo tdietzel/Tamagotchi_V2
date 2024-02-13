@@ -1,0 +1,26 @@
+@using Tamagotchis.ViewModels
+@using Tamagotchis.Models
+@using System.Security.Claims
+
+<h2>Authentication with Identity</h2>
+<hr />
+
+@if (User.Identity.IsAuthenticated)
+{
+  <p>Hello @User.Identity.Name!</p>
+  @* <p>Hello @ViewBag.UserName!</p> *@
+  @using (Html.BeginForm("Index", "Pets", new { id = User.FindFirstValue(ClaimTypes.NameIdentifier) }, FormMethod.Get))
+  {
+    <input type="submit" value="Do Something" />
+  }
+  @using (Html.BeginForm("LogOff", "Account"))
+  {
+    <input type="submit" class="btn btn-primary" value="Log out" />
+  }
+}
+else
+{
+  <p>@Html.ActionLink("Register", "Register")</p>
+  <p>@Html.ActionLink("Log in", "Login")</p>
+}
+<p>@Html.ActionLink("Home", "Index", "Home")</p>

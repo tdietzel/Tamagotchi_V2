@@ -19,7 +19,7 @@
       {
         @Html.LabelFor(model => model.Name)
         @Html.TextBoxFor(model => model.Name)
-        <input type="hidden" id="UserId" name="UserId" value="@ViewBag.UserId" />
+        <input type="hidden" id="id" name="id" value="@ViewBag.UserId" />
         <input type="submit" value="Add new pet" />
       }
       <h4>Already have a pet? @Html.ActionLink("Head to your pets", "Index", new { id = ViewBag.UserId })</h4>

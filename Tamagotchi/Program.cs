@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Identity;
 
 using Tamagotchis.Models;
 
@@ -23,6 +24,10 @@ namespace Tamagotchis
         )
       );
 
+      builder.Services.AddIdentity<User, IdentityRole>()
+        .AddEntityFrameworkStores<TamagotchiContext>()
+        .AddDefaultTokenProviders();
+
       WebApplication app = builder.Build();
 
       // app.UseDeveloperExceptionPage();
@@ -31,9 +36,12 @@ namespace Tamagotchis
 
       app.UseRouting();
 
+      app.UseAuthentication(); 
+      app.UseAuthorization();
+
       app.MapControllerRoute(
         name: "default",
-        pattern: "{controller=Users}/{action=Index}"
+        pattern: "{controller=Account}/{action=Index}"
       );
 
       app.Run();

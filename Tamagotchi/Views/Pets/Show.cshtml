@@ -48,21 +48,21 @@
           {
             @Html.HiddenFor(model => model.PetId)
             <input type="hidden" name="action" value="feed" />
-            <input type="hidden" name="userId" value="@Model.UserId" />
+            <input type="hidden" name="userId" value="@Model.Id" />
             <input type="submit" value="Feed" />
           }
           @using (Html.BeginForm("SleepingAction", "Pets", new { id = $"sleeping-{Model.PetId}" }, FormMethod.Post))
           {
             @Html.HiddenFor(model => model.PetId)
             <input type="hidden" name="action" value="sleep" />
-            <input type="hidden" name="userId" value="@Model.UserId" />
+            <input type="hidden" name="userId" value="@Model.Id" />
             <input type="submit" value="Sleep" />
           }
           @using (Html.BeginForm("PlayingAction", "Pets", new { id = $"playing-{Model.PetId}" }, FormMethod.Post))
           {
             @Html.HiddenFor(model => model.PetId)
             <input type="hidden" name="action" value="play" />
-            <input type="hidden" name="userId" value="@Model.UserId" />
+            <input type="hidden" name="userId" value="@Model.Id" />
             <input type="submit" value="Play" />
           }
         </div>
@@ -75,7 +75,7 @@
       
     </div>
       <div class="playground-form">
-        @Html.ActionLink("Return to pet playground", "Index", new { id = Model.UserId })
+        @Html.ActionLink("Return to pet playground", "Index", new { id = Model.Id })
       </div>
       <div class="inventory-style">
         <h1 class="inventory-title">Inventory</h1>
