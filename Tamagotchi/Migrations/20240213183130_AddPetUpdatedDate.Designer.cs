@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Tamagotchis.Models;
 
@@ -10,9 +11,10 @@ using Tamagotchis.Models;
 namespace Tamagotchi.Migrations
 {
     [DbContext(typeof(TamagotchiContext))]
-    partial class TamagotchiContextModelSnapshot : ModelSnapshot
+    [Migration("20240213183130_AddPetUpdatedDate")]
+    partial class AddPetUpdatedDate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -189,9 +191,6 @@ namespace Tamagotchi.Migrations
 
                     b.Property<int>("Attention")
                         .HasColumnType("int");
-
-                    b.Property<DateTime>("CreationDate")
-                        .HasColumnType("datetime(6)");
 
                     b.Property<int>("Energy")
                         .HasColumnType("int");

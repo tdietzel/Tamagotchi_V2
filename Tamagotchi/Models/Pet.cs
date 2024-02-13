@@ -40,7 +40,8 @@ namespace Tamagotchis.Models
     // Timers
     private Timer ageTimer;
     private Timer statTicker;
-    private DateTime UpdatedDate;
+    public DateTime UpdatedDate { get; set; }
+    public DateTime CreationDate { get; set; }
 
     // Pet Constructor
     public Pet()
@@ -48,6 +49,7 @@ namespace Tamagotchis.Models
       Fullness = 100;
       Energy = 0;
       Attention = 100;
+      CreationDate = DateTime.Now;
       UpdatedDate = DateTime.Now;
       InitializeTimers();
     }
