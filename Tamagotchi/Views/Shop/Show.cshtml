@@ -17,31 +17,31 @@
       <div class="shop-style">
         <div class="shop-section">
           <h1>Food</h1>
-           @foreach (var food in Model.Foods)
+           @* @foreach (var food in Model.Foods)
           {
             double cost = Math.Round(food.Fullness / 2.0);
             <div class="food">
               <h5>@food.Name</h5> <p>@food.Fullness</p>
-              <img id="heart" src="~/img/hearts.png" />
+              <img id="heart" src="~/img/hearts.png" /> *@
 
               @* @using (Html.BeginForm("PurchaseFood", "Shop", FormMethod.Post))
               {
                 <input type="hidden" name="foodId" value="@food.FoodId" />
-                <input type="hidden" id="userId" name="userId" value="@ViewBag.user.UserId" />
+                <input type="hidden" id="userId" name="userId" value="@ViewBag.User.Id" />
                 <button type="submit">@cost <img id="coin" src="~/img/coin.png" /> </button>
               } *@
 
-              <form class="food-form" action="/Shop/PurchaseFood" method="post">
+              @* <form class="food-form" action="/Shop/PurchaseFood" method="post">
               <input type="hidden" name="foodId" value="@food.FoodId" />
-              <input type="hidden" id="userId" name="userId" value="@ViewBag.user.UserId" />
+              <input type="hidden" id="userId" name="userId" value="@ViewBag.User.Id" />
               <button type="submit">@cost <img id="coin" src="~/img/coin.png" /> </button>
               </form>
             </div>
-          }
+          } *@
         </div>
         <div class="shop-section">
           <h1>Toys</h1>
-          @foreach (var toy in Model.Toys)
+          @* @foreach (var toy in Model.Toys)
           {
             double cost = Math.Round(toy.Excitement / 2.0);
             <div class="toy">
@@ -52,7 +52,7 @@
                 <button type="submit">@cost <img id="coin" src="~/img/coin.png" /> </button>
               </form>
             </div>
-          }
+          } *@
         </div>
         <div class="shop-section">
           <h1>Eggs</h1>
@@ -72,14 +72,12 @@
         </div>
         <br />
 
-        @* Update to display actual currency amount *@
         <div class="coins">
           <h3>@ViewBag.user.Money</h3>
           <img id="coin" src="~/img/coin.png" />
         </div>
       </div>
-      <h4><a id="head-back" href="/pets">Head to your pets</a></h4>
-      @Html.ActionLink("Head to your pets", "Index", "Pets", new { id = ViewBag.user.UserId }, null)
+      @Html.ActionLink("Head to your pets", "Index", "Pets", new { id = ViewBag.User.Id }, null)
     </div>
   </body>
 </html> 

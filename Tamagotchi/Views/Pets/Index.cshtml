@@ -257,8 +257,7 @@
       </div>
       }
 
-      @Html.ActionLink("Head to the shop!", "Show", "Shop", new { id = Model[0].Id }) @* style the link with shop-btn *@
-
+      @Html.ActionLink("Head to the shop!", "Show", "Shop") @* style the link with shop-btn *@
     <div class="inventory-style">
       <h1 class="inventory-title">Inventory</h1>
       <div class="inventory">
@@ -312,6 +311,8 @@
       </div>
     }
   }
+  <!-- To make life easier for testing -->
+  @Html.ActionLink("Make another pet?", "Create", new { id = ViewBag.UserId }) 
 
 </body>
 

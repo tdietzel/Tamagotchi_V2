@@ -5,7 +5,7 @@ using System.Windows;
 using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-
+using Tamagotchis.Models;
 
 namespace Tamagotchis.Models
 {
@@ -37,19 +37,20 @@ namespace Tamagotchis.Models
     public int Attention { get; set; }
     public int Weight { get; set; } = 1;
 
+    // Timers
+    private Timer ageTimer;
+    private Timer statTicker;
+    private DateTime UpdatedDate;
+
     // Pet Constructor
     public Pet()
     {
       Fullness = 100;
       Energy = 0;
       Attention = 100;
-
+      UpdatedDate = DateTime.Now;
       InitializeTimers();
     }
-
-    // Timers
-    private Timer ageTimer;
-    private Timer statTicker;
 
     // Pet Actions
     public bool IsHatched { get; set; } = false;
@@ -87,10 +88,6 @@ namespace Tamagotchis.Models
         petToUpdate.Attention = this.Attention;
         _db.SaveChanges();
       }
-      else
-      {
-        Console.WriteLine("Pet is NULL");
-      }
     }
 
     // Vitals Control
@@ -107,14 +104,14 @@ namespace Tamagotchis.Models
     }
     private void DecreaseAttributes()
     {
-      Energy -= 2;
-      Fullness -= 2;
-      Attention -= 2;
+      this.Energy -= 2;
+      this.Fullness -= 2;
+      this.Attention -= 2;
 
-      if (Energy <= 0)
+      if (this.Energy <= 0)
       {
-        Energy = 0;
-        Sleep();
+        this.Energy = 0;
+        this.Sleep();
       }
 
       CheckIfDead();
