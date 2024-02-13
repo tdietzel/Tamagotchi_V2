@@ -15,7 +15,6 @@
 </head>
 
 <body>
-
   @{
     string eat;
     string sleep;
@@ -35,96 +34,92 @@
   }
   else
   {
-    <script>
+    @*function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve,ms));
+    }
+    async function hatchPetTimer(petId) {
+    await delay(10000);
+    document.getElementById('hatchForm-' + petId).submit();
+    }
 
-      @*function delay(ms) {
-      return new Promise(resolve => setTimeout(resolve,ms));
-      }
-      async function hatchPetTimer(petId) {
-      await delay(10000);
-      document.getElementById('hatchForm-' + petId).submit();
-      }
+    async function sleepPetTimer(petId) {
+    await delay(5000);
+    document.getElementById('sleeping-' + petId).submit();
+    }
 
-      async function sleepPetTimer(petId) {
-      await delay(5000);
-      document.getElementById('sleeping-' + petId).submit();
-      }
+    async function playPetTimer(petId) {
+    await delay(10000); // Adjust the delay for playing
+    document.getElementById('playing-' + petId).submit();
+    }
 
-      async function playPetTimer(petId) {
-      await delay(10000); // Adjust the delay for playing
-      document.getElementById('playing-' + petId).submit();
-      }
+    async function feedPetTimer(petId) {
+    await delay(15000); // Adjust the delay for feeding
+    document.getElementById('eating-' + petId).submit();
+    }*@
 
-      async function feedPetTimer(petId) {
-      await delay(15000); // Adjust the delay for feeding
-      document.getElementById('eating-' + petId).submit();
-      }*@
-
-      @foreach (Pet pet in Model)
+    @foreach (Pet pet in Model)
+    {
+      if (pet.Type == "Cat")
       {
-        if (pet.Type == "Cat")
+        eat = "/img/kitten-food.png";
+        sleep = "/img/kitten-sleeping.png";
+        play = "/img/kitten-playing.png";
+        petImg = "/img/kitten.png";
+        dead = "/img/kitten-grave.png";
+      }
+      else
+      {
+        eat = "/img/food.png";
+        sleep = "/img/sleep.png";
+        play = "/img/playing.png";
+        petImg = "/img/dog.png";
+        dead = "/img/deadDog.png";
+      }
+      <div class="pet">
+      @if (pet.Alive)
+      {
+        @using (Html.BeginForm("Abandon", "Pets", FormMethod.Post))
         {
-          eat = "/img/kitten-food.png";
-          sleep = "/img/kitten-sleeping.png";
-          play = "/img/kitten-playing.png";
-          petImg = "/img/kitten.png";
-          dead = "/img/kitten-grave.png";
+          <input type="hidden" name="petId" value="@pet.PetId" />
+          <input type="hidden" name="userId" value="@pet.Id" />
+          <input type="hidden" name="action" value="delete" />
+          <input type="submit" id="abandon" value="Abandon Pet" />
         }
-        else
+
+        <h1>@pet.Name</h1>
+
+        @if (!pet.IsHatched)
         {
-          eat = "/img/food.png";
-          sleep = "/img/sleep.png";
-          play = "/img/playing.png";
-          petImg = "/img/dog.png";
-          dead = "/img/deadDog.png";
-        }
-          <div class="pet">
-          @if (pet.Alive)
-          {
-            @using (Html.BeginForm("Abandon", "Pets", FormMethod.Post))
-            {
-                <input type="hidden" name="petId" value="@pet.PetId" />
-                <input type="hidden" name="userId" value="@pet.Id" />
-                <input type="hidden" name="action" value="delete" />
-                <input type="submit" id="abandon" value="Abandon Pet" />
+          <div class='action'>
+            <img src="~/img/egg.png" alt="Egg" />
+            <h3>Hatching...</h3>
+          </div>
+
+          <form action="/pets/hatch" method="post" id='@($"hatchForm-{pet.PetId}")'>
+            <input type="hidden" name="petId" value="@pet.PetId" />
+            <input type="hidden" name="userId" value="@pet.Id" />
+            <button onclick="hatchPet(this)" data-petid="@pet.PetId" style="display: none;">hatch</button>
+          </form>
+
+          <script>
+            function delay(ms) {
+              return new Promise(resolve => setTimeout(resolve,ms));
             }
+            async function hatchPet() {
+              await delay(10000);
+              document.getElementById('hatchForm-@pet.PetId').submit();
+            }
+            hatchPet();
 
-              <h1>@pet.Name</h1>
+            @* setTimeout(() => {
+            document.getElementById('hatchForm-@pet.PetId').submit();
+            }, 10000); *@
 
-            @if (!pet.IsHatched)
-            {
-                <div class='action'>
-                  <img src="~/img/egg.png" alt="Egg" />
-                  <h3>Hatching...</h3>
-                </div>
-
-                <form action="/pets/hatch" method="post" id='@($"hatchForm-{pet.PetId}")'>
-                  <input type="hidden" name="petId" value="@pet.PetId" />
-                  <input type="hidden" name="userId" value="@pet.Id" />
-                  <button onclick="hatchPet(this)" data-petid="@pet.PetId" style="display: none;">hatch</button>
-                </form>
-
-                <script type="text/javascript">   @*Tried to remove this thing, to clean up the file. The form above now references petActions.js in wwwroot. If you remove this script, the page doesn't load correctly*@
-
-                @* setTimeout(() => {
-          document.getElementById('hatchForm-@pet.PetId').submit();
-          }, 10000); *@
-
-                  function delay(ms) {
-                                                    return new Promise(resolve => setTimeout(resolve,ms));
-                                                  }
-                  async function hatchPet() {
-                    await delay(10000);
-                  document.getElementById('hatchForm-@pet.PetId').submit();
-                                                  }
-                  hatchPet();
-
-                @*hatchPetTimer('@pet.PetId');*@
-
+            @*hatchPetTimer('@pet.PetId');*@
           </script>
-            }
-            else if (pet.IsSleeping)
-            {
+        }
+        else if (pet.IsSleeping)
+        {
           <div class='action-sleep'>
             <img src="@sleep" alt="Sleeping" />
             <h3>sleeping... zZz</h3>
@@ -137,30 +132,29 @@
             <button type="submit" style="display: none">Sleep</button>
           </form>
 
-              RenderHearts(pet.Fullness);
+          RenderHearts(pet.Fullness);
+
           <script>
-                @* setTimeout(function () {
-          var sleepForm = document.getElementById('sleeping-' + @pet.PetId);
-          console.log(sleepForm);
-          document.getElementById('sleeping-' + @pet.PetId).submit();
-          }, 5000); *@
-
-                  function delay(ms) {
-                                                    return new Promise(resolve => setTimeout(resolve,ms));
-                                                  }
-                  async function sleepPet() {
-                    await delay(5000);
-                  document.getElementById('sleeping-@pet.PetId').submit();
-                                                  }
-                  sleepPet();
-
-                @*sleepPetTimer('@pet.PetId');*@
-
-
-          </script>
+            function delay(ms) {
+              return new Promise(resolve => setTimeout(resolve,ms));
             }
-            else if (pet.IsPlaying)
-            {
+            async function sleepPet() {
+              await delay(5000);
+              document.getElementById('sleeping-@pet.PetId').submit();
+            }
+            sleepPet();
+
+            @* setTimeout(function () {
+            var sleepForm = document.getElementById('sleeping-' + @pet.PetId);
+            console.log(sleepForm);
+            document.getElementById('sleeping-' + @pet.PetId).submit();
+            }, 5000); *@
+
+            @*sleepPetTimer('@pet.PetId');*@
+          </script>
+        }
+        else if (pet.IsPlaying)
+        {
           <div class='action'>
             <img src="@play" alt="Playing" />
             <h3>@pet.Name is playing!</h3>
@@ -174,28 +168,26 @@
           </form>
 
           <script>
-                @*setTimeout(function () {
-          var playForm = document.getElementById('playing-' + @pet.PetId);
-          console.log(playForm);
-          document.getElementById('playing-' + @pet.PetId).submit();
-          }, 5000);*@
-
-                  function delay(ms) {
-                                                    return new Promise(resolve => setTimeout(resolve,ms));
-                                                  }
-                  async function playPet() {
-                    await delay(5000);
-                  document.getElementById('playing-@pet.PetId').submit();
-                                                  }
-                  playPet();
-
-                @*playPetTimer('@pet.PetId');*@
-
-
-          </script>
+            function delay(ms) {
+              return new Promise(resolve => setTimeout(resolve,ms));
             }
-            else if (pet.IsFeeding)
-            {
+            async function playPet() {
+              await delay(5000);
+              document.getElementById('playing-@pet.PetId').submit();
+            }
+            playPet();
+
+            @*setTimeout(function () {
+            var playForm = document.getElementById('playing-' + @pet.PetId);
+            console.log(playForm);
+            document.getElementById('playing-' + @pet.PetId).submit();
+            }, 5000);*@
+
+            @*playPetTimer('@pet.PetId');*@
+          </script>
+        }
+        else if (pet.IsFeeding)
+        {
           <div class='action'>
             <img src="@eat" alt="Eating" />
             <h3>@pet.Name is eating...</h3>
@@ -209,55 +201,54 @@
           </form>
 
           <script>
-                @*setTimeout(function () {
-          var eatForm = document.getElementById('eating-'+ @pet.PetId);
-          console.log(eatForm);
-          document.getElementById("eating-" + @pet.PetId).submit();
-          }, 5000);*@
+            @*setTimeout(function () {
+            var eatForm = document.getElementById('eating-'+ @pet.PetId);
+            console.log(eatForm);
+            document.getElementById("eating-" + @pet.PetId).submit();
+            }, 5000);*@
+            @*feedPetTimer('@pet.PetId');*@
 
-                  function delay(ms) {
-                                                    return new Promise(resolve => setTimeout(resolve,ms));
-                                                  }
-                  async function feedPet() {
-                    await delay(5000);
-                  document.getElementById('eating-@pet.PetId').submit();
-                                                  }
-                  feedPet();
-
-                @*feedPetTimer('@pet.PetId');*@
-
-          </script>
+            function delay(ms) {
+              return new Promise(resolve => setTimeout(resolve,ms));
             }
-            else
-            {
+            async function feedPet() {
+              await delay(5000);
+              document.getElementById('eating-@pet.PetId').submit();
+            }
+            feedPet();
+          </script>
+        }
+        else
+        {
           <img src="@petImg" alt="Pet" />
 
-              RenderHearts(pet.Fullness);
-              RenderEnergy(pet.Energy);
-              RenderHappiness(pet.Attention);
+          RenderHearts(pet.Fullness);
+          RenderEnergy(pet.Energy);
+          RenderHappiness(pet.Attention);
 
-              @Html.ActionLink("View Pet Details", "Show", new { id = pet.PetId })
+          @Html.ActionLink("View Pet Details", "Show", new { id = pet.PetId })
 
-            }
-          }
-          else
+        }
+        }
+        else
+        {
+          <h1>@pet.Name</h1>
+          <img src="@dead" alt="Dead Pet" />
+          <h4>@pet.Name has died :(</h4>
+
+          @using (Html.BeginForm("BuryAction", "Pets", FormMethod.Post))
           {
-        <h1>@pet.Name</h1>
-        <img src="@dead" alt="Dead Pet" />
-        <h4>@pet.Name has died :(</h4>
-
-            @using (Html.BeginForm("BuryAction", "Pets", FormMethod.Post))
-            {
-          <input type="hidden" name="petId" value="@pet.PetId" />
-          <input type="hidden" name="userId" value="@pet.Id" />
-          <input type="hidden" name="action" value="delete" />
-          <input type="submit" value="Bury @pet.Name" id="abandon" />
-            }
-          }
-      </div>
+        <input type="hidden" name="petId" value="@pet.PetId" />
+        <input type="hidden" name="userId" value="@pet.Id" />
+        <input type="hidden" name="action" value="delete" />
+        <input type="submit" value="Bury @pet.Name" id="abandon" />
       }
+    }
+    </div>
+  }
 
-      @Html.ActionLink("Head to the shop!", "Show", "Shop") @* style the link with shop-btn *@
+
+    @Html.ActionLink("Head to the shop!", "Show", "Shop") @* style the link with shop-btn *@
     <div class="inventory-style">
       <h1 class="inventory-title">Inventory</h1>
       <div class="inventory">
@@ -279,7 +270,6 @@
       } *@
       </div>
     </div>
-    </script>
   }
 
   @functions
@@ -299,7 +289,7 @@
         @for (var i = 0; i < 5; i++)
         {
           <img id="heart" src="/img/@(i * 20 < value ? "lightning-bolt.png" : "lightning-bolt-black.png")"
-            alt="Lightning Bolt" />
+          alt="Lightning Bolt" />
         }
       </div>
     }
@@ -307,13 +297,13 @@
     {
       <div class="health-hearts">
         <img id="happiness" src="/img/@(value > 70 ? "happy-face.png" : value > 40 ? "neutral-face.png" : "sad-face.png")"
-          alt="Happiness" />
+        alt="Happiness" />
       </div>
     }
   }
+
   <!-- To make life easier for testing -->
   @Html.ActionLink("Make another pet?", "Create", new { id = ViewBag.UserId }) 
-
 </body>
 
 </html>
