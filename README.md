@@ -31,8 +31,11 @@ The primary functionality of the application is to take care of virtual pets, kn
 - **IDE**: Visual Studio
 - **Package Manager**: NuGet
 - **Version Control**: Git
-- **Testing**: MSTest
+- **Database**: MySQL
+- **ORM**: Entity Framework Core 6.0
 - **Build Tool**: MSBuild
+- **Testing**: MSTest
+- **Web Server**: ASP.NET Core
 
 ## Installation
 
@@ -70,7 +73,7 @@ This project uses a SQL database to store and manage data. Follow the instructio
      ```
 
 3. **Configure Connection String**
-   - In the root of the Factory directory, create the `appsettings.json` file.
+   - In the root of the Tamagotchi directory, create the `appsettings.json` file.
    - Update the connection string with the appropriate details and add it to that file:
      ```json
         {
