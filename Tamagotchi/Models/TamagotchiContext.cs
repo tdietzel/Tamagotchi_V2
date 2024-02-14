@@ -11,7 +11,7 @@ namespace Tamagotchis.Models
     public DbSet<Food> Foods { get; set; }
 
     public DbSet<InventoryItem> InventoryItems { get; set; }
-    public DbSet<Inventory> Inventories { get; set; }
+    public DbSet<Inventory> Inventory { get; set; }
 
     public TamagotchiContext(DbContextOptions options) : base(options) { }
 
@@ -22,6 +22,11 @@ namespace Tamagotchis.Models
         .HasData(
           new Shop { ShopId = 1 }
         );
+
+      builder.Entity<User>()
+      .HasOne(u => u.Inventory)
+      .WithOne(i => i.User)
+      .HasForeignKey<Inventory>(i => i.UserId);
 
       builder.Entity<Toy>()
         .HasData(

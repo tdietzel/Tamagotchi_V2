@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Tamagotchis.Models;
 
@@ -10,9 +11,10 @@ using Tamagotchis.Models;
 namespace Tamagotchi.Migrations
 {
     [DbContext(typeof(TamagotchiContext))]
-    partial class TamagotchiContextModelSnapshot : ModelSnapshot
+    [Migration("20240214180849_AddInventoryEntity")]
+    partial class AddInventoryEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -220,7 +222,7 @@ namespace Tamagotchi.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int?>("FoodId")
+                    b.Property<int>("FoodId")
                         .HasColumnType("int");
 
                     b.Property<string>("InventoryId")
@@ -229,7 +231,7 @@ namespace Tamagotchi.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ToyId")
+                    b.Property<int>("ToyId")
                         .HasColumnType("int");
 
                     b.Property<string>("Type")
@@ -528,7 +530,9 @@ namespace Tamagotchi.Migrations
                 {
                     b.HasOne("Tamagotchis.Models.Food", "Food")
                         .WithMany()
-                        .HasForeignKey("FoodId");
+                        .HasForeignKey("FoodId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Tamagotchis.Models.Inventory", "Inventory")
                         .WithMany("Items")
@@ -536,7 +540,9 @@ namespace Tamagotchi.Migrations
 
                     b.HasOne("Tamagotchis.Models.Toy", "Toy")
                         .WithMany()
-                        .HasForeignKey("ToyId");
+                        .HasForeignKey("ToyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Food");
 

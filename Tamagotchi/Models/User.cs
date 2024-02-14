@@ -4,41 +4,29 @@ using System.Timers;
 using System.Collections.Generic;
 using System.Windows;
 using System.Linq;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Tamagotchis.Models;
 
 namespace Tamagotchis.Models
 {
   public class User : IdentityUser
   {
-    public string Name { get; set; }
+    public int InventoryId { get; set; }
+    public Inventory Inventory { get; set; }
 
-    public double Money { get; set; }
     public List<Pet> Pets { get; set; }
+    public string Name { get; set; }
+    public double Money { get; set; }
 
-    public User() {
+    public User()
+    {
       Money = 200;
+      Inventory = new Inventory();
     }
-    // public List<Inventory> UserInventory { get; set; }
-    // public List<Food> PurchasedFoods { get; set; }
-    // public List<Toy> PurchasedToys { get; set; }
 
-    // public Inventory()
-    // {
-    //   PurchasedFoods = new List<Food>();
-    //   PurchasedFoods = new List<Toy>();
-    // }
-
-    // public void AddPurchasedFoods (Food food)
-    // {
-    //   UserInventory.PurchasedFoods.Add(food);
-    // }
-
-    // public void AddPurchasedToys (Toy toy)
-    // {
-    //   UserInventory.PurchasedToys.Add(toy);
-    // }
-
-    public void UseMoney (int amount) {
+    public void UseMoney(int amount)
+    {
       Money -= amount;
     }
   }

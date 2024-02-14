@@ -3,13 +3,18 @@ using System.Timers;
 using System.Collections.Generic;
 using System.Windows;
 using System.Linq;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Tamagotchis.Models
 {
   public class Food {
-    public Shop Shop { get; set; }
-    public int ShopId { get; set; }
+    [Key]
     public int FoodId { get; set; }
+
+    [ForeignKey("Shop")]
+    public int ShopId { get; set; }
+    public Shop Shop { get; set; }
 
     public string Name { get; set; }
     public int Fullness { get; set; }

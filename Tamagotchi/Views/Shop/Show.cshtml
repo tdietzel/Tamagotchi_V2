@@ -30,12 +30,6 @@
                 <input type="hidden" id="userId" name="userId" value="@ViewBag.User.Id" />
                 <button type="submit">@cost <img id="coin" src="~/img/coin.png" /> </button>
               }
-
-              @* <form class="food-form" action="/Shop/PurchaseFood" method="post">
-              <input type="hidden" name="foodId" value="@food.FoodId" />
-              <input type="hidden" id="userId" name="userId" value="@ViewBag.User.Id" />
-              <button type="submit">@cost <img id="coin" src="~/img/coin.png" /> </button>
-              </form> *@
             </div>
           }
         </div>
@@ -47,10 +41,13 @@
             <div class="toy">
               <h5>@toy.Name</h5> <p>@toy.Excitement</p>
               <img id="lightning-bolt" src="~/img/lightning-bolt.png" />
-              <form action="/shop/buytoy" method="post">
-                <input type="hidden" name="toyId" value="@toy.Name" />
+
+              @using (Html.BeginForm("PurchaseToy", "Shop", FormMethod.Post))
+              {
+                <input type="hidden" name="toyId" value="@toy.ToyId" />
+                <input type="hidden" id="userId" name="userId" value="@ViewBag.User.Id" />
                 <button type="submit">@cost <img id="coin" src="~/img/coin.png" /> </button>
-              </form>
+              }
             </div>
           }
         </div>

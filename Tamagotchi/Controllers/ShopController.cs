@@ -36,7 +36,6 @@ namespace Tamagotchis.Controllers
       return View(shop);
     }
 
-    //some changes below
     [HttpPost("/shop/buyFood")]
     public async Task<ActionResult> PurchaseFood(int foodId, string userId)
     {
@@ -49,17 +48,16 @@ namespace Tamagotchis.Controllers
       {
         user.Money -= cost;
         
-        Food selectedFood = _db.Foods.Find(foodId);
-        if (selectedFood != null)
+        InventoryItem newItem = new InventoryItem
         {
-          user.FoodInventory.Add(selectedFood);
-          Console.WriteLine("👽👽👽👽👽👽👽👽");
-          Console.WriteLine(user.FoodInventory[0].Name);
-          Console.WriteLine(user.FoodInventory[0].Fullness);
-          // selectedFood.Quantity += 1;
-        }
+          InventoryId = user.Id,
+          FoodId = food.FoodId,
+          Quantity = 1,
+          Type = "Food"
+        };
+        
+        _db.InventoryItems.Add(newItem);
         _db.SaveChanges();
-        //redirect for success
       }
       else
       {
@@ -67,46 +65,35 @@ namespace Tamagotchis.Controllers
       }
       return RedirectToAction("Show");
     }
-    
-    // //altered to hopefully work with userId
-    // [HttpPost("/shop/buyToy")]
-    // public ActionResult PurchaseToy(string toyId, int userId)
-    // {
-    //   var toy = _db.Toys.Find(toyId);
-    //   var user = _db.Users.Find(userId);
 
-    //   if (user.Money >= toy.Cost)
-    //   {
-    //     user.Toy -= toy.Cost;
+    [HttpPost("/shop/buyToy")]
+    public async Task<ActionResult> PurchaseToy(int toyId, string userId)
+    {
+      User user = await _userManager.FindByIdAsync(userId);
+      Toy toy = _db.Toys.Find(toyId);
 
-    //     var inventoryItem = db.InventoryItems.FirstOrDefault(i => i.ItemId == toyId && i.UserId == userId && i.ItemType = "Toy");
-    //     if (inventoryItem != null)
-    //     {
-    //       inventoryItem.Quantity += 1;
-    //     }
-    //     else
-    //     {
-    //       _db.InventoryItems.Add(new InventoryItem { UserId = userId, ItemId = toy.ToyId, ItemType = "Toy", Quantity = 1});
-    //     }
+      double cost = Math.Round(toy.Excitement / 2.0);
 
-    //     _db.SaveChanges();
-    //     //redirect successful purchase
-    //   }
-    //   else
-    //   {
-    //     //redirect for broke
-    //   }
-    // }
-    
-    // // {
-    // //   Toy newPurchase = new Toy(toyId);
+      if (user.Money >= cost)
+      {
+        user.Money -= cost;
+        
+        InventoryItem newItem = new InventoryItem
+        {
+          InventoryId = user.Id,
+          ToyId = toy.ToyId,
+          Quantity = 1,
+          Type = "Toy"
+        };
 
-    // //   if (newPurchase.Buy(toyId))
-    // //   {
-    // //     newPurchase.AddToInstances();
-    // //   }
-      
-    // //   return RedirectToAction("Show");
-    // // }
+        _db.InventoryItems.Add(newItem);
+        _db.SaveChanges();
+      }
+      else
+      {
+        //redirect for not enough money
+      }
+      return RedirectToAction("Show");
+    }
   }
 }
