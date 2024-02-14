@@ -11,7 +11,7 @@
   @* <p>Hello @ViewBag.UserName!</p> *@
   @using (Html.BeginForm("Index", "Pets", new { id = User.FindFirstValue(ClaimTypes.NameIdentifier) }, FormMethod.Get))
   {
-    <input type="submit" value="Do Something" />
+    <input type="submit" value="View Pets" />
   }
   @using (Html.BeginForm("LogOff", "Account"))
   {
@@ -23,4 +23,3 @@ else
   <p>@Html.ActionLink("Register", "Register")</p>
   <p>@Html.ActionLink("Log in", "Login")</p>
 }
-<p>@Html.ActionLink("Home", "Index", "Home")</p>

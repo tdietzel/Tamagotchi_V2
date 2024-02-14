@@ -37,37 +37,36 @@ namespace Tamagotchis.Controllers
     }
 
     //some changes below
-    // [HttpPost("/shop/buyFood")]
-    // [HttpPost]
-    // public ActionResult PurchaseFood(int foodId, int userId)
-    // {
-    //   Food food = _db.Foods.Find(foodId);
-    //   User user = _db.Users.Find(userId);
-    //   double cost = Math.Round(food.Fullness / 2.0);
+    [HttpPost("/shop/buyFood")]
+    public async Task<ActionResult> PurchaseFood(int foodId, string userId)
+    {
+      User user = await _userManager.FindByIdAsync(userId);
+      Food food = _db.Foods.Find(foodId);
 
-    //   if (user.Money >= cost)
-    //   {
-    //     user.Money -= cost;
+      double cost = Math.Round(food.Fullness / 2.0);
+
+      if (user.Money >= cost)
+      {
+        user.Money -= cost;
         
-    //     // var inventoryItem = _db.InventoryItems.FirstOrDefault(i => i.ItemId == foodId && i.UserId == userId && i.ItemType == "Food");
-    //     // if (inventoryItem != null)
-    //     // {
-    //     //   inventoryItem.Quantity += 1;
-    //     // }
-    //     // else
-    //     // {
-    //     //   _db.InventoryItems.Add(new InventoryItem { UserId = userId, ItemId = food.FoodId, ItemType = "Food", Quantity = 1});
-    //     // }
-
-    //     _db.SaveChanges();
-    //     //redirect for success
-    //   }
-    //   else
-    //   {
-    //     //redirect for not enough money
-    //   }
-    //   return RedirectToAction("Show");
-    // }
+        Food selectedFood = _db.Foods.Find(foodId);
+        if (selectedFood != null)
+        {
+          user.FoodInventory.Add(selectedFood);
+          Console.WriteLine("👽👽👽👽👽👽👽👽");
+          Console.WriteLine(user.FoodInventory[0].Name);
+          Console.WriteLine(user.FoodInventory[0].Fullness);
+          // selectedFood.Quantity += 1;
+        }
+        _db.SaveChanges();
+        //redirect for success
+      }
+      else
+      {
+        //redirect for not enough money
+      }
+      return RedirectToAction("Show");
+    }
     
     // //altered to hopefully work with userId
     // [HttpPost("/shop/buyToy")]

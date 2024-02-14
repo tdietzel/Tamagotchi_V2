@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Tamagotchis.Models;
 
@@ -10,9 +11,10 @@ using Tamagotchis.Models;
 namespace Tamagotchi.Migrations
 {
     [DbContext(typeof(TamagotchiContext))]
-    partial class TamagotchiContextModelSnapshot : ModelSnapshot
+    [Migration("20240213222701_AddSeeding")]
+    partial class AddSeeding
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -168,14 +170,9 @@ namespace Tamagotchi.Migrations
                     b.Property<int>("ShopId")
                         .HasColumnType("int");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("varchar(255)");
-
                     b.HasKey("FoodId");
 
                     b.HasIndex("ShopId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Foods");
 
@@ -470,10 +467,6 @@ namespace Tamagotchi.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Tamagotchis.Models.User", null)
-                        .WithMany("FoodInventory")
-                        .HasForeignKey("UserId");
-
                     b.Navigation("Shop");
                 });
 
@@ -506,8 +499,6 @@ namespace Tamagotchi.Migrations
 
             modelBuilder.Entity("Tamagotchis.Models.User", b =>
                 {
-                    b.Navigation("FoodInventory");
-
                     b.Navigation("Pets");
                 });
 #pragma warning restore 612, 618

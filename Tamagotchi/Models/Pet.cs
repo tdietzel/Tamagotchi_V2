@@ -104,16 +104,16 @@ namespace Tamagotchis.Models
         Attention = 0;
       }
     }
-    private void DecreaseAttributes()
+    public void DecreaseAttributes()
     {
-      this.Energy -= 2;
-      this.Fullness -= 2;
-      this.Attention -= 2;
+      Energy -= 2;
+      Fullness -= 2;
+      Attention -= 2;
 
-      if (this.Energy <= 0)
+      if (Energy <= 0)
       {
-        this.Energy = 0;
-        this.Sleep();
+        Energy = 0;
+        Sleep();
       }
 
       CheckIfDead();

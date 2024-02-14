@@ -3,14 +3,16 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using Tamagotchis.Models;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
+using Tamagotchis.Models;
+
+// using System.Timers;
 
 namespace Tamagotchis.Controllers
 {
@@ -18,11 +20,31 @@ namespace Tamagotchis.Controllers
   {
     private readonly TamagotchiContext _db;
     private readonly UserManager<User> _userManager;
+    // private readonly Timer _updateTimer;
     public PetsController(TamagotchiContext db, UserManager<User> userManager)
     {
       _db = db;
       _userManager = userManager;
+      // _updateTimer = new Timer();
+      // _updateTimer.Interval = 10000; 
+      // _updateTimer.Elapsed += UpdateTimerElapsed;
+      // _updateTimer.Start();
     }
+
+    // private void UpdateTimerElapsed(object sender, ElapsedEventArgs e)
+    // {
+    //   Console.WriteLine("👽👽👽👽👽👽");
+    //   Console.WriteLine("Initial");
+    //   List<Pet> pets = _db.Pets.ToList();
+      
+    //   foreach (Pet pet in pets)
+    //   {
+    //     Console.WriteLine("👽👽👽👽👽👽");
+    //     Console.WriteLine("TimerElapsed");
+    //     pet.DecreaseAttributes();
+    //   }
+    //   _db.SaveChanges();
+    // }
 
     [HttpGet("/Pets/{id}")]
     public async Task<ActionResult> Index(string id)
@@ -35,6 +57,7 @@ namespace Tamagotchis.Controllers
       .ToList();
   
       ViewBag.UserId = id;
+      ViewBag.User = currentUser;
       // Response.Headers.Add("Refresh", "11");
 
       return View(userPets);
@@ -59,7 +82,7 @@ namespace Tamagotchis.Controllers
       return RedirectToAction("Index", new { id = userId });
     }
 
-    [HttpGet("/Pets/Show/{id}")]//I think this is where things might be going wrong with the missing first pet
+    [HttpGet("/Pets/Show/{id}")]
     public ActionResult Show(int id)
     {
       Pet thisPet = _db.Pets.FirstOrDefault(pet => pet.PetId == id);
