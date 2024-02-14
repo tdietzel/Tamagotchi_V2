@@ -30,16 +30,16 @@ namespace Tamagotchis.Models
 
       builder.Entity<Toy>()
         .HasData(
-          new Toy { ToyId = 1, Name = "Ball", Excitement = 20, ItemType = "Toy", Quantity = 1, ShopId = 1, purchasedSuccessfully = false },
-          new Toy { ToyId = 2, Name = "Bone", Excitement = 30, ItemType = "Toy", Quantity = 1, ShopId = 1, purchasedSuccessfully = false },
-          new Toy { ToyId = 3, Name = "Frisbee", Excitement = 50, ItemType = "Toy", Quantity = 1, ShopId = 1, purchasedSuccessfully = false }
+          new Toy { ToyId = 1, Name = "Ball", Excitement = 20, ItemType = "Toy", ShopId = 1, purchasedSuccessfully = false },
+          new Toy { ToyId = 2, Name = "Bone", Excitement = 30, ItemType = "Toy", ShopId = 1, purchasedSuccessfully = false },
+          new Toy { ToyId = 3, Name = "Frisbee", Excitement = 50, ItemType = "Toy", ShopId = 1, purchasedSuccessfully = false }
         );
 
       builder.Entity<Food>()
         .HasData(
-          new Food { FoodId = 1, Name = "Kibble", Fullness = 10, ItemType = "Food", Quantity = 1, ShopId = 1, purchasedSuccessfully = false },
-          new Food { FoodId = 2, Name = "Canned", Fullness = 20, ItemType = "Food", Quantity = 1, ShopId = 1, purchasedSuccessfully = false },
-          new Food { FoodId = 3, Name = "Filet-Mignon", Fullness = 35, ItemType = "Food", Quantity = 1, ShopId = 1, purchasedSuccessfully = false }
+          new Food { FoodId = 1, Name = "Kibble", Fullness = 10, ItemType = "Food", ShopId = 1, purchasedSuccessfully = false },
+          new Food { FoodId = 2, Name = "Canned", Fullness = 20, ItemType = "Food", ShopId = 1, purchasedSuccessfully = false },
+          new Food { FoodId = 3, Name = "Filet-Mignon", Fullness = 35, ItemType = "Food", ShopId = 1, purchasedSuccessfully = false }
         );
     }
   }

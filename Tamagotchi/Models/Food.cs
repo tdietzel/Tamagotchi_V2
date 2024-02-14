@@ -19,7 +19,6 @@ namespace Tamagotchis.Models
     public string Name { get; set; }
     public int Fullness { get; set; }
     public string ItemType { get; set; }
-    public int Quantity { get; set; }
     public bool purchasedSuccessfully = false;
 
     // private void SetFullnessBasedOnName()

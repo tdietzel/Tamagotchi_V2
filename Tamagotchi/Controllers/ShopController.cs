@@ -48,16 +48,28 @@ namespace Tamagotchis.Controllers
       {
         user.Money -= cost;
         
-        InventoryItem newItem = new InventoryItem
+        #nullable enable
+        InventoryItem? joinEntity = _db.InventoryItems.FirstOrDefault(join => (join.InventoryId == userId && join.FoodId == food.FoodId));
+        #nullable disable
+        if (joinEntity == null && foodId != 0)
         {
-          InventoryId = user.Id,
-          FoodId = food.FoodId,
-          Quantity = 1,
-          Type = "Food"
-        };
+          InventoryItem newItem = new InventoryItem
+          {
+            InventoryId = user.Id,
+            FoodId = food.FoodId,
+            Quantity = 1,
+            Type = "Food"
+          };
         
-        _db.InventoryItems.Add(newItem);
-        _db.SaveChanges();
+          _db.InventoryItems.Add(newItem);
+          _db.SaveChanges();
+        } 
+        else
+        {
+          joinEntity.Quantity += 1;
+          _db.InventoryItems.Update(joinEntity);
+          _db.SaveChanges();
+        }
       }
       else
       {
@@ -77,17 +89,29 @@ namespace Tamagotchis.Controllers
       if (user.Money >= cost)
       {
         user.Money -= cost;
-        
-        InventoryItem newItem = new InventoryItem
-        {
-          InventoryId = user.Id,
-          ToyId = toy.ToyId,
-          Quantity = 1,
-          Type = "Toy"
-        };
 
-        _db.InventoryItems.Add(newItem);
-        _db.SaveChanges();
+        #nullable enable
+        InventoryItem? joinEntity = _db.InventoryItems.FirstOrDefault(join => (join.InventoryId == userId && join.ToyId == toy.ToyId));
+        #nullable disable
+        if (joinEntity == null && toyId != 0)
+        {
+          InventoryItem newItem = new InventoryItem
+          {
+            InventoryId = user.Id,
+            ToyId = toy.ToyId,
+            Quantity = 1,
+            Type = "Toy"
+          };
+        
+          _db.InventoryItems.Add(newItem);
+          _db.SaveChanges();
+        } 
+        else
+        {
+          joinEntity.Quantity += 1;
+          _db.InventoryItems.Update(joinEntity);
+          _db.SaveChanges();
+        }
       }
       else
       {
