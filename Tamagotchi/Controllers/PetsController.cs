@@ -36,7 +36,7 @@ namespace Tamagotchis.Controllers
     //   Console.WriteLine("👽👽👽👽👽👽");
     //   Console.WriteLine("Initial");
     //   List<Pet> pets = _db.Pets.ToList();
-      
+
     //   foreach (Pet pet in pets)
     //   {
     //     Console.WriteLine("👽👽👽👽👽👽");
@@ -52,13 +52,23 @@ namespace Tamagotchis.Controllers
       string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
       User currentUser = await _userManager.FindByIdAsync(userId);
 
+      Inventory inventory = _db.Inventory
+        .Include(inv => inv.Items)
+          .ThenInclude(item => item.Food)
+        .Include(inv => inv.Items)
+          .ThenInclude(item => item.Toy)
+      .FirstOrDefault(inv => inv.UserId == currentUser.Id);
+      if (inventory != null)
+      {
+        ViewBag.InventoryItems = inventory.Items;
+      }
+
       List<Pet> userPets = _db.Pets
         .Where(pet => pet.Id == currentUser.Id)
       .ToList();
-  
-      ViewBag.UserId = id;
+
+      ViewBag.UserId = userId;
       ViewBag.User = currentUser;
-      // Response.Headers.Add("Refresh", "11");
 
       return View(userPets);
     }
@@ -75,6 +85,7 @@ namespace Tamagotchis.Controllers
     {
       string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
       User currentUser = await _userManager.FindByIdAsync(userId);
+      
       pet.User = currentUser;
       _db.Pets.Add(pet);
       _db.SaveChanges();
@@ -83,9 +94,28 @@ namespace Tamagotchis.Controllers
     }
 
     [HttpGet("/Pets/Show/{id}")]
-    public ActionResult Show(int id)
+    public async Task<ActionResult> Show(int id)
     {
+      string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+      User currentUser = await _userManager.FindByIdAsync(userId);
+
+      Inventory inventory = _db.Inventory
+        .Include(inv => inv.Items)
+          .ThenInclude(item => item.Food)
+        .Include(inv => inv.Items)
+          .ThenInclude(item => item.Toy)
+      .FirstOrDefault(inv => inv.UserId == currentUser.Id);
+
+      if (inventory != null)
+      {
+        ViewBag.InventoryItems = inventory.Items;
+      }
+
       Pet thisPet = _db.Pets.FirstOrDefault(pet => pet.PetId == id);
+
+      ViewBag.UserId = userId;
+      ViewBag.User = currentUser;
+
       if (thisPet != null)
       {
         return View(thisPet);

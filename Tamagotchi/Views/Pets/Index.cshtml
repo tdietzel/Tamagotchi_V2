@@ -253,29 +253,28 @@
   <div class="inventory-style">
     <h1 class="inventory-title">Inventory</h1>
     <div class="inventory">
-      @if (ViewBag.User.FoodInventory == null || ViewBag.User.FoodInventory.Count == 0)
+      @foreach (InventoryItem item in ViewBag.User.Inventory.Items)
       {
-        <p>No food items available.</p>
-      }
-      else
-      {
-        @foreach (Food food in ViewBag.User.FoodInventory)
+        @if(item.Type == "Food")
         {
           <div class="inventory-item">
-            <p>@food.Name</p>
-            <p class="hp">@food.Fullness</p>
+            <p>@item.Food.Name</p><p>&nbsp; <p style="color: rgb(255, 112, 112);">x @item.Quantity</p></p>
+            <p class="hp">@item.Food.Fullness</p>
             <img class="fullness" src="~/img/hearts.png" />
           </div>
         }
       }
-      @* @foreach (var toy in Pet._inventoryToy)
+      @foreach (InventoryItem item in ViewBag.User.Inventory.Items)
       {
-      <div class="inventory-item">
-      <p>@toy.Name</p>
-      <p class="excitement">@toy.Excitement</p>
-      <img class="fullness" src="~/img/lightning-bolt.png" />
-      </div>
-      } *@
+        @if(item.Type == "Toy")
+        {
+          <div class="inventory-item">
+            <p>@item.Toy.Name</p><p>&nbsp; <p style="color: rgb(242, 253, 88);">x @item.Quantity</p></p>
+            <p class="hp">@item.Toy.Excitement</p>
+            <img class="fullness" src="~/img/lightning-bolt.png" />
+          </div>
+        }
+      }
     </div>
   </div>
 
